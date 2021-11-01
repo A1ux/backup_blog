@@ -17,8 +17,6 @@ menu:
 
 Actualmente trabajo como consultor en ciberseguridad. Cree este blog para crear notas personales y compartir por si algun dia alguien necesita ayuda, no se si como forma de writeup veremos que dice el tiempo. Pero de momento lo quiero para tener notas guardadas por si algun dia las necesito y volver a releerlas, a veces olvido las cosas facilmente jaja
 
-M
-
 Mis redes sociales son:
 
 * https://github.com/A1ux/

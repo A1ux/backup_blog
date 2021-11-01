@@ -5,6 +5,43 @@
     <link>https://www.alux.cc/tags/</link>
     <description>Recent content in Tags on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>es-GT</language><atom:link href="https://www.alux.cc/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>es-GT</language>
+    <lastBuildDate>Mon, 01 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>academy</title>
+      <link>https://www.alux.cc/tags/academy/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/academy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>burpsuite</title>
+      <link>https://www.alux.cc/tags/burpsuite/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/burpsuite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>portswigger</title>
+      <link>https://www.alux.cc/tags/portswigger/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/portswigger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sqli</title>
+      <link>https://www.alux.cc/tags/sqli/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/sqli/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

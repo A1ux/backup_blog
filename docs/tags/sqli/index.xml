@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sqli on A1ux</title>
+    <link>https://www.alux.cc/tags/sqli/</link>
+    <description>Recent content in sqli on A1ux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-GT</language>
+    <lastBuildDate>Mon, 01 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/sqli/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/</guid>
+      <description>Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data Este laboratorio contiene una vulnerabilidad de SQL Injection y la manera de resolverlo es que haga un ataque de SQL y que muestra los detalles de todos los productos en cualquier categoria, tanto released como unreleased.
+Nos regalan una pista y se nos dice que el sistema realiza la siguiente consulta SQL
+SELECT*FROMproductsWHEREcategory=&amp;#39;Gifts&amp;#39;ANDreleased=1Reconocimiento Como lo explica en la lectura del laboratorio, la aplicacion recupera datos de la categoria Gifts y que solo se muestre los datos que tengan released como valor 1.</description>
+    </item>
+    
+  </channel>
+</rss>

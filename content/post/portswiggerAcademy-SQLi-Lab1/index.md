@@ -1,6 +1,6 @@
 +++
 author = "Alux"
-title = "Portswigger Academy Learning Path: SQL Injection"
+title = "Portswigger Academy Learning Path: SQL Injection Lab 1"
 date = "2021-11-01"
 description = "Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data"
 tags = [

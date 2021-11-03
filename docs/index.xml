@@ -76,12 +76,12 @@
 </description>
         </item>
         <item>
-        <title>Portswigger Academy Learning Path: SQL Injection</title>
-        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/</link>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/</link>
         <pubDate>Mon, 01 Nov 2021 00:00:00 +0000</pubDate>
         
-        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/</guid>
-        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection" /&gt;&lt;h1 id=&#34;lab-sql-injection-vulnerability-in-where-clause-allowing-retrieval-of-hidden-data&#34;&gt;Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data&lt;/h1&gt;
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 1" /&gt;&lt;h1 id=&#34;lab-sql-injection-vulnerability-in-where-clause-allowing-retrieval-of-hidden-data&#34;&gt;Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data&lt;/h1&gt;
 &lt;p&gt;Este laboratorio contiene una vulnerabilidad de SQL Injection y la manera de resolverlo es que haga un ataque de SQL y que muestra los detalles de todos los productos en cualquier categoria, tanto &lt;code&gt;released&lt;/code&gt; como &lt;code&gt;unreleased&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Nos regalan una pista y se nos dice que el sistema realiza la siguiente consulta SQL&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;products&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WHERE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;category&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Gifts&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;AND&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;released&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
@@ -125,11 +125,11 @@
 			flex-grow: 272; 
 			flex-basis: 653px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/intruder.png&#34; data-size=&#34;765x281&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/intruder.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/intruder.png&#34; data-size=&#34;765x281&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/intruder.png&#34;
 			width=&#34;765&#34;
 			height=&#34;281&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/intruder_hu2ccd66ec86f3df3c4bd2dbac1bdd383f_13343_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/intruder_hu2ccd66ec86f3df3c4bd2dbac1bdd383f_13343_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/intruder_hu2ccd66ec86f3df3c4bd2dbac1bdd383f_13343_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-1/intruder_hu2ccd66ec86f3df3c4bd2dbac1bdd383f_13343_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Ataque con intruder&#34;&gt;
 	&lt;/a&gt;

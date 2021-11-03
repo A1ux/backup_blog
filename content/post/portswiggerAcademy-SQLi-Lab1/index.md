@@ -12,8 +12,7 @@ tags = [
 categories = [
     "pentest web",
 ]
-series = ["Themes Guide"]
-aliases = ["migrate-from-jekyl"]
+series = ["Portswigger Labs"]
 image = "head.png"
 +++
 

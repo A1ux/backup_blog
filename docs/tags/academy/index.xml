@@ -6,7 +6,17 @@
     <description>Recent content in academy on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Mon, 01 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-2/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-2/</guid>
+      <description>Lab: SQL injection vulnerability allowing login bypass En este laboratorio se pretende explotar un SQL Injection, esta vez es un inicio de sesion, y se intentara explotar como en el laboratorio 1 en el cual se tiene que tratar de hacer un bypass para que el sistema no valide el resto que seria la contrasena. La consulta que hara seguramente sera:
+SELECT*FROMusersWHEREusername=&amp;#39;usuario&amp;#39;ANDpassword=&amp;#39;contrasena&amp;#39;Reconocimiento Se tratara de hacer que el sistema ya no invalide la contrasena que es enviada en la peticion, todo esto comentando lo que le sigue, de esta manera:</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: SQL Injection</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection/</link>

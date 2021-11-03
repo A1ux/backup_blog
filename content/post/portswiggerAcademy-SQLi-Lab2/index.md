@@ -1,6 +1,6 @@
 +++
 author = "Alux"
-title = "Portswigger Academy Learning Path: SQL Injection"
+title = "Portswigger Academy Learning Path: SQL Injection Lab 2"
 date = "2021-11-02"
 description = "Lab: SQL injection vulnerability allowing login bypass"
 tags = [
@@ -12,8 +12,7 @@ tags = [
 categories = [
     "pentest web",
 ]
-series = ["Themes Guide"]
-aliases = ["migrate-from-jekyl"]
+series = ["Portswigger Labs"]
 image = "headlab2.png"
 +++
 

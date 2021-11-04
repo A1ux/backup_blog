@@ -35,7 +35,7 @@ Ahora toca usar el metodo union para poder recuperar esos datos y tratar de inye
 Recuperamos las columnas inyectando la siguiente consulta:
 
 ```
-https://xxxxxxxxxxxx.web-security-academy.net/filter?category=PetsPets' order by 4--
+https://xxxxxxxxxxxx.web-security-academy.net/filter?category=Pets' order by 4--
 ```
 
 #### Recuperar tipo de datos

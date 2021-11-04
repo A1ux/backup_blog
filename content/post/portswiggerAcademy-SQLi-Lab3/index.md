@@ -51,11 +51,11 @@ Ingresamos a la web y elegimos alguna categoria, en este ejemplo sera la categor
   Pets' UNION SELECT NULL-- | **Muestra error**
   Pets' UNION SELECT NULL,NULL-- | **Muestra error**
   Pets' UNION SELECT NULL,NULL,NULL-- | Imprimer resultados normalmente
-  Pets' UNION SELECT NULL,NULL,NULL,NULL-- | Imprimer resultados normalmente
+  Pets' UNION SELECT NULL,NULL,NULL,NULL-- | **Muestra error**
 
 Como se ve al ingresar el valor 4 o 1,2 y 4 nulls, nos muestra un error de `Internal server error` lo que hace que el backend no este respondiendo de manera correcta y no pueda procesar la solicitud. Con esto sabemos que la tabla en la que se extrae los datos cuenta con 3 columnas.
 
-![Labo resuelto](resuelto.png)
+![Laboratorio resuelto](resuelto.png)
 
 
 [^1]: [Laboratorio](https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns)

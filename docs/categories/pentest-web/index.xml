@@ -18,6 +18,25 @@ Usando algunos de estos dos podemos recuperar el numero de columnas, sabiendo qu
     </item>
     
     <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/</guid>
+      <description>Lab: SQL injection UNION attack, finding a column containing text En este laboratorio1la finalidad es saber el tipo de datos que es utilizado en los valores que son enviadas en la consulta, ya que es necesario saber que tipo de valor son para que el sistema no genere errores al momento de extraeros, utilizaremos la informacion anterior primero enumerando el numero de columnas, y al hacer el reconocimiento sabemos que cuenta con 3 columnas ya que es la unica que no genera un error.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/</guid>
+      <description>Lab: Lab: SQL injection UNION attack, retrieving data from other tables En este laboratorio1la finalidad es poder extraer los datos de una tabla, las columnas son username y password de la tabla users. La idea es hacer uso del metodo union en sql para poder extraer esos datos aparte de los que ya trae el sistema. La consulta comun para recuperar estos datos seria:
+selectusername,passwordfromusers;Reconocimiento Ahora toca usar el metodo union para poder recuperar esos datos y tratar de inyectar ese comando en la consulta primaria para recuperar los usuarios y contrasenas de la tala de usuarios.</description>
+    </item>
+    
+    <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 2</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-2/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>

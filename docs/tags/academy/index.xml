@@ -6,7 +6,17 @@
     <description>Recent content in academy on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/</guid>
+      <description>Lab: SQL injection UNION attack, determining the number of columns returned by the query En este laboratorio1la finalidad es recuperar el numero de columnas de la tabla a la que se esta realizando la consulta, para posteriormente poder extraer los datos basandose en ese numero de columnas. Para este caso se puede hacer uso de dos metodos que pueden ser ORDER BY ? o UNION SELECT NULL,NULL,NULL...
+Usando algunos de estos dos podemos recuperar el numero de columnas, sabiendo que a la hora que la aplicacion genere un error no sera el numero de columna correcta, claramente si usamos un order by 9 y secuencialmente llegamos hasta el 10 quiere decir que esa tabla cuenta con 9 columnas y son las que utilizaremos posteriormente para imprimir los datos.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 2</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-2/</link>

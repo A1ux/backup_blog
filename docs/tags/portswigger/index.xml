@@ -37,6 +37,25 @@ selectusername,passwordfromusers;Reconocimiento Ahora toca usar el metodo union 
     </item>
     
     <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-6/</guid>
+      <description>Lab: SQL injection UNION attack, retrieving multiple values in a single column En este laboratorio1la finalidad es poder extraer los datos de una tabla, las columnas son username y password de la tabla users. Es igual al anterior lab solamente que esta vez se tiene que extraer los datos en una sola columna haciendo uso de una consulta sql. La forma que tiene SQL para poder extraer datos de esa manera es de la siguiente:</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 7</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-7/</guid>
+      <description>Lab: SQL injection attack, querying the database type and version on Oracle En este laboratorio1la finalidad es poder extraer la version de Oracle especificamente algo sobre este string Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production, PL/SQL Release 11.2.0.2.0 - Production, CORE 11.2.0.2.0 Production, TNS for Linux: Version 11.2.0.2.0 - Production, NLSRTL Version 11.2.0.2.0 - Production
+Reconocimiento Ya que sabemos que el gestor es Oracle, se utilizaran payloads de Oracle y la manera de extraer los datos es muy diferente, siguiendo los pasos anteriores tocara enumerar columnas</description>
+    </item>
+    
+    <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 2</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-2/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>

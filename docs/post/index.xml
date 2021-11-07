@@ -6,7 +6,37 @@
     <description>Recent content in Posts on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 10</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-10/</guid>
+      <description>Lab: SQL injection attack, listing the database contents on Oracle En este laboratorio1la finalidad es poder extraer los datos en una base de datos oracle que es muy distinto a como se hace en los otros gestores
+Reconocimiento Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo union select null--  notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
+      <description>Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft En este laboratorio1la finalidad es poder extraer la version de la base de datos MySQL o Microsoft SQL Server y poder imprimir en las tablas que se presentan. La string que deberiamos de recuperar es 8.0.27
+Reconocimiento Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo union select null--  notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 9</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-9/</guid>
+      <description>Lab: SQL injection attack, listing the database contents on non-Oracle databases En este laboratorio1la finalidad es poder extraer datos de la base de datos, basandose en inyectar consultas para tomarlos, al final se resuelve el laboratorio iniciando sesion con el usuario administrator.
+Reconocimiento Algo a notar en las consultas al hacer union en MySQL es que al agregar un comentario se debe de agregar un espacio, como ejemplo union select null--  notese el espacio al final para que el sistema pueda comentar correctamente, en otros gestores no es necesario esto pero MySQL si.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 3</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-3/</link>

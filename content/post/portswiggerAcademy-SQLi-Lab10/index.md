@@ -26,9 +26,9 @@ Algo a notar en las consultas al hacer union en MySQL es que al agregar un comen
 
 > Algo a tomar en cuenta es que al hacer la solicitud por medio del navegador si se agrega solamente un espacio este no aceptara correctamente la consulta por alguna razon por lo que habria que agregar un `-` para inyectar correctamente la consulta y contrario por medio de `repeater en burpsuite` si se puede agregar solo el espacio y sigue mostrando correctamente sin dar un error de servidor.
 
-###  Payloads
+##  Payloads
 
-#### Detectar columnas
+### Detectar columnas
 
 ```sql
 Pets' order by 1-- -

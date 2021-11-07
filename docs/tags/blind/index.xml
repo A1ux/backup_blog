@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blind on A1ux</title>
+    <link>https://www.alux.cc/tags/blind/</link>
+    <description>Recent content in blind on A1ux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-GT</language>
+    <lastBuildDate>Sun, 07 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/blind/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 11</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-11/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-11/</guid>
+      <description>Lab: Blind SQL injection with conditional responses En este laboratorio1la finalidad es poder extraer la contrasena del usuario administrator, para eso se nos dan las columnas username y password de la tabla users.
+Reconocimiento Lo primero es buscar donde es vulnerable a sql injection, en este caso nos dicen en el articulo que seguramente es la cookie de TrackingId solo queda comprobarlo.
+Payloads Detectar si es vulnerable TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;1; //Muestra welcome back TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome back  Peticion enviada al servidor</description>
+    </item>
+    
+  </channel>
+</rss>

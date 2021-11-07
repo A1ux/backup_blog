@@ -18,6 +18,17 @@ Reconocimiento Algo a notar en las consultas al hacer union en MySQL es que al a
     </item>
     
     <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 11</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-11/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-11/</guid>
+      <description>Lab: Blind SQL injection with conditional responses En este laboratorio1la finalidad es poder extraer la contrasena del usuario administrator, para eso se nos dan las columnas username y password de la tabla users.
+Reconocimiento Lo primero es buscar donde es vulnerable a sql injection, en este caso nos dicen en el articulo que seguramente es la cookie de TrackingId solo queda comprobarlo.
+Payloads Detectar si es vulnerable TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;1; //Muestra welcome back TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome back  Peticion enviada al servidor</description>
+    </item>
+    
+    <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
       <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>

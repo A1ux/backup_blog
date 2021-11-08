@@ -1,6 +1,6 @@
 +++
 author = "Alux"
-title = "Portswigger Academy Learning Path: SQL Injection Lab 8"
+title = "Portswigger Academy Learning Path: SQL Injection Lab 12"
 date = "2021-11-06"
 description = "# Lab: Blind SQL injection with conditional errors"
 tags = [

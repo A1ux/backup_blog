@@ -29,11 +29,11 @@ Payloads Detectar si es vulnerable TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#
     </item>
     
     <item>
-      <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
-      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 12</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/</link>
       <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/</guid>
       <description># Lab: Blind SQL injection with conditional errors En este laboratorio1la finalidad es poder extraer la contrasena de la tabla users del usuario administrator. Ademas se indica que esta utilizando en el backend Oracle por lo cual procederemos a buscar la informacion sobre este.
 Reconocimiento Al abrir la aplicacion vemos que ya no se comporta como en el Lab11 lo que nos permitia que segun la respuesta devuelta por el servidor saber si la consulta que realizabamos era true o false.</description>
     </item>

@@ -374,12 +374,12 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 </description>
         </item>
         <item>
-        <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
-        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 12</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/</link>
         <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
         
-        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
-        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 8" /&gt;&lt;h1 id=&#34;-lab-blind-sql-injection-with-conditional-errors&#34;&gt;# Lab: Blind SQL injection with conditional errors&lt;/h1&gt;
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 12" /&gt;&lt;h1 id=&#34;-lab-blind-sql-injection-with-conditional-errors&#34;&gt;# Lab: Blind SQL injection with conditional errors&lt;/h1&gt;
 &lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la contrasena de la tabla &lt;code&gt;users&lt;/code&gt; del usuario &lt;code&gt;administrator&lt;/code&gt;. Ademas se indica que esta utilizando en el backend Oracle por lo cual procederemos a buscar la informacion sobre este.&lt;/p&gt;
 &lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
 &lt;p&gt;Al abrir la aplicacion vemos que ya no se comporta como en el Lab11 lo que nos permitia que segun la respuesta devuelta por el servidor saber si la consulta que realizabamos era true o false.&lt;/p&gt;
@@ -400,11 +400,11 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 			flex-grow: 214; 
 			flex-basis: 515px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions.png&#34; data-size=&#34;1136x529&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/positions.png&#34; data-size=&#34;1136x529&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/positions.png&#34;
 			width=&#34;1136&#34;
 			height=&#34;529&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Payload a enviar el ataque por intruder&#34;&gt;
 	&lt;/a&gt;
@@ -420,11 +420,11 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 			flex-grow: 282; 
 			flex-basis: 676px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads.png&#34; data-size=&#34;784x278&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/payloads.png&#34; data-size=&#34;784x278&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/payloads.png&#34;
 			width=&#34;784&#34;
 			height=&#34;278&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads_hu3826db709bb7e645db59686da8152161_11835_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads_hu3826db709bb7e645db59686da8152161_11835_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/payloads_hu3826db709bb7e645db59686da8152161_11835_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/payloads_hu3826db709bb7e645db59686da8152161_11835_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Ataque con intruder&#34;&gt;
 	&lt;/a&gt;
@@ -443,11 +443,11 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 			flex-grow: 201; 
 			flex-basis: 483px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb.png&#34; data-size=&#34;1140x566&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/clusterbomb.png&#34; data-size=&#34;1140x566&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/clusterbomb.png&#34;
 			width=&#34;1140&#34;
 			height=&#34;566&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Ataque de cluster bomb&#34;&gt;
 	&lt;/a&gt;
@@ -463,11 +463,11 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 			flex-grow: 186; 
 			flex-basis: 446px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque.png&#34; data-size=&#34;771x414&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/ataque.png&#34; data-size=&#34;771x414&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/ataque.png&#34;
 			width=&#34;771&#34;
 			height=&#34;414&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Resoyestas del ataque con error de respuesta 500&#34;&gt;
 	&lt;/a&gt;
@@ -484,11 +484,11 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
 			flex-grow: 206; 
 			flex-basis: 494px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34; data-size=&#34;1786x866&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/resuelto.png&#34; data-size=&#34;1786x866&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/resuelto.png&#34;
 			width=&#34;1786&#34;
 			height=&#34;866&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-12/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Laboratorio resuelto&#34;&gt;
 	&lt;/a&gt;

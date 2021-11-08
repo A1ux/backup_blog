@@ -379,6 +379,141 @@ TrackingId=xxxxxxxxxxxxxxxx&#39; and &#39;1&#39;=&#39;2; //No muestra welcome ba
         <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
         
         <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 8" /&gt;&lt;h1 id=&#34;-lab-blind-sql-injection-with-conditional-errors&#34;&gt;# Lab: Blind SQL injection with conditional errors&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la contrasena de la tabla &lt;code&gt;users&lt;/code&gt; del usuario &lt;code&gt;administrator&lt;/code&gt;. Ademas se indica que esta utilizando en el backend Oracle por lo cual procederemos a buscar la informacion sobre este.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Al abrir la aplicacion vemos que ya no se comporta como en el Lab11 lo que nos permitia que segun la respuesta devuelta por el servidor saber si la consulta que realizabamos era true o false.&lt;/p&gt;
+&lt;p&gt;Ahora lo que se puede hacer es inyectar una consulta SQL que nos genere ese error a proposito para saber si la consulta es true o false y el error terminara dando un error en el servidor y nos guiaremos por eso. Y ya que sabemos que es un backend Oracle haremos la siguiente prueba a inyectar en la cookie&lt;/p&gt;
+&lt;p&gt;En este caso inyectaremos la siguiente peticion:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; AND (SELECT CASE WHEN (1=2) THEN to_char(1/0) ELSE &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; END FROM dual)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;	&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;muestra&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;la&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pagina&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;normal&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; AND (SELECT CASE WHEN (1=1) THEN to_char(1/0) ELSE &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; END FROM dual)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;muestra&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;un&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;de&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;servidor&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Lo que hace practicamente es que se cumpla la condicion de la cookie y luego la dentro del select genera un propio error que nos dira si es true o false segun la condicion que queramos, en este caso de prueba se valida con &lt;code&gt;1=1&lt;/code&gt; o &lt;code&gt;1=2&lt;/code&gt; aqui genera error del servidor solo si se cumple como pasa con la condicion &lt;code&gt;1=1&lt;/code&gt;, practicamente es un codigo que en cualquier lenguaje de programacion se ve, por ultimo si la condicion no es correcta como la salida sera &lt;code&gt;&#39;a&#39;&lt;/code&gt; solo valida que sea igual a la ultima a ingresada &lt;code&gt;&#39;a&lt;/code&gt; con una sola comilla al inicio para que la ultima la agregue el propio sistema a la que le colocaria a la cookie.&lt;/p&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;h4 id=&#34;recuperar-tamano-de-contrasena&#34;&gt;Recuperar tamano de contrasena&lt;/h4&gt;
+&lt;p&gt;Como en el laboratorio anterior tocara saber el tamano de la contrasena y para eso utilizaremos la siguiente consulta inyectada:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; AND (SELECT CASE WHEN ((select length(password) from users where username=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;administrator&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;)=§20§) THEN to_char(1/0) ELSE &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; END FROM dual)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Esta inyeccion hace validar el tamano de la contrasena, si la contrasena tiene el tamano que se le indica hara que la aplicacion genere un error &lt;code&gt;500&lt;/code&gt; en el servidor de &lt;code&gt;Internal Server Error&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 214; 
+			flex-basis: 515px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions.png&#34; data-size=&#34;1136x529&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions.png&#34;
+			width=&#34;1136&#34;
+			height=&#34;529&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/positions_hu8ffc86b7f7277a11e0ab0ae97ff0a112_74882_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Payload a enviar el ataque por intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Payload a enviar el ataque por intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al valor se le hara una peticion de 1 hasta 30 para saber cual es el tamano de la contrasena y como se muestra la aplicacion genera un error &lt;code&gt;500&lt;/code&gt; con el payload 20 lo que significa que la contrasena tiene 20 caracteres.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 282; 
+			flex-basis: 676px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads.png&#34; data-size=&#34;784x278&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads.png&#34;
+			width=&#34;784&#34;
+			height=&#34;278&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads_hu3826db709bb7e645db59686da8152161_11835_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/payloads_hu3826db709bb7e645db59686da8152161_11835_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ataque con intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ataque con intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;recuperar-la-contrasena&#34;&gt;Recuperar la contrasena&lt;/h3&gt;
+&lt;p&gt;Ahora que sabemos el tamano ya podemos enviar la peticion para recuperarla, ahora para recuperar la contrasena utilizaremos la siguiente consulta para inyectar:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; AND (SELECT CASE WHEN ((select SUBSTR(password, 1, 1) from users where username=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;administrator&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;) THEN to_char(1/0) ELSE &amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; END FROM dual)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora vamos a realizar un ataque de clusterbomb enviando en el primer parametro el valor que cambiara de 1 a 20 y en el segundo un caracter alfanumerico.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 201; 
+			flex-basis: 483px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb.png&#34; data-size=&#34;1140x566&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb.png&#34;
+			width=&#34;1140&#34;
+			height=&#34;566&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/clusterbomb_hu06f5bcfe4a95f0b61d1ee23c79eba140_74895_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ataque de cluster bomb&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ataque de cluster bomb&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y al terminar el ataque podemos notar que los que dan un error 500 del lado servidor son donde la condicion fue true y toca tomar toda esa informacion para formar la contrasena:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 186; 
+			flex-basis: 446px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque.png&#34; data-size=&#34;771x414&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque.png&#34;
+			width=&#34;771&#34;
+			height=&#34;414&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/ataque_hu285ec21bee2f135b85cb64b0006de933_18437_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Resoyestas del ataque con error de respuesta 500&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Resoyestas del ataque con error de respuesta 500&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al finalizar y formar la contrasena seria &lt;code&gt;gt4dyzmn4weyzcdog1n1&lt;/code&gt; y podemos iniciar sesion en la aplicacion para completar el laboratorio&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 206; 
+			flex-basis: 494px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34; data-size=&#34;1786x866&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto.png&#34;
+			width=&#34;1786&#34;
+			height=&#34;866&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/resuelto_huf13eac2c8bbf1e3d9abbc64039f0280d_94807_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/blind/lab-conditional-errors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</link>
+        <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/</guid>
         <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 8" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft&#34;&gt;Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft&lt;/h1&gt;
 &lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la version de la base de datos MySQL o Microsoft SQL Server y poder imprimir en las tablas que se presentan. La string que deberiamos de recuperar es &lt;code&gt;8.0.27&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;

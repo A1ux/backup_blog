@@ -1,7 +1,7 @@
 baseurl: https://www.alux.cc/
 languageCode: es-GT
 theme: hugo-theme-stack
-paginate: 5
+paginate: 10
 title: A1ux
 
 # Change it to your Disqus shortname before using
@@ -133,7 +133,7 @@ params:
             - tag-cloud
 
         archives:
-            limit: 5
+            limit: 15
 
         tagCloud:
             limit: 10
@@ -176,7 +176,7 @@ menu:
           weight: -100
           params:
               ### For demonstration purpose, the home link will be open in a new tab
-              newTab: true
+              newTab: false
               icon: home
     
     social:

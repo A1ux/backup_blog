@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "content/post/portswiggerAcademy-SQLi-Lab12/index.md",
+            "file": "content/post/portswiggerAcademy-SQLi-Lab13/index.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/post/portswiggerAcademy-SQLi-Lab12/index.md",
+                "file": "content/post/portswiggerAcademy-SQLi-Lab13/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,6 +88,7 @@
   },
   "active": "13170587be54f8c5",
   "lastOpenFiles": [
+    "content/post/portswiggerAcademy-SQLi-Lab13/index.md",
     "content/post/portswiggerAcademy-SQLi-Lab12/index.md",
     "content/post/portswiggerAcademy-SQLi-Lab12/resuelto.png",
     "content/post/portswiggerAcademy-SQLi-Lab11/index.md",

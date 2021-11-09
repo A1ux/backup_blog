@@ -54,7 +54,7 @@ Al valor se le hara una peticion de 1 hasta 30 para saber cual es el tamano de l
 
 ![Ataque con intruder](payloads.png)
 
-### Recuperar la contrasena
+#### Recuperar la contrasena
 
 Ahora que sabemos el tamano ya podemos enviar la peticion para recuperarla, ahora para recuperar la contrasena utilizaremos la siguiente consulta para inyectar:
 

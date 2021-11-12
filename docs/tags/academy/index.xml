@@ -6,7 +6,38 @@
     <description>Recent content in academy on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Mon, 08 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 14</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</link>
+      <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</guid>
+      <description>Lab: Blind SQL injection with time delays En este laboratorio1la finalidad es poder explotar una vulnerabilidad de sql injection pero basandose en tiempo, la cual se utilizara posteriormente para poder extraer los datos del usuario y contrasena de la tabla usuers.
+Reconocimiento Basandonos en la siguiente lista2encontramos que inyectando la siguiente consulta podemos ejecutar un delay, sabiendo que la aplicacion es backend postgresql.
+xxxxxxxxx&#39; AND 1337=(SELECT 1337 FROM PG_SLEEP(10)) AND &#39;1337&#39;=&#39;1337 //inyectar esto no dejara ejecutar conditional time delay xxxxxxxxx&#39;%3BSELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END-- //%3B para no tener conflicto en repeater al colocar &#39;;&#39; en la cookie Podemos inyectar las siguientes consultas para crearla:</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 15</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/</link>
+      <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/</guid>
+      <description>Lab: Blind SQL injection with out-of-band interaction En este laboratorio1la finalidad es poder inyectar una consulta sql y basandonos en la ejecucion que pueda realizar el backend una consulta hacia un endpoint y genere una accion, en este caso de esto se trata. Mas que todo donde los otros tipos de sql injection a ciegas no puede llegar.
+Reconocimiento Burpsuite cuenta con una propia herramienta que es Burp Collaborator que lo que hace es apoyar a detectar vulnerabilidades a ciegas.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: SQL Injection Lab 16</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/</link>
+      <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/</guid>
+      <description>Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft En este laboratorio1la finalidad es poder extraer la contrasena del usuario &amp;lsquo;administrator&amp;rsquo; en la tabla &amp;lsquo;users&amp;rsquo;. Para este caso haciendo uso de la exfiltracion de la propia base de datos para que se conecte a nuestro host y ahi captura lo que es enviado en la url.
+Reconocimiento Lo primero es saber que tipo de payloads podemos usar para ejecutar la consulta que deseamos, y se encuentran las siguientes:</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 13</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-13/</link>

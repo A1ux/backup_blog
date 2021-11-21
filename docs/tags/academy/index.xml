@@ -6,7 +6,47 @@
     <description>Recent content in academy on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</link>
+      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</guid>
+      <description>Lab: Broken brute-force protection, IP block En este laboratorio1la finalidad es ingresar con la cuenta de carlos, pero tiene una funcionalidad que lo que hace es bloquear nuestra ip al maximo de intentos que son 3, despues de esos intentos sale una alerta que muestra que se estan realizando demasiados intentos.
+Reconocimiento Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion al realizar mas de 3 intentos en el usuario carlos.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/</link>
+      <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/</guid>
+      <description>Lab: Username enumeration via different responses En este laboratorio1la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no.
+Reconocimiento Para resolver el ejercicio se nos da el siguiente listado de usuarios2 y contrasenas3para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion:
+ Respuesta al iniciar sesion con usuario incorrecto</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/</link>
+      <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/</guid>
+      <description>Lab: Username enumeration via different responses En este laboratorio1la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no, pero aca hay una sutil diferencia y es que la respuesta aunque pareciera ser igual, no es igual y esos son los pequenos cambios a notar.
+Reconocimiento Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion, que ya no dice que el usuario es incorrecto, sino que es mas generico.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/</link>
+      <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/</guid>
+      <description>Lab: Username enumeration via different responses En este laboratorio1la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no, pero el sistema cuenta con una proteccion que no permite mas de 3 intentos para realizar brute forcing por lo que tiene rate limit, por lo que antes de tratar de enumerar usuarios hay que encontrar la manera de hacer un bypass a esto.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: SQL Injection Lab 14</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</link>

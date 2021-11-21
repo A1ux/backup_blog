@@ -6,7 +6,586 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Thu, 11 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</link>
+        <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 4" /&gt;&lt;h1 id=&#34;lab-broken-brute-force-protection-ip-block&#34;&gt;Lab: Broken brute-force protection, IP block&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es ingresar con la cuenta de carlos, pero tiene una funcionalidad que lo que hace es bloquear nuestra ip al maximo de intentos que son 3, despues de esos intentos sale una alerta que muestra que se estan realizando demasiados intentos.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion al realizar mas de 3 intentos en el usuario &lt;code&gt;carlos&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 489px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/login.png&#34; data-size=&#34;1113x546&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/login.png&#34;
+			width=&#34;1113&#34;
+			height=&#34;546&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/login_hueb5317791af68144bd509c5846674762_31223_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/login_hueb5317791af68144bd509c5846674762_31223_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuesta al realizar muchos intentos de inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuesta al realizar muchos intentos de inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos esto, se nos da un usuario valido que es &lt;code&gt;wiener&lt;/code&gt; con la contrasena &lt;code&gt;peter&lt;/code&gt; y al tratar de ingresar vemos que accede, pero algo importante al notar es que al iniciar sesion y luego se vuelve a intentar con el usuario &lt;code&gt;carlos&lt;/code&gt; si deja hacer un nuevo intento otra vez y a la tercera vez se bloquea. Por lo que se sabe que si iniciamos sesion con un usuario valido el contador vuelve a 0.&lt;/p&gt;
+&lt;p&gt;Ahora queda armar los payloads para realizar el ataque, que es intentar con el usuario valido y luego con la contrasena para carlos para que el contador siempre vuelva a 0 cada que se intenta. Para eso utilizamos &lt;code&gt;intruder&lt;/code&gt; con el tipo de ataque &lt;code&gt;Pitchfork&lt;/code&gt; que lo que hara es el payload de posicion 1 se intente con el 1 y el 2 con el posicion 2 y asi sucesivamente.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Algo a notar es que los payloads set del 1 deben de ser igual en conteo al de payload set 2, es decir si el set 1 tiene 100 valores en su lista, debe tener los mismos en el set 2&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;creacion-de-lista-usuarios&#34;&gt;Creacion de lista usuarios&lt;/h3&gt;
+&lt;p&gt;Para eso y crear una lista de 200 ya que las contrasenas a intentar son 100, y se van a intercalar wiener y carlos&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;wiener&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;carlos&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;creacion-de-lista-contrasenas&#34;&gt;Creacion de lista contrasenas&lt;/h3&gt;
+&lt;p&gt;Lo siguiente es intercalar entre las contrasenas que se probaran a carlos, por eso agregamos el valor &lt;code&gt;peter&lt;/code&gt; antes de cada linea con un salto de linea los que nos crea una lista de payloads.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sed &lt;span class=&#34;s1&#34;&gt;&amp;#39;s/^/peter\n/&amp;#39;&lt;/span&gt; passwords.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora que tenemos los payloads hacemos lo siguiente de hacer el ataque de tipo &lt;code&gt;Pitchfork&lt;/code&gt; y los set de payloads como los mostrados, donde primero se prueba el usuario &lt;code&gt;wiener:peter&lt;/code&gt; luego &lt;code&gt;carlos:pass1,pass2,...&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 210; 
+			flex-basis: 504px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder.png&#34; data-size=&#34;1260x600&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder.png&#34;
+			width=&#34;1260&#34;
+			height=&#34;600&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder_hu13e04c537bb634ab0db80282e2bc36ff_79854_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder_hu13e04c537bb634ab0db80282e2bc36ff_79854_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Position&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Position&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 120; 
+			flex-basis: 288px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder2.png&#34; data-size=&#34;562x467&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder2.png&#34;
+			width=&#34;562&#34;
+			height=&#34;467&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder2_huf2950eb89135190c058ac7b6a583255c_17856_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/intruder2_huf2950eb89135190c058ac7b6a583255c_17856_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al realizar el ataque ya podemos ver que &lt;code&gt;wiener:peter&lt;/code&gt; tiene respuesta de tipo &lt;code&gt;302&lt;/code&gt; asi que si se ingresa una contrasena valida a carlos este tambien sera la contrasena correcta como se muestra.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 308; 
+			flex-basis: 741px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resultado.png&#34; data-size=&#34;880x285&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resultado.png&#34;
+			width=&#34;880&#34;
+			height=&#34;285&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resultado_hu155c50f5c9bf2b3d0722ad36755fab37_15859_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resultado_hu155c50f5c9bf2b3d0722ad36755fab37_15859_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de usuarios&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de usuarios&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya con esto tenemos la contrasena y podemos iniciar sesion. Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 162; 
+			flex-basis: 390px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resuelto.png&#34; data-size=&#34;1257x772&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resuelto.png&#34;
+			width=&#34;1257&#34;
+			height=&#34;772&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resuelto_huad37b116f87d93d87be469b8e7c9a84e_79258_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/resuelto_huad37b116f87d93d87be469b8e7c9a84e_79258_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-broken-bruteforce-protection-ip-block&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/</link>
+        <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 1" /&gt;&lt;h1 id=&#34;lab-username-enumeration-via-different-responses&#34;&gt;Lab: Username enumeration via different responses&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da el siguiente listado de &lt;!-- raw HTML omitted --&gt;usuarios&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; y contrasenas&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt; para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 487px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/login.png&#34; data-size=&#34;1105x544&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/login.png&#34;
+			width=&#34;1105&#34;
+			height=&#34;544&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/login_hu8128ac1c2d82ee6ea39b95c1dfa4d38c_23321_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/login_hu8128ac1c2d82ee6ea39b95c1dfa4d38c_23321_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuesta al iniciar sesion con usuario incorrecto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuesta al iniciar sesion con usuario incorrecto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Basandonos en la respuesta sabremos identificar usuarios en el sistema, solo toca enviar los multiples usuarios y saber cual esta registrado, utilizando la lista de usuarios antes mencionados. Para eso lanzamos el ataque:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 161; 
+			flex-basis: 388px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder.png&#34; data-size=&#34;878x542&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder.png&#34;
+			width=&#34;878&#34;
+			height=&#34;542&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder_hu810a8f13f81b14c0d814046ff276ba88_66207_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder_hu810a8f13f81b14c0d814046ff276ba88_66207_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Position&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Position&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 133; 
+			flex-basis: 321px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder2.png&#34; data-size=&#34;602x450&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder2.png&#34;
+			width=&#34;602&#34;
+			height=&#34;450&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder2_hu5f38efcfad4fbeb0fe5d81f5d4a79b9b_16823_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/intruder2_hu5f38efcfad4fbeb0fe5d81f5d4a79b9b_16823_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y al lanzar el ataque obtuvimos la respuesta, y aunque la respuesta es muy parecida, en un usuario da una respuesta diferente con el &lt;code&gt;length 3008&lt;/code&gt; y es la donde ya nos dice que es &lt;code&gt;Incorrect password&lt;/code&gt; lo cual ya hemos enumerado al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 274; 
+			flex-basis: 658px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado.png&#34; data-size=&#34;779x284&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado.png&#34;
+			width=&#34;779&#34;
+			height=&#34;284&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado_hu5d7427e5d58f56221a6b9e258f60aedb_12871_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado_hu5d7427e5d58f56221a6b9e258f60aedb_12871_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de usuarios&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de usuarios&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya ahora solo queda lanzar el mismo ataque pero con el listado de contrasenas al usuario &lt;code&gt;auth&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 177; 
+			flex-basis: 426px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado2.png&#34; data-size=&#34;771x434&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado2.png&#34;
+			width=&#34;771&#34;
+			height=&#34;434&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado2_hu0e79f8e5bfd426eb354a60d8dde98428_27105_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resultado2_hu0e79f8e5bfd426eb354a60d8dde98428_27105_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de contrasenas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de contrasenas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 199; 
+			flex-basis: 477px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resuelto.png&#34; data-size=&#34;1210x608&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resuelto.png&#34;
+			width=&#34;1210&#34;
+			height=&#34;608&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resuelto_hu1465c5741f9d543ab8a87871bf498e6c_58961_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/resuelto_hu1465c5741f9d543ab8a87871bf498e6c_58961_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-username-enumeration-via-different-responses&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;usernames.txt&#34; &gt;Listado de Usuarios&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;passwords.txt&#34; &gt;Listado de Contrasenas&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/</link>
+        <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 2" /&gt;&lt;h1 id=&#34;lab-username-enumeration-via-different-responses&#34;&gt;Lab: Username enumeration via different responses&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no, pero aca hay una sutil diferencia y es que la respuesta aunque pareciera ser igual, no es igual y esos son los pequenos cambios a notar.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion, que ya no dice que el usuario es incorrecto, sino que es mas generico.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 204; 
+			flex-basis: 491px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/login.png&#34; data-size=&#34;1098x536&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/login.png&#34;
+			width=&#34;1098&#34;
+			height=&#34;536&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/login_hu251b6055b472149bc2584dcd65cfae97_25182_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/login_hu251b6055b472149bc2584dcd65cfae97_25182_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuesta al iniciar sesion con usuario incorrecto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuesta al iniciar sesion con usuario incorrecto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Basandonos en la respuesta sabremos identificar usuarios en el sistema, solo toca enviar los multiples usuarios y saber cual esta registrado, utilizando la lista de usuarios antes mencionados. Para eso lanzamos el ataque:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 161; 
+			flex-basis: 388px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder.png&#34; data-size=&#34;878x542&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder.png&#34;
+			width=&#34;878&#34;
+			height=&#34;542&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder_hu810a8f13f81b14c0d814046ff276ba88_66207_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder_hu810a8f13f81b14c0d814046ff276ba88_66207_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Position&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Position&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 133; 
+			flex-basis: 321px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder2.png&#34; data-size=&#34;602x450&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder2.png&#34;
+			width=&#34;602&#34;
+			height=&#34;450&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder2_hu5f38efcfad4fbeb0fe5d81f5d4a79b9b_16823_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/intruder2_hu5f38efcfad4fbeb0fe5d81f5d4a79b9b_16823_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y al lanzar el ataque obtuvimos muchas respuestas, todas muy similares, para eso haremos de la funcion de burp &lt;code&gt;Grep - Match&lt;/code&gt; con el valor &lt;code&gt;Invalid username or password.&lt;/code&gt; y veremos si alguna respuesta cambia a esta.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 177; 
+			flex-basis: 425px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado.png&#34; data-size=&#34;1047x590&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado.png&#34;
+			width=&#34;1047&#34;
+			height=&#34;590&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado_hu47319634e7b2736770c99edf34fe19e4_43840_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado_hu47319634e7b2736770c99edf34fe19e4_43840_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de usuarios&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de usuarios&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Como vemos esta esa respuesta sutil, ya que la respuesta que es la correcta hace falta un &lt;code&gt;.&lt;/code&gt; y eso puede hacer la diferencia al enumerar usuarios. Ya ahora solo queda lanzar el mismo ataque pero con el listado de contrasenas al usuario &lt;code&gt;auth&lt;/code&gt;. Ahora probaremos el listado de contrasenas, y encontramos basandonos en la respuesta basandonos en la respuesta &lt;code&gt;302&lt;/code&gt; que es diferente al resto ya que nos redirige.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 287; 
+			flex-basis: 689px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado2.png&#34; data-size=&#34;830x289&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado2.png&#34;
+			width=&#34;830&#34;
+			height=&#34;289&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado2_hu1967b2b0ddea9b5f1ca83154c4432294_13610_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resultado2_hu1967b2b0ddea9b5f1ca83154c4432294_13610_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de contrasenas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de contrasenas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 198; 
+			flex-basis: 477px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resuelto.png&#34; data-size=&#34;1773x891&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resuelto.png&#34;
+			width=&#34;1773&#34;
+			height=&#34;891&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resuelto_hu8d940e4e4d3d248b16d8a97a2b325935_103006_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-2/resuelto_hu8d940e4e4d3d248b16d8a97a2b325935_103006_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-username-enumeration-via-different-responses&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/</link>
+        <pubDate>Sat, 13 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 3" /&gt;&lt;h1 id=&#34;lab-username-enumeration-via-different-responses&#34;&gt;Lab: Username enumeration via different responses&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es enumerar usuarios en el inicio de sesion y dependiendo de la respuesta sabremos si el usuario esta registrado o no, pero el sistema cuenta con una proteccion que no permite mas de 3 intentos para realizar brute forcing por lo que tiene &lt;code&gt;rate limit&lt;/code&gt;, por lo que antes de tratar de enumerar usuarios hay que encontrar la manera de hacer un bypass a esto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion, que ya no dice que el usuario es incorrecto, sino que es mas generico.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 207; 
+			flex-basis: 497px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/login.png&#34; data-size=&#34;1131x546&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/login.png&#34;
+			width=&#34;1131&#34;
+			height=&#34;546&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/login_hu6514c5ce479ea119d7802a36733820c6_32033_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/login_hu6514c5ce479ea119d7802a36733820c6_32033_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuesta al realizar muchos intentos de inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuesta al realizar muchos intentos de inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Lo primero para saltarse esto existen maneras, una de las cuales puede ser se lista:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;X-Originating-IP: 127.0.0.1
+X-Forwarded-For: 127.0.0.1
+X-Remote-IP: 127.0.0.1
+X-Remote-Addr: 127.0.0.1
+X-Client-IP: 127.0.0.1
+X-Host: 127.0.0.1
+X-Forwared-Host: 127.0.0.1
+
+
+#or use double X-Forwared-For header
+X-Forwarded-For:
+X-Forwarded-For: 127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Las listas se pueden encontrar en la &lt;!-- raw HTML omitted --&gt;lista de seclists&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que podemos saltar este bloqueo ya podemos seguir con el ataque. Basandonos en la respuesta sabremos identificar usuarios en el sistema, solo toca enviar los multiples usuarios y saber cual esta registrado, utilizando la lista de usuarios antes mencionados. Para eso lanzamos el ataque y cambiando la posicion 1 con numeros y valores aleatorios para generar el cambio de ip aleatorio y que no se bloquee la solicitud. Algo a notar es que ya que esta solicitud hace una validacion de usuario y contrasena por lo que si enviamos una contrasena muy larga el sistema tardara mucho mas en enviarnos la respuesta.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 233; 
+			flex-basis: 560px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder.png&#34; data-size=&#34;1278x547&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder.png&#34;
+			width=&#34;1278&#34;
+			height=&#34;547&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder_hu7c2bf7bf3e1803c6e4011bb39fe35b6a_88157_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder_hu7c2bf7bf3e1803c6e4011bb39fe35b6a_88157_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Position&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Position&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 115; 
+			flex-basis: 276px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder2.png&#34; data-size=&#34;676x586&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder2.png&#34;
+			width=&#34;676&#34;
+			height=&#34;586&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder2_hueaac38b166ce2aad98fdf456ff4c3b68_20852_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/intruder2_hueaac38b166ce2aad98fdf456ff4c3b68_20852_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al realizar el ataque ya tenemos resultados y nos fijaremos en el tiempo de la respuesta recibida, en este caso el usuario es &lt;code&gt;af&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 401; 
+			flex-basis: 964px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado.png&#34; data-size=&#34;1145x285&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado.png&#34;
+			width=&#34;1145&#34;
+			height=&#34;285&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado_hude0a9408eca661fc4e4eea99e4e6673c_18001_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado_hude0a9408eca661fc4e4eea99e4e6673c_18001_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de usuarios&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de usuarios&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Como vemos esta la respuesta tarda en recibir, por lo que ahora haremos el mismo proceso, pero cambiando la posicion a la contrasena con el listado de contrasenas, y recibimos uno con codigo de respuesta &lt;code&gt;302&lt;/code&gt; asi que la contrasena es &lt;code&gt;jennifer&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 277; 
+			flex-basis: 666px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado2.png&#34; data-size=&#34;794x286&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado2.png&#34;
+			width=&#34;794&#34;
+			height=&#34;286&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado2_hu55ae3d390b7f7d4a687c9cbd2c296cf1_13736_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resultado2_hu55ae3d390b7f7d4a687c9cbd2c296cf1_13736_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de contrasenas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de contrasenas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resulto el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 185; 
+			flex-basis: 444px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resuelto.png&#34; data-size=&#34;1753x947&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resuelto.png&#34;
+			width=&#34;1753&#34;
+			height=&#34;947&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resuelto_hucd9277e5c3e7f30522896801e30140d2_98784_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-3/resuelto_hucd9277e5c3e7f30522896801e30140d2_98784_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-username-enumeration-via-response-timing&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/danielmiessler/SecLists/tree/master/Miscellaneous/web/http-request-headers&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Lista de seclists http-request-headers&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: SQL Injection Lab 14</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-sql-injection-lab-14/</link>
         <pubDate>Thu, 11 Nov 2021 00:00:00 +0000</pubDate>

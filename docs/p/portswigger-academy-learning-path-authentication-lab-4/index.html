@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: Broken brute-force protection, IP block'><title>Portswigger Academy Learning Path: Authentication Lab 4</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: Authentication Lab 4'>
+<meta property='og:description' content='Lab: Broken brute-force protection, IP block'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='broken authentication' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-11-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-11-20T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: Authentication Lab 4">
+<meta name="twitter:description" content="Lab: Broken brute-force protection, IP block"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/head.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-authentication-lab-4/">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-authentication-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-authentication-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 4" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-authentication-lab-4/">Portswigger Academy Learning Path: Authentication Lab 4</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: Broken brute-force protection, IP block
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 20, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-broken-brute-force-protection-ip-block">Lab: Broken brute-force protection, IP block</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es ingresar con la cuenta de carlos, pero tiene una funcionalidad que lo que hace es bloquear nuestra ip al maximo de intentos que son 3, despues de esos intentos sale una alerta que muestra que se estan realizando demasiados intentos.</p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion al realizar mas de 3 intentos en el usuario <code>carlos</code>.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 203; 
+			flex-basis: 489px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-4/login.png" data-size="1113x546">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-4/login.png"
+			width="1113"
+			height="546"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-4/login_hueb5317791af68144bd509c5846674762_31223_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-4/login_hueb5317791af68144bd509c5846674762_31223_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Respuesta al realizar muchos intentos de inicio de sesion">
+	</a>
+	
+	<figcaption>Respuesta al realizar muchos intentos de inicio de sesion</figcaption>
+	
+</figure></p>
+<h2 id="explotacion">Explotacion</h2>
+<p>Ahora que sabemos esto, se nos da un usuario valido que es <code>wiener</code> con la contrasena <code>peter</code> y al tratar de ingresar vemos que accede, pero algo importante al notar es que al iniciar sesion y luego se vuelve a intentar con el usuario <code>carlos</code> si deja hacer un nuevo intento otra vez y a la tercera vez se bloquea. Por lo que se sabe que si iniciamos sesion con un usuario valido el contador vuelve a 0.</p>
+<p>Ahora queda armar los payloads para realizar el ataque, que es intentar con el usuario valido y luego con la contrasena para carlos para que el contador siempre vuelva a 0 cada que se intenta. Para eso utilizamos <code>intruder</code> con el tipo de ataque <code>Pitchfork</code> que lo que hara es el payload de posicion 1 se intente con el 1 y el 2 con el posicion 2 y asi sucesivamente.</p>
+<blockquote>
+<p>Algo a notar es que los payloads set del 1 deben de ser igual en conteo al de payload set 2, es decir si el set 1 tiene 100 valores en su lista, debe tener los mismos en el set 2</p>
+</blockquote>
+<h3 id="creacion-de-lista-usuarios">Creacion de lista usuarios</h3>
+<p>Para eso y crear una lista de 200 ya que las contrasenas a intentar son 100, y se van a intercalar wiener y carlos</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nb">print</span><span class="p">((</span><span class="s2">&#34;wiener</span><span class="se">\n</span><span class="s2">carlos</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div><h3 id="creacion-de-lista-contrasenas">Creacion de lista contrasenas</h3>
+<p>Lo siguiente es intercalar entre las contrasenas que se probaran a carlos, por eso agregamos el valor <code>peter</code> antes de cada linea con un salto de linea los que nos crea una lista de payloads.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sed <span class="s1">&#39;s/^/peter\n/&#39;</span> passwords.txt
+</code></pre></div><p>Ahora que tenemos los payloads hacemos lo siguiente de hacer el ataque de tipo <code>Pitchfork</code> y los set de payloads como los mostrados, donde primero se prueba el usuario <code>wiener:peter</code> luego <code>carlos:pass1,pass2,...</code></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 210; 
+			flex-basis: 504px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-4/intruder.png" data-size="1260x600">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-4/intruder.png"
+			width="1260"
+			height="600"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-4/intruder_hu13e04c537bb634ab0db80282e2bc36ff_79854_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-4/intruder_hu13e04c537bb634ab0db80282e2bc36ff_79854_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Intruder Position">
+	</a>
+	
+	<figcaption>Intruder Position</figcaption>
+	
+</figure>
+<figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 120; 
+			flex-basis: 288px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-4/intruder2.png" data-size="562x467">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-4/intruder2.png"
+			width="562"
+			height="467"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-4/intruder2_huf2950eb89135190c058ac7b6a583255c_17856_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-4/intruder2_huf2950eb89135190c058ac7b6a583255c_17856_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Intruder Payloads">
+	</a>
+	
+	<figcaption>Intruder Payloads</figcaption>
+	
+</figure></p>
+<p>Al realizar el ataque ya podemos ver que <code>wiener:peter</code> tiene respuesta de tipo <code>302</code> asi que si se ingresa una contrasena valida a carlos este tambien sera la contrasena correcta como se muestra.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 308; 
+			flex-basis: 741px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-4/resultado.png" data-size="880x285">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-4/resultado.png"
+			width="880"
+			height="285"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-4/resultado_hu155c50f5c9bf2b3d0722ad36755fab37_15859_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-4/resultado_hu155c50f5c9bf2b3d0722ad36755fab37_15859_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Respuestas del ataque de usuarios">
+	</a>
+	
+	<figcaption>Respuestas del ataque de usuarios</figcaption>
+	
+</figure></p>
+<p>Ya con esto tenemos la contrasena y podemos iniciar sesion. Y con esto hemos resulto el lab:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 162; 
+			flex-basis: 390px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-4/resuelto.png" data-size="1257x772">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-4/resuelto.png"
+			width="1257"
+			height="772"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-4/resuelto_huad37b116f87d93d87be469b8e7c9a84e_79258_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-4/resuelto_huad37b116f87d93d87be469b8e7c9a84e_79258_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<p>Con esto ya muestra que se ha resuelto el lab.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/authentication/password-based/lab-broken-bruteforce-protection-ip-block"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/broken-authentication/">broken authentication</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-1/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-1/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 1</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-2/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-2/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 2</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-3/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 3</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-14/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-14/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 14</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-sql-injection-lab-15/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-sql-injection-lab-15/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: SQL Injection Lab 15</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a></li>
+    <li><a href="#explotacion">Explotacion</a>
+      <ol>
+        <li><a href="#creacion-de-lista-usuarios">Creacion de lista usuarios</a></li>
+        <li><a href="#creacion-de-lista-contrasenas">Creacion de lista contrasenas</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -6,11 +6,11 @@
     <description>Recent content in Tags on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>academy</title>
       <link>https://www.alux.cc/tags/academy/</link>
-      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.alux.cc/tags/academy/</guid>
       <description></description>
@@ -19,7 +19,7 @@
     <item>
       <title>broken authentication</title>
       <link>https://www.alux.cc/tags/broken-authentication/</link>
-      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.alux.cc/tags/broken-authentication/</guid>
       <description></description>
@@ -28,7 +28,7 @@
     <item>
       <title>burpsuite</title>
       <link>https://www.alux.cc/tags/burpsuite/</link>
-      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.alux.cc/tags/burpsuite/</guid>
       <description></description>
@@ -37,9 +37,45 @@
     <item>
       <title>portswigger</title>
       <link>https://www.alux.cc/tags/portswigger/</link>
-      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.alux.cc/tags/portswigger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apache</title>
+      <link>https://www.alux.cc/tags/apache/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/apache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://www.alux.cc/tags/docker/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>proxy</title>
+      <link>https://www.alux.cc/tags/proxy/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>virtual host</title>
+      <link>https://www.alux.cc/tags/virtual-host/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/tags/virtual-host/</guid>
       <description></description>
     </item>
     

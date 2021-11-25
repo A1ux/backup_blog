@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Cuando se cuenta con varios contenedores y queremos que accedan a traves de un virtual host se hace complicado, por eso esta es la forma de realizar este metodo para redirigir varias paginas web a traves del mismo puerto'><title>Multiples contenedores y Proxy Inverso Apache &#43; HTTPS</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Multiples contenedores y Proxy Inverso Apache &#43; HTTPS'>
+<meta property='og:description' content='Cuando se cuenta con varios contenedores y queremos que accedan a traves de un virtual host se hace complicado, por eso esta es la forma de realizar este metodo para redirigir varias paginas web a traves del mismo puerto'>
+<meta property='og:url' content='https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='docker' /><meta property='article:tag' content='apache' /><meta property='article:tag' content='virtual host' /><meta property='article:tag' content='proxy' /><meta property='article:published_time' content='2021-11-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-11-21T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/head.png' />
+<meta name="twitter:title" content="Multiples contenedores y Proxy Inverso Apache &#43; HTTPS">
+<meta name="twitter:description" content="Cuando se cuenta con varios contenedores y queremos que accedan a traves de un virtual host se hace complicado, por eso esta es la forma de realizar este metodo para redirigir varias paginas web a traves del mismo puerto"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/head.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/multiples-contenedores-y-proxy-inverso-apache-https/">
+                <img src="/p/multiples-contenedores-y-proxy-inverso-apache-https/head_hu344c5e2ed235c4957dd8b33b636c0e47_153790_800x0_resize_box_3.png"
+                        srcset="/p/multiples-contenedores-y-proxy-inverso-apache-https/head_hu344c5e2ed235c4957dd8b33b636c0e47_153790_800x0_resize_box_3.png 800w, /p/multiples-contenedores-y-proxy-inverso-apache-https/head_hu344c5e2ed235c4957dd8b33b636c0e47_153790_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="352" 
+                        loading="lazy"
+                        alt="Featured image of post Multiples contenedores y Proxy Inverso Apache &#43; HTTPS" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/infraestructure/" >
+                infraestructure
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/multiples-contenedores-y-proxy-inverso-apache-https/">Multiples contenedores y Proxy Inverso Apache &#43; HTTPS</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Cuando se cuenta con varios contenedores y queremos que accedan a traves de un virtual host se hace complicado, por eso esta es la forma de realizar este metodo para redirigir varias paginas web a traves del mismo puerto
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 21, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="problema">Problema</h1>
+<p>Actualmente cuento con un vps el cual uso muy poco pero queria utilizarlo mas seguido, por lo cual me di a la tarea de tener un dns el cual me bloquee todo el trafico malicioso o de publicidad, la primera opcion fue <code>Pi-Hole</code> que utilice anteriormente aunque existen otras opciones como <code>Adguard Home</code> pero que algun dia probare. Para esto queria que todo estuviera centralizado y no tener que acceder a traves de puertos a los servicios como pihole o algun otro docker que quiera levantar mas adelante. ya que no quiero acceder por dominio.com:port para cada servicio sino que segun lo que ingrese se me redirija hacia el puerto 443 automaticamente.</p>
+<p>Para eso lo que hare es que cuando se acceda a los siguientes dominios, sea automaticamente redirigido a un docker por el proxy reverso de apache y evitar colocar puertos y que se maneje todo por subdominios y forzando las comunicaciones a https.</p>
+<ol>
+<li><a class="link" href="https://pi.dominio.com/"  target="_blank" rel="noopener"
+    >https://pi.dominio.com/</a></li>
+<li><a class="link" href="https://wordpress.dominio.com/"  target="_blank" rel="noopener"
+    >https://wordpress.dominio.com/</a></li>
+</ol>
+<h1 id="resolucion">Resolucion</h1>
+<p>Para esto me apoyare del siguiente software para solucionar este problema.</p>
+<ul>
+<li>Apache</li>
+<li>Docker</li>
+<li>Certbot</li>
+</ul>
+<h2 id="configuracion-de-contenedores-docker">Configuracion de contenedores docker</h2>
+<p>Actualmente solo tengo 1 contenedor arriba, que es pihole pero hare un ejemplo si tuviera un wordpress adicional a este para poder acceder a traves del dominio y todos con un certificado de letsencrypt.</p>
+<h3 id="pi-hole-container">Pi-Hole Container</h3>
+<p>Para pihole existe el siguiente script para poder ejecutarlo, que lo que hara es levantar uno en el puerto 3141 de nuestro vps, pero sin exponerlo a toda internet.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="c1"># https://github.com/pi-hole/docker-pi-hole/blob/master/README.md</span>
+
+<span class="nv">PIHOLE_BASE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">PIHOLE_BASE</span><span class="k">:-$(</span><span class="nb">pwd</span><span class="k">)</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="o">[[</span> -d <span class="s2">&#34;</span><span class="nv">$PIHOLE_BASE</span><span class="s2">&#34;</span> <span class="o">]]</span> <span class="o">||</span> mkdir -p <span class="s2">&#34;</span><span class="nv">$PIHOLE_BASE</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;Couldn&#39;t create storage directory: </span><span class="nv">$PIHOLE_BASE</span><span class="s2">&#34;</span><span class="p">;</span> <span class="nb">exit</span> 1<span class="p">;</span> <span class="o">}</span>
+
+<span class="c1"># Note: ServerIP should be replaced with your external ip.</span>
+docker run -d <span class="se">\
+</span><span class="se"></span>    --name pihole <span class="se">\
+</span><span class="se"></span>    -p 53:53/tcp -p 53:53/udp <span class="se">\
+</span><span class="se"></span>    -p 127.0.0.1:3141:80 <span class="se">\
+</span><span class="se"></span>    -e <span class="nv">TZ</span><span class="o">=</span><span class="s2">&#34;America/Chicago&#34;</span> <span class="se">\
+</span><span class="se"></span>    -v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PIHOLE_BASE</span><span class="si">}</span><span class="s2">/etc-pihole/:/etc/pihole/&#34;</span> <span class="se">\
+</span><span class="se"></span>    -v <span class="s2">&#34;</span><span class="si">${</span><span class="nv">PIHOLE_BASE</span><span class="si">}</span><span class="s2">/etc-dnsmasq.d/:/etc/dnsmasq.d/&#34;</span> <span class="se">\
+</span><span class="se"></span>    --dns<span class="o">=</span>127.0.0.1 --dns<span class="o">=</span>1.1.1.1 <span class="se">\
+</span><span class="se"></span>    --restart<span class="o">=</span>unless-stopped <span class="se">\
+</span><span class="se"></span>    --hostname pi.hole <span class="se">\
+</span><span class="se"></span>    -e <span class="nv">VIRTUAL_HOST</span><span class="o">=</span><span class="s2">&#34;pi.hole&#34;</span> <span class="se">\
+</span><span class="se"></span>    -e <span class="nv">PROXY_LOCATION</span><span class="o">=</span><span class="s2">&#34;pi.hole&#34;</span> <span class="se">\
+</span><span class="se"></span>    -e <span class="nv">ServerIP</span><span class="o">=</span><span class="s2">&#34;127.0.0.1&#34;</span> <span class="se">\
+</span><span class="se"></span>    pihole/pihole:latest
+
+<span class="nb">printf</span> <span class="s1">&#39;Starting up pihole container &#39;</span>
+<span class="k">for</span> i in <span class="k">$(</span>seq <span class="m">1</span> 20<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="k">$(</span>docker inspect -f <span class="s2">&#34;{{.State.Health.Status}}&#34;</span> pihole<span class="k">)</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;healthy&#34;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+        <span class="nb">printf</span> <span class="s1">&#39; OK&#39;</span>
+        <span class="nb">echo</span> -e <span class="s2">&#34;\n</span><span class="k">$(</span>docker logs pihole 2&gt; /dev/null <span class="p">|</span> grep <span class="s1">&#39;password:&#39;</span><span class="k">)</span><span class="s2"> for your pi-hole: https://</span><span class="si">${</span><span class="nv">IP</span><span class="si">}</span><span class="s2">/admin/&#34;</span>
+        <span class="nb">exit</span> <span class="m">0</span>
+    <span class="k">else</span>
+        sleep <span class="m">3</span>
+        <span class="nb">printf</span> <span class="s1">&#39;.&#39;</span>
+    <span class="k">fi</span>
+
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$i</span> -eq <span class="m">20</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&#34;\nTimed out waiting for Pi-hole start, consult your container logs for more info (\`docker logs pihole\`)&#34;</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
+<span class="k">done</span><span class="p">;</span>
+</code></pre></div><h3 id="wordpress-container">Wordpress container</h3>
+<p>Ahora tenemos otro contenedor con wordpress que lo que hace es iniciar una instancia de word y siempre solamente local en el puerto 8002, para esto ya tenemos dos contenedores en los cuales trabajar.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">WordPress</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">wordpress</span><span class="w">
+</span><span class="w">    </span><span class="nt">links</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">mariadb:mysql</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">WORDPRESS_DB_PASSWORD=password</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="m">127.0.0.1</span><span class="p">:</span><span class="m">8001</span><span class="p">:</span><span class="m">80</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">./html:/var/www/html</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="nt">mariadb</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">mariadb</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">MYSQL_ROOT_PASSWORD=password</span><span class="w">
+</span><span class="w">      </span>- <span class="l">MYSQL_DATABASE=wordpress</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">./database:/var/lib/mysql</span><span class="w">
+</span></code></pre></div><h2 id="generacion-de-certificados-de-ssl">Generacion de certificados de SSL</h2>
+<p>Para esto utilizaremos certbot que nos solucionara la vida, ya que permitira descargar los certificados generados por letsencrypt en nuestra carpeta de archivos, todos estos se guardan en <code>/etc/letsencrypt/live/</code></p>
+<p>Lo primero es en nuestro DNS agregar el CNAME de wordpress y pi apuntando a nuestra ip ya que certbot se basa en esto sino no dejara generar los certificados necesarios ya que hace una comprobacion de la ip y de nombre de DNS. Para esto los generamos con los siguientes comandos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">certbot certonly --apache -d pi.dominio.com
+certbot certonly --apache -d wordpress.dominio.com
+</code></pre></div><p>Y si todo esta correctamente son guardados en la carpeta anterior mencionada, y desde ahi se podran importar a apache. Para configurar que las conexiones solo sean manejadas por HTTPS.</p>
+<h2 id="configurar-apache-como-proxy-reverso">Configurar Apache como proxy reverso</h2>
+<p>Para eso debemos de ejecutar las siguientes instrucciones con permisos de <code>root</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">apt install apache
+a2enmod proxy       
+a2enmod proxy_http
+a2enmod proxy_balancer
+a2enmod ssl
+a2enmod rewrite
+</code></pre></div><p>Lo que hara es instalar apache, habilitar los modulos necesarios para redireccion y que actue como gateway, permitir proxear y balancear todo, aparte el habilitar modulo de SSL para que las comunicaciones vayan cifradas por HTTPS y que se pueda redirigir a estas. Ahora solo queda desactivar el puerto 80 y manejar siempre por 443 que es HTTPS, para eso editamos el archivo <code>/etc/apache2/ports.conf</code>.</p>
+<pre tabindex="0"><code># If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+#Listen 80
+
+&lt;IfModule ssl_module&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_gnutls.c&gt;
+        Listen 443
+&lt;/IfModule&gt;
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+</code></pre><p>Ya que habilitamos e instalamos apache, vamos a lo siguiente que es agregar la configuracion para los sitios web a los que se quiere acceder:</p>
+<pre tabindex="0"><code>cd /etc/apache2/sites-available/
+touch wordpress.conf
+touch pihole.conf
+</code></pre><p>Y en pihole.conf agregamos el siguiente texto que lo que hace es colocar el nombre del virtual host al que accederemos igual al nombre que se coloca en el DNS, la ip y puerto en la que esta expuesto que en nuestro caso es localhost y puerto 3141 y los certificados SSL anteriormente generados con certbot.</p>
+<p>pihole.conf</p>
+<pre tabindex="0"><code>&lt;VirtualHost *:443&gt;
+    ProxyPreserveHost On
+    ServerName pi.dominio.com
+    ProxyPass / http://127.0.0.1:3141/
+    ProxyPassReverse / http://127.0.0.1:3141/
+    SSLEngine On
+    SSLProxyEngine On
+    SSLCertificateFile &quot;/etc/letsencrypt/live/pi.dominio.com/cert.pem&quot;
+    SSLCertificateChainFile &quot;/etc/letsencrypt/live/pi.dominio.com/chain.pem&quot;
+    SSLCertificateKeyFile &quot;/etc/letsencrypt/live/pi.dominio.com/privkey.pem&quot;
+&lt;/VirtualHost&gt;
+</code></pre><p>Para wordpress es similar y solo se cambia de puerto</p>
+<p>wordpress.conf</p>
+<pre tabindex="0"><code>&lt;VirtualHost *:443&gt;
+    ProxyPreserveHost On
+    ServerName wordpress.dominio.com
+    ProxyPass / http://127.0.0.1:8001/
+    ProxyPassReverse / http://127.0.0.1:8001/
+    SSLEngine On
+    SSLProxyEngine On
+    SSLCertificateFile &quot;/etc/letsencrypt/live/wordpress.dominio.com/cert.pem&quot;
+    SSLCertificateChainFile &quot;/etc/letsencrypt/live/wordpress.dominio.com/chain.pem&quot;
+    SSLCertificateKeyFile &quot;/etc/letsencrypt/live/wordpress.dominio.com/privkey.pem&quot;
+&lt;/VirtualHost&gt;
+</code></pre><p>teniendo esto ya solamente queda reiniciar apache o si ya lo habra pedido antes tambien hacerlo si es necesario.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">systemctl reload apache2
+</code></pre></div><p>Y si accedemos a traves de internet a pi.dominio.com y wordpress.dominio.com ya deberia entrar sin problema y a traves de HTTPS con certificados de Lets Encrypt.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/docker/">docker</a>
+        
+            <a href="/tags/apache/">apache</a>
+        
+            <a href="/tags/virtual-host/">virtual host</a>
+        
+            <a href="/tags/proxy/">proxy</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#configuracion-de-contenedores-docker">Configuracion de contenedores docker</a>
+      <ol>
+        <li><a href="#pi-hole-container">Pi-Hole Container</a></li>
+        <li><a href="#wordpress-container">Wordpress container</a></li>
+      </ol>
+    </li>
+    <li><a href="#generacion-de-certificados-de-ssl">Generacion de certificados de SSL</a></li>
+    <li><a href="#configurar-apache-como-proxy-reverso">Configurar Apache como proxy reverso</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

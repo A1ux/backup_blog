@@ -3,33 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.alux.cc/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/academy/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/broken-authentication/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/burpsuite/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/pentest-web/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/portswigger/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</loc>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</loc>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/post/</loc>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/</loc>
+    <lastmod>2021-11-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/apache/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/docker/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/categories/infraestructure/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/proxy/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/virtual-host/</loc>
+    <lastmod>2021-11-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</loc>
     <lastmod>2021-11-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.alux.cc/post/</loc>
-    <lastmod>2021-11-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/</loc>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/</loc>
     <lastmod>2021-11-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-1/</loc>

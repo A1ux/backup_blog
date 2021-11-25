@@ -6,7 +6,47 @@
     <description>Recent content in broken authentication on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/broken-authentication/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/broken-authentication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 8</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</link>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</guid>
+      <description>Lab: 2FA broken logic En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios wiener y carlos basandonos en estos haremos posible hacer el bypass para el usuario carlos.
+Reconocimiento En el email de wiener sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena peter.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 9</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</link>
+      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</guid>
+      <description>Lab: 2FA bypass using a brute-force attack En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da unas credenciales que son carlos:montoya y luego de esto se nos pide el segundo factor de autenticacion y la idea es saltarselo para poder ingresar.
+Reconocimiento Al iniciar sesion con las credenciales, se puede notar que se pide el 2FA si las credenciales son correctas. Pero este hace uso de csrf-token y como todo token va cambiando y enviandose por lo que si usamos algo como repeater el codigo ya no funcionara mas.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/</guid>
+      <description>Lab: Broken brute-force protection, multiple credentials per request En este laboratorio1la finalidad es ingresar con un usuario valido, como el que se nos indica que es carlos y se nos da el listado de contrasenas que podemos probar.
+Reconocimiento Para resolver el ejercicio se nos da el listado de contrasenas con el que nos podemos autenticar con el usuario carlos, cuando tratamos de ingresar con el usuario se nos muestra una respuesta generica como la siguiente:</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 7</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/</link>
+      <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/</guid>
+      <description>Lab: 2FA simple bypass En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios wiener y carlos basandonos en estos haremos posible hacer el bypass para el usuario carlos.
+Reconocimiento En el email de wiener sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena peter.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Authentication Lab 4</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</link>
@@ -15,6 +55,16 @@
       <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</guid>
       <description>Lab: Broken brute-force protection, IP block En este laboratorio1la finalidad es ingresar con la cuenta de carlos, pero tiene una funcionalidad que lo que hace es bloquear nuestra ip al maximo de intentos que son 3, despues de esos intentos sale una alerta que muestra que se estan realizando demasiados intentos.
 Reconocimiento Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, al intentar iniciar sesion podemos notar la respuesta del inicio de sesion al realizar mas de 3 intentos en el usuario carlos.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/</link>
+      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/</guid>
+      <description>Lab: Username enumeration via account lock En este laboratorio1la finalidad es ingresar con un usuario valido, pero antes debemos hacer una enumeracion para saber que usuario existe o no en la aplicacion.
+Reconocimiento Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, asi que con el uso de intruder copiamos 4 veces los usuarios para que se traten de ingresar 4 veces con una contrasena cualquiera.</description>
     </item>
     
     <item>

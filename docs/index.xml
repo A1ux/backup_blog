@@ -6,7 +6,830 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</link>
+        <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 8" /&gt;&lt;h1 id=&#34;lab-2fa-broken-logic&#34;&gt;Lab: 2FA broken logic&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios &lt;code&gt;wiener&lt;/code&gt; y &lt;code&gt;carlos&lt;/code&gt; basandonos en estos haremos posible hacer el bypass para el usuario carlos.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En el email de &lt;code&gt;wiener&lt;/code&gt; sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena &lt;code&gt;peter&lt;/code&gt;. Al iniciar sesion con las credenciales, luego se nos pide el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 276; 
+			flex-basis: 664px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34; data-size=&#34;1135x410&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34;
+			width=&#34;1135&#34;
+			height=&#34;410&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y si vamos a la pestana de email client recibimos el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 219; 
+			flex-basis: 526px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34; data-size=&#34;1787x815&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;815&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Codigo de seguridad para usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Codigo de seguridad para usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso ya que no contamos con la contrasena del usuario carlos haremos un account takeover y tambien pasando una configuracion de seguridad incorrecta en el 2FA que permite enviar multiples codigos de seguridad sin bloquearnos.&lt;/p&gt;
+&lt;p&gt;Notamos que al iniciar con credenciales correctas de &lt;code&gt;wiener:peter&lt;/code&gt; el sistema envia una cookie llamada &lt;code&gt;verify=wiener&lt;/code&gt; lo que nos da a entender que esta validando al usuario &lt;code&gt;wiener&lt;/code&gt; su segundo factor de autenticacion, y si es correcto lo redirigira con una cookie asignada a su perfil.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 153; 
+			flex-basis: 368px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34; data-size=&#34;788x513&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34;
+			width=&#34;788&#34;
+			height=&#34;513&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Cookie del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Cookie del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Si enviamos nuestro codigo que hemos recibido en el correo, ingresa automaticamente al perfil de wiener, y es aca donde esta la vulnerabilidad, ya que tenemos una cookie pero que aun no tiene asignado un perfil podremos utilizarla para acceder con el usuario &lt;code&gt;carlos&lt;/code&gt; y con intruder generar un ataque de &lt;code&gt;sniper&lt;/code&gt; el cual inyecte numeros del 1111 al 1999 hasta que encontremos el codigo que sea el correcto. En este caso vamos a repetir el proceso pero lo vamos a interceptar y al momento que se llegue a esta peticion lo enviaremos al intruder y le damos drop para que la cookie la podamos utilizar en intruder.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 238; 
+			flex-basis: 572px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34; data-size=&#34;1226x514&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34;
+			width=&#34;1226&#34;
+			height=&#34;514&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Configuracion de posicion de payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Configuracion de posicion de payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 342px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34; data-size=&#34;616x432&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34;
+			width=&#34;616&#34;
+			height=&#34;432&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Configuracion de payload set con valores de 1111 a 9999&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Configuracion de payload set con valores de 1111 a 9999&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya que tenemos los resultados, notamos que existe una respuesta &lt;code&gt;302&lt;/code&gt; que es la que nos redirige a nuestro perfil. Asi que ya tenemos una cookie valida para poder ingresar al perfil de carlos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 172; 
+			flex-basis: 414px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34; data-size=&#34;781x452&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34;
+			width=&#34;781&#34;
+			height=&#34;452&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Resultado de intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Resultado de intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego de esto burpsuite cuenta con una funcion interesante que es ver la respuesta en el navegador dando clic derecho y &lt;code&gt;Show response in browser&lt;/code&gt; por lo que copiamos el link y lo pegamos en el navegador&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 199; 
+			flex-basis: 479px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34; data-size=&#34;1284x643&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34;
+			width=&#34;1284&#34;
+			height=&#34;643&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ver respuesta de burpsuite en navegador&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ver respuesta de burpsuite en navegador&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al pegar esta direccion en el navegador ya nos redirige al perfil de &lt;code&gt;carlos&lt;/code&gt; y hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 190; 
+			flex-basis: 457px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34; data-size=&#34;1802x946&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34;
+			width=&#34;1802&#34;
+			height=&#34;946&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-broken-logic&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 9</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</link>
+        <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 9" /&gt;&lt;h1 id=&#34;lab-2fa-bypass-using-a-brute-force-attack&#34;&gt;Lab: 2FA bypass using a brute-force attack&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da unas credenciales que son &lt;code&gt;carlos:montoya&lt;/code&gt; y luego de esto se nos pide el segundo factor de autenticacion y la idea es saltarselo para poder ingresar.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Al iniciar sesion con las credenciales, se puede notar que se pide el 2FA si las credenciales son correctas. Pero este hace uso de &lt;code&gt;csrf-token&lt;/code&gt; y como todo token va cambiando y enviandose por lo que si usamos algo como repeater el codigo ya no funcionara mas.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 154; 
+			flex-basis: 369px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/csrftoken.png&#34; data-size=&#34;784x509&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/csrftoken.png&#34;
+			width=&#34;784&#34;
+			height=&#34;509&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/csrftoken_hu7af8705dd3be90ab7a17c861d19ef02c_69815_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/csrftoken_hu7af8705dd3be90ab7a17c861d19ef02c_69815_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Token CSRF enviado en peticion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Token CSRF enviado en peticion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;El proceso de iniciio de sesion es el siguiente, luego de iniciar credenciales por lo que pide el codigo 2FA.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 370; 
+			flex-basis: 890px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login.png&#34; data-size=&#34;1124x303&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login.png&#34;
+			width=&#34;1124&#34;
+			height=&#34;303&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login_hu7a9673f81c06cd1bd3915f72c75f992f_15696_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login_hu7a9673f81c06cd1bd3915f72c75f992f_15696_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2FA en el inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2FA en el inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero notamos que al intentar mas de 2 codigos de 2FA el sistema vuelve a pedir las credenciales nuevamente.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 200; 
+			flex-basis: 482px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login2.png&#34; data-size=&#34;1143x569&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login2.png&#34;
+			width=&#34;1143&#34;
+			height=&#34;569&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login2_hu0cee997e40631e6ba28cbe37b43eb83e_25513_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/login2_hu0cee997e40631e6ba28cbe37b43eb83e_25513_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Inicio de sesion continuo al 2 intentos erroneos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Inicio de sesion continuo al 2 intentos erroneos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y si vamos a la pestana de email client recibimos el codigo de seguridad.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ya que se cuenta con un token csrf nos complica y que tambien despues de dos intentos se nos vuelven a pedir credenciales, por lo que automatizar el ataque se nos complica. Pero burpsuite cuenta con el uso de macros lo que nos permitira automatizar todo el proceso. Para eso se sigue el siguiente proceso:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 237; 
+			flex-basis: 569px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/sessions.png&#34; data-size=&#34;995x419&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/sessions.png&#34;
+			width=&#34;995&#34;
+			height=&#34;419&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/sessions_hub5141f68eb7917e8708e0fa5db34d275_23701_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/sessions_hub5141f68eb7917e8708e0fa5db34d275_23701_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Paso 1&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Paso 1&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 189; 
+			flex-basis: 453px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/scope.png&#34; data-size=&#34;1148x607&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/scope.png&#34;
+			width=&#34;1148&#34;
+			height=&#34;607&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/scope_hub3892af7d3cd674809d1116addd0048e_47279_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/scope_hub3892af7d3cd674809d1116addd0048e_47279_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Paso 2&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Paso 2&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 120; 
+			flex-basis: 288px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macrorecorder.png&#34; data-size=&#34;1023x851&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macrorecorder.png&#34;
+			width=&#34;1023&#34;
+			height=&#34;851&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macrorecorder_hu1b20d870f6e284add3ceef33157064b8_87107_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macrorecorder_hu1b20d870f6e284add3ceef33157064b8_87107_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Paso 3&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Paso 3&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 205; 
+			flex-basis: 493px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macro.png&#34; data-size=&#34;1940x943&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macro.png&#34;
+			width=&#34;1940&#34;
+			height=&#34;943&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macro_hu7e1c2a19d4debc819f7d6457ec211d08_75913_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/macro_hu7e1c2a19d4debc819f7d6457ec211d08_75913_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Paso 4&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Paso 4&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Los pasos anteriores lo que hace, es crear una macro de todos los pasos que hace nuestra consulta para antes de poder enviar el codigo, toda esta macro nos realizara el proceso para poder aplicar fuerza bruta en el 2FA y resolverlo. Algo a recordar es siempre dar &lt;code&gt;test macro&lt;/code&gt; para poder validad que la macro funcione correctamente.&lt;/p&gt;
+&lt;p&gt;Despues de todo este proceso ya podemos realizar el ataque con intruder ya que la macro anteriormente definida, para eso enviamos la peticion donde es enviada el codigo 2FA a intruder.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 216; 
+			flex-basis: 519px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/intruder.png&#34; data-size=&#34;1295x598&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/intruder.png&#34;
+			width=&#34;1295&#34;
+			height=&#34;598&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/intruder_hu75c91db759eaae54cee2a8cdd1d1a3ce_77267_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/intruder_hu75c91db759eaae54cee2a8cdd1d1a3ce_77267_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder 2FA&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder 2FA&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Seteamos valores de 0001 hasta 9999, diciendo que tenga el tamano de 4 y sin decimales&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 103; 
+			flex-basis: 247px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/payloads.png&#34; data-size=&#34;721x698&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/payloads.png&#34;
+			width=&#34;721&#34;
+			height=&#34;698&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/payloads_hue717eca9a6189da33017306a26d2c17f_24430_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/payloads_hue717eca9a6189da33017306a26d2c17f_24430_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Payloadas 2FA&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Payloadas 2FA&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Seteamos tambien que solo se envie una peticion y no se maneje por hilos ya que al ser token csrf no funcionaria el envio de demasiadas peticiones&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 144; 
+			flex-basis: 346px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resourcepool.png&#34; data-size=&#34;990x686&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resourcepool.png&#34;
+			width=&#34;990&#34;
+			height=&#34;686&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resourcepool_hu23c7c0b0b3599353fb736478a10a5d88_22890_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resourcepool_hu23c7c0b0b3599353fb736478a10a5d88_22890_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Resource Pool 2FA&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Resource Pool 2FA&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora lanzamos el ataque y esperar, se nos muestra una respuesta con codigo 302 que es la correcta. Asi que damos show response in browser, lo pegamos en el link y con eso ya tenemos acceso a la cuenta de carlos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 153; 
+			flex-basis: 369px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resultado.png&#34; data-size=&#34;791x514&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resultado.png&#34;
+			width=&#34;791&#34;
+			height=&#34;514&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resultado_hu6ffc76c2141cf0f3f78d5bbff4222d64_34089_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resultado_hu6ffc76c2141cf0f3f78d5bbff4222d64_34089_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del servidor&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del servidor&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al pegar esta direccion en el navegador ya nos redirige al perfil de &lt;code&gt;carlos&lt;/code&gt; y hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 193; 
+			flex-basis: 463px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resuelto.png&#34; data-size=&#34;1780x922&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resuelto.png&#34;
+			width=&#34;1780&#34;
+			height=&#34;922&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resuelto_hu73e65476ac7e3458103efdbf6e68cd75_103759_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/resuelto_hu73e65476ac7e3458103efdbf6e68cd75_103759_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Multiples contenedores y Proxy Inverso Apache &#43; HTTPS</title>
+        <link>https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/</link>
+        <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/multiples-contenedores-y-proxy-inverso-apache-https/head.png" alt="Featured image of post Multiples contenedores y Proxy Inverso Apache &#43; HTTPS" /&gt;&lt;h1 id=&#34;problema&#34;&gt;Problema&lt;/h1&gt;
+&lt;p&gt;Actualmente cuento con un vps el cual uso muy poco pero queria utilizarlo mas seguido, por lo cual me di a la tarea de tener un dns el cual me bloquee todo el trafico malicioso o de publicidad, la primera opcion fue &lt;code&gt;Pi-Hole&lt;/code&gt; que utilice anteriormente aunque existen otras opciones como &lt;code&gt;Adguard Home&lt;/code&gt; pero que algun dia probare. Para esto queria que todo estuviera centralizado y no tener que acceder a traves de puertos a los servicios como pihole o algun otro docker que quiera levantar mas adelante. ya que no quiero acceder por dominio.com:port para cada servicio sino que segun lo que ingrese se me redirija hacia el puerto 443 automaticamente.&lt;/p&gt;
+&lt;p&gt;Para eso lo que hare es que cuando se acceda a los siguientes dominios, sea automaticamente redirigido a un docker por el proxy reverso de apache y evitar colocar puertos y que se maneje todo por subdominios y forzando las comunicaciones a https.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://pi.dominio.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://pi.dominio.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://wordpress.dominio.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://wordpress.dominio.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;resolucion&#34;&gt;Resolucion&lt;/h1&gt;
+&lt;p&gt;Para esto me apoyare del siguiente software para solucionar este problema.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apache&lt;/li&gt;
+&lt;li&gt;Docker&lt;/li&gt;
+&lt;li&gt;Certbot&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuracion-de-contenedores-docker&#34;&gt;Configuracion de contenedores docker&lt;/h2&gt;
+&lt;p&gt;Actualmente solo tengo 1 contenedor arriba, que es pihole pero hare un ejemplo si tuviera un wordpress adicional a este para poder acceder a traves del dominio y todos con un certificado de letsencrypt.&lt;/p&gt;
+&lt;h3 id=&#34;pi-hole-container&#34;&gt;Pi-Hole Container&lt;/h3&gt;
+&lt;p&gt;Para pihole existe el siguiente script para poder ejecutarlo, que lo que hara es levantar uno en el puerto 3141 de nuestro vps, pero sin exponerlo a toda internet.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# https://github.com/pi-hole/docker-pi-hole/blob/master/README.md&lt;/span&gt;
+
+&lt;span class=&#34;nv&#34;&gt;PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-$(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[[&lt;/span&gt; -d &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; mkdir -p &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Couldn&amp;#39;t create storage directory: &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; 1&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# Note: ServerIP should be replaced with your external ip.&lt;/span&gt;
+docker run -d &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --name pihole &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -p 53:53/tcp -p 53:53/udp &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -p 127.0.0.1:3141:80 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -e &lt;span class=&#34;nv&#34;&gt;TZ&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;America/Chicago&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -v &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/etc-pihole/:/etc/pihole/&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -v &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PIHOLE_BASE&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/etc-dnsmasq.d/:/etc/dnsmasq.d/&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --dns&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;127.0.0.1 --dns&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.1.1.1 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --restart&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;unless-stopped &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --hostname pi.hole &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -e &lt;span class=&#34;nv&#34;&gt;VIRTUAL_HOST&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;pi.hole&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -e &lt;span class=&#34;nv&#34;&gt;PROXY_LOCATION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;pi.hole&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    -e &lt;span class=&#34;nv&#34;&gt;ServerIP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    pihole/pihole:latest
+
+&lt;span class=&#34;nb&#34;&gt;printf&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Starting up pihole container &amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; i in &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;seq &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; 20&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;docker inspect -f &lt;span class=&#34;s2&#34;&gt;&amp;#34;{{.State.Health.Status}}&amp;#34;&lt;/span&gt; pihole&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;healthy&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;printf&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39; OK&amp;#39;&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;\n&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;docker logs pihole 2&amp;gt; /dev/null &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s1&#34;&gt;&amp;#39;password:&amp;#39;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; for your pi-hole: https://&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;IP&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/admin/&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+        sleep &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;printf&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$i&lt;/span&gt; -eq &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;then&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;\nTimed out waiting for Pi-hole start, consult your container logs for more info (\`docker logs pihole\`)&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;fi&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;wordpress-container&#34;&gt;Wordpress container&lt;/h3&gt;
+&lt;p&gt;Ahora tenemos otro contenedor con wordpress que lo que hace es iniciar una instancia de word y siempre solamente local en el puerto 8002, para esto ya tenemos dos contenedores en los cuales trabajar.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;3&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;services&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;WordPress&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;wordpress&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;mariadb:mysql&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;WORDPRESS_DB_PASSWORD=password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;m&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8001&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;./html:/var/www/html&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;mariadb&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;mariadb&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;environment&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;MYSQL_ROOT_PASSWORD=password&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;MYSQL_DATABASE=wordpress&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;volumes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;./database:/var/lib/mysql&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;generacion-de-certificados-de-ssl&#34;&gt;Generacion de certificados de SSL&lt;/h2&gt;
+&lt;p&gt;Para esto utilizaremos certbot que nos solucionara la vida, ya que permitira descargar los certificados generados por letsencrypt en nuestra carpeta de archivos, todos estos se guardan en &lt;code&gt;/etc/letsencrypt/live/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Lo primero es en nuestro DNS agregar el CNAME de wordpress y pi apuntando a nuestra ip ya que certbot se basa en esto sino no dejara generar los certificados necesarios ya que hace una comprobacion de la ip y de nombre de DNS. Para esto los generamos con los siguientes comandos:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;certbot certonly --apache -d pi.dominio.com
+certbot certonly --apache -d wordpress.dominio.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Y si todo esta correctamente son guardados en la carpeta anterior mencionada, y desde ahi se podran importar a apache. Para configurar que las conexiones solo sean manejadas por HTTPS.&lt;/p&gt;
+&lt;h2 id=&#34;configurar-apache-como-proxy-reverso&#34;&gt;Configurar Apache como proxy reverso&lt;/h2&gt;
+&lt;p&gt;Para eso debemos de ejecutar las siguientes instrucciones con permisos de &lt;code&gt;root&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;apt install apache
+a2enmod proxy       
+a2enmod proxy_http
+a2enmod proxy_balancer
+a2enmod ssl
+a2enmod rewrite
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Lo que hara es instalar apache, habilitar los modulos necesarios para redireccion y que actue como gateway, permitir proxear y balancear todo, aparte el habilitar modulo de SSL para que las comunicaciones vayan cifradas por HTTPS y que se pueda redirigir a estas. Ahora solo queda desactivar el puerto 80 y manejar siempre por 443 que es HTTPS, para eso editamos el archivo &lt;code&gt;/etc/apache2/ports.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+#Listen 80
+
+&amp;lt;IfModule ssl_module&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+&amp;lt;IfModule mod_gnutls.c&amp;gt;
+        Listen 443
+&amp;lt;/IfModule&amp;gt;
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ya que habilitamos e instalamos apache, vamos a lo siguiente que es agregar la configuracion para los sitios web a los que se quiere acceder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /etc/apache2/sites-available/
+touch wordpress.conf
+touch pihole.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y en pihole.conf agregamos el siguiente texto que lo que hace es colocar el nombre del virtual host al que accederemos igual al nombre que se coloca en el DNS, la ip y puerto en la que esta expuesto que en nuestro caso es localhost y puerto 3141 y los certificados SSL anteriormente generados con certbot.&lt;/p&gt;
+&lt;p&gt;pihole.conf&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;VirtualHost *:443&amp;gt;
+    ProxyPreserveHost On
+    ServerName pi.dominio.com
+    ProxyPass / http://127.0.0.1:3141/
+    ProxyPassReverse / http://127.0.0.1:3141/
+    SSLEngine On
+    SSLProxyEngine On
+    SSLCertificateFile &amp;quot;/etc/letsencrypt/live/pi.dominio.com/cert.pem&amp;quot;
+    SSLCertificateChainFile &amp;quot;/etc/letsencrypt/live/pi.dominio.com/chain.pem&amp;quot;
+    SSLCertificateKeyFile &amp;quot;/etc/letsencrypt/live/pi.dominio.com/privkey.pem&amp;quot;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Para wordpress es similar y solo se cambia de puerto&lt;/p&gt;
+&lt;p&gt;wordpress.conf&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;VirtualHost *:443&amp;gt;
+    ProxyPreserveHost On
+    ServerName wordpress.dominio.com
+    ProxyPass / http://127.0.0.1:8001/
+    ProxyPassReverse / http://127.0.0.1:8001/
+    SSLEngine On
+    SSLProxyEngine On
+    SSLCertificateFile &amp;quot;/etc/letsencrypt/live/wordpress.dominio.com/cert.pem&amp;quot;
+    SSLCertificateChainFile &amp;quot;/etc/letsencrypt/live/wordpress.dominio.com/chain.pem&amp;quot;
+    SSLCertificateKeyFile &amp;quot;/etc/letsencrypt/live/wordpress.dominio.com/privkey.pem&amp;quot;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;teniendo esto ya solamente queda reiniciar apache o si ya lo habra pedido antes tambien hacerlo si es necesario.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;systemctl reload apache2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Y si accedemos a traves de internet a pi.dominio.com y wordpress.dominio.com ya deberia entrar sin problema y a traves de HTTPS con certificados de Lets Encrypt.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/</link>
+        <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 6" /&gt;&lt;h1 id=&#34;lab-broken-brute-force-protection-multiple-credentials-per-request&#34;&gt;Lab: Broken brute-force protection, multiple credentials per request&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es ingresar con un usuario valido, como el que se nos indica que es &lt;code&gt;carlos&lt;/code&gt; y se nos da el listado de contrasenas que podemos probar.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da el listado de contrasenas con el que nos podemos autenticar con el usuario carlos, cuando tratamos de ingresar con el usuario se nos muestra una respuesta generica como la siguiente:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 200; 
+			flex-basis: 480px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/login.png&#34; data-size=&#34;1101x550&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/login.png&#34;
+			width=&#34;1101&#34;
+			height=&#34;550&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/login_hu04338b439d24f74a8abf92495846d019_25375_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/login_hu04338b439d24f74a8abf92495846d019_25375_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero al ver la peticion, vemos que la peticion hace uso de post en formato &lt;code&gt;json&lt;/code&gt; de la siguiente manera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;username&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;carlos&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos esto, intentaremos inyectar muchas mas contrasenas en esta misma peticion para evitar el bloqueo al realizar demasiados intentos, debemos saber que para enviar multiples valores en json se deben de enviar dentro de corchetes de la siguiente manera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;username&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;carlos&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;valor1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;valor2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;valor3&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Para eso podemos usar el siguiente comando con &lt;code&gt;sed&lt;/code&gt; para que de nuestra lista de contrasenas crear la estructura y automatizarlo:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ sed &lt;span class=&#34;s1&#34;&gt;&amp;#39;s/^/&amp;#34;/; s/$/&amp;#34;,/&amp;#39;&lt;/span&gt; passwords.txt
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;123456&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;password&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;12345678&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;qwerty&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;123456789&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;12345&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;1234&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;111111&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;1234567&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;dragon&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;123123&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;baseball&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;abc123&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;football&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;monkey&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;letmein&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;shadow&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;master&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;666666&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;qwertyuiop&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;123321&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;mustang&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;1234567890&amp;#34;&lt;/span&gt;,
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;michael&amp;#34;&lt;/span&gt;,
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora los enviamos por &lt;code&gt;repeater&lt;/code&gt; de la siguiente manera para poder iniciar sesion, lo que nos devuelve una respuesta 302 por lo que ya contamos con una contrasena valida enviada en formato &lt;code&gt;json&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 176; 
+			flex-basis: 422px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/repeater.png&#34; data-size=&#34;1537x873&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/repeater.png&#34;
+			width=&#34;1537&#34;
+			height=&#34;873&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/repeater_hu6a5683e46895ed87154ea0d0dcfcb756_104036_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/repeater_hu6a5683e46895ed87154ea0d0dcfcb756_104036_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Envio de peticiones con repeater&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Envio de peticiones con repeater&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya hemos ingresado al usuario de carlos:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 207; 
+			flex-basis: 499px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/resuelto.png&#34; data-size=&#34;1753x843&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/resuelto.png&#34;
+			width=&#34;1753&#34;
+			height=&#34;843&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/resuelto_hued2b284d37bc28aab5ae0230afc93063_95319_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-6/resuelto_hued2b284d37bc28aab5ae0230afc93063_95319_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-broken-brute-force-protection-multiple-credentials-per-request&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 7</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/</link>
+        <pubDate>Sun, 21 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 7" /&gt;&lt;h1 id=&#34;lab-2fa-simple-bypass&#34;&gt;Lab: 2FA simple bypass&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios &lt;code&gt;wiener&lt;/code&gt; y &lt;code&gt;carlos&lt;/code&gt; basandonos en estos haremos posible hacer el bypass para el usuario carlos.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En el email de &lt;code&gt;wiener&lt;/code&gt; sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena &lt;code&gt;peter&lt;/code&gt;. Al iniciar sesion con las credenciales, luego se nos pide el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 294; 
+			flex-basis: 707px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/login.png&#34; data-size=&#34;1771x601&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/login.png&#34;
+			width=&#34;1771&#34;
+			height=&#34;601&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/login_hu2de989df32717fdd52ccdfb3d16924b1_57960_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/login_hu2de989df32717fdd52ccdfb3d16924b1_57960_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y si vamos a la pestana de email client recibimos el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 219; 
+			flex-basis: 526px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/email.png&#34; data-size=&#34;1787x815&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/email.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;815&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Codigo de seguridad para usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Codigo de seguridad para usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso la manera de hacer el bypass es muy facil, practicamente la aplicacion no valida el codigo, ya con ingresar usuario y contrasena ya se puede entrar al sistema.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 368; 
+			flex-basis: 883px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/history.png&#34; data-size=&#34;1138x309&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/history.png&#34;
+			width=&#34;1138&#34;
+			height=&#34;309&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/history_hu7102ed477f56197ac1e7b8e52d810a93_28628_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/history_hu7102ed477f56197ac1e7b8e52d810a93_28628_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Historial HTTP&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Historial HTTP&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Notamos que luego ingresar el codigo en &lt;code&gt;/login2&lt;/code&gt; redirigira a la pagina &lt;code&gt;/my-account&lt;/code&gt;. Si nos saltamos el enviar el codigo y vamos directamente a la pagina &lt;code&gt;/my-account&lt;/code&gt; ya habremos resuelto el lab.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;El sistema no valida nunca el codigo 2FA ya que sin ingresarlo ya puede ingresar a ciertos modulos de la aplicacion&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Y con eso ya hemos ingresado al usuario de carlos:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 191; 
+			flex-basis: 459px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/resuelto.png&#34; data-size=&#34;1807x944&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/resuelto.png&#34;
+			width=&#34;1807&#34;
+			height=&#34;944&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/resuelto_hued56bc9624cf60dc16cc87fe0b7e4149_100581_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-7/resuelto_hued56bc9624cf60dc16cc87fe0b7e4149_100581_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-simple-bypass&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Authentication Lab 4</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-4/</link>
         <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
@@ -132,6 +955,128 @@
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-broken-bruteforce-protection-ip-block&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/</link>
+        <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 5" /&gt;&lt;h1 id=&#34;lab-username-enumeration-via-account-lock&#34;&gt;Lab: Username enumeration via account lock&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es ingresar con un usuario valido, pero antes debemos hacer una enumeracion para saber que usuario existe o no en la aplicacion.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da un listado de usuarios y contrasenas para realizar las pruebas, asi que con el uso de &lt;code&gt;intruder&lt;/code&gt; copiamos 4 veces los usuarios para que se traten de ingresar 4 veces con una contrasena cualquiera. Y aca hay un usuario que si existe se bloqueara por un minuto, como se muestra que el usuario &lt;code&gt;ar&lt;/code&gt; se bloquea.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 104; 
+			flex-basis: 251px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/login.png&#34; data-size=&#34;787x751&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/login.png&#34;
+			width=&#34;787&#34;
+			height=&#34;751&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/login_hu76be6439ebe1323acc98597f038a123e_55149_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/login_hu76be6439ebe1323acc98597f038a123e_55149_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos esto, intentaremos entrar con el usuario &lt;code&gt;ar&lt;/code&gt; pero hay que tener cuidado que no se nos bloquee la cuenta, en este caso si se bloquea, pero la propia aplicacion tiene una falla la cual aunque se bloquea la cuenta el mensaje es diferente para el usuario valido lo que permite reconocer que el usuario y contrasena si es valido porque muestra un error distinto al resto, y solo queda esperar que la aplicacion se desbloquee luego de un tiempo.&lt;/p&gt;
+&lt;p&gt;Los valores enviados son:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 185; 
+			flex-basis: 445px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder.png&#34; data-size=&#34;1126x606&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder.png&#34;
+			width=&#34;1126&#34;
+			height=&#34;606&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder_hud31863dafebd4ecaa2449ce6121ee990_74004_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder_hud31863dafebd4ecaa2449ce6121ee990_74004_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Position&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Position&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 112; 
+			flex-basis: 270px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder2.png&#34; data-size=&#34;547x485&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder2.png&#34;
+			width=&#34;547&#34;
+			height=&#34;485&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder2_hu49811b357fc9608a1ce80cd865858408_18614_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/intruder2_hu49811b357fc9608a1ce80cd865858408_18614_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al realizar el ataque ya podemos ver los resultados y el de contrasena &lt;code&gt;starwars&lt;/code&gt; es el unico diferente al resto por lo que nos indica que es la contrasena correcta.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 278; 
+			flex-basis: 667px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resultado.png&#34; data-size=&#34;782x281&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resultado.png&#34;
+			width=&#34;782&#34;
+			height=&#34;281&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resultado_hu93563b4b39bb6a7096613d33b51c6fbd_13320_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resultado_hu93563b4b39bb6a7096613d33b51c6fbd_13320_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque de usuarios&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque de usuarios&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya hemos ingresado:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 146; 
+			flex-basis: 351px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resuelto.png&#34; data-size=&#34;1253x856&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resuelto.png&#34;
+			width=&#34;1253&#34;
+			height=&#34;856&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resuelto_hu6e5273b61924195f172a5d5e74839316_83547_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-5/resuelto_hu6e5273b61924195f172a5d5e74839316_83547_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/password-based/lab-username-enumeration-via-account-lock&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

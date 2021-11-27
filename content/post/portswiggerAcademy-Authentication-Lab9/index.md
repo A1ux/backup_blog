@@ -1,7 +1,7 @@
 +++
 author = "Alux"
 title = "Portswigger Academy Learning Path: Authentication Lab 9"
-date = "2021-11-22"
+date = "2021-11-24"
 description = "Lab: 2FA bypass using a brute-force attack"
 tags = [
     "broken authentication",

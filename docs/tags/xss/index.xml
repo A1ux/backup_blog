@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xss on A1ux</title>
+    <link>https://www.alux.cc/tags/xss/</link>
+    <description>Recent content in xss on A1ux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-GT</language>
+    <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/xss/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 11</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</guid>
+      <description>Lab: Offline password cracking En este laboratorio1la finalidad es ingresar con el usuario carlos el cual hay que robar la cookie y luego crackear la contrasena en offline para poder entrar al sistema con el usuario carlos para que al resolver el lab se debe de eliminar el usuario carlos y estara resuelto.
+Reconocimiento Lo primero que tenemos es que podemos ingresar con el usuario wiener, lo primero que notamos es que podemos escribir comentarios en el sistema, y ahi es donde tenemos una idea de que se puede ingresar codigo javascript para aprovecharse por medio de javascript robar una cookie si no se cuenta con el header de httpOnly.</description>
+    </item>
+    
+  </channel>
+</rss>

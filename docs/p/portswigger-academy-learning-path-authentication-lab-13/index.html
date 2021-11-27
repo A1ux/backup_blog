@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: Password reset poisoning via middleware'><title>Portswigger Academy Learning Path: Authentication Lab 13</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: Authentication Lab 13'>
+<meta property='og:description' content='Lab: Password reset poisoning via middleware'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='broken authentication' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-11-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-11-26T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: Authentication Lab 13">
+<meta name="twitter:description" content="Lab: Password reset poisoning via middleware"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/head.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-authentication-lab-13/">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-13/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-authentication-lab-13/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-authentication-lab-13/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 13" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-authentication-lab-13/">Portswigger Academy Learning Path: Authentication Lab 13</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: Password reset poisoning via middleware
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 26, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-password-reset-poisoning-via-middleware">Lab: Password reset poisoning via middleware</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es aprovecharse de una vulnerabilidad en la recuperacion de contrasena, la cual permite que un usuario pueda hacerse con otra cuenta por la mala implementacion de esta funcion.</p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>La pagina consta de un inicio de sesion el cual, tiene una parte de recuperacion de contrasena, y si colocamos el usuario de <code>wiener</code> recibimos un correo con el link para recuperar la contrasena. Todo funciona bien al parecer.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 325; 
+			flex-basis: 780px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/form.png" data-size="1142x351">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/form.png"
+			width="1142"
+			height="351"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/form_hu45194fe7501f149d657c40469f47e766_17420_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/form_hu45194fe7501f149d657c40469f47e766_17420_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Recuperacion ingresando nombre de usuario">
+	</a>
+	
+	<figcaption>Recuperacion ingresando nombre de usuario</figcaption>
+	
+</figure></p>
+<p>Luego recibiremos el siguiente correo:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 262; 
+			flex-basis: 630px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/email.png" data-size="1777x676">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/email.png"
+			width="1777"
+			height="676"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Correo de recuperacion de contrasena">
+	</a>
+	
+	<figcaption>Correo de recuperacion de contrasena</figcaption>
+	
+</figure></p>
+<p>Si abrimos el link nos enviara a ingresar la nueva contrasena del usuario.</p>
+<h2 id="explotacion">Explotacion</h2>
+<p>Ahora como se podria explotar algo asi ya que todo funciona muy bien, pero hay un error, a la hora de la creacion del link que se le envia al usuario victima se puede craftear para que tome un host del atacante y nosotros posteriormente cuando el usuario abra el link poder capturar el token. El diagrama de ataque seria el siguiente:</p>
+<p><figure 
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/ataque.svg" >
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/ataque.svg"
+			
+			
+			
+			loading="lazy"
+			alt="Diagrama de ataque">
+	</a>
+	
+	<figcaption>Diagrama de ataque</figcaption>
+	
+</figure></p>
+<p>Ahora realizamos todo el proceso de recuperacion de la contrasena y capturamos cuando se envia el usuario al que se piensa recuperar la contrasena, que es cuando se toma el host para enviar el correo. En este caso lo que queremos es que tome otro host y no el que es enviado en <code>Host:</code> para eso existen maneras de modificarlo, si se agrega otro Host da error pero si se agrega <code>X-Forwarded-Host</code> si lo toma y envia el correo hacia la victima con el host que se le indica en el header.</p>
+<blockquote>
+<p>The <code>X-Forwarded-Host</code> (XFH) header is a de-facto standard header for identifying the original host requested by the client in the Host HTTP request header.</p>
+</blockquote>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 198; 
+			flex-basis: 475px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/request.png" data-size="1513x763">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/request.png"
+			width="1513"
+			height="763"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/request_hub0ca1253e188b0824be8865c8273fe62_139887_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/request_hub0ca1253e188b0824be8865c8273fe62_139887_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Solicitud hacia el servidor">
+	</a>
+	
+	<figcaption>Solicitud hacia el servidor</figcaption>
+	
+</figure></p>
+<p>Este seria el link que recibiria la victima con la url del atacante que se le indico en el header <code>X-Forwarded-Host</code>:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 298; 
+			flex-basis: 717px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/mail.png" data-size="1751x586">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/mail.png"
+			width="1751"
+			height="586"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/mail_hu023ea08e79381d55b9a6b64a232fde99_121235_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/mail_hu023ea08e79381d55b9a6b64a232fde99_121235_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Correo recibido por la victima">
+	</a>
+	
+	<figcaption>Correo recibido por la victima</figcaption>
+	
+</figure></p>
+<p>Y cuando llega a la victima este lo abrira pero vera la pagina falsa y nosotros capturaremos el token para posteriormente nosotros ingresarlo manual a la pagina verdadera:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 164; 
+			flex-basis: 393px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/log.png" data-size="1653x1007">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/log.png"
+			width="1653"
+			height="1007"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/log_hu3268a1b9ad31feb8605f15d2608eb3ba_541982_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/log_hu3268a1b9ad31feb8605f15d2608eb3ba_541982_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Captura del token de la victima">
+	</a>
+	
+	<figcaption>Captura del token de la victima</figcaption>
+	
+</figure></p>
+<p>Ahora abrimos la pagina web y nos pide las credenciales nuevas para el usuario carlos:</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 149; 
+			flex-basis: 359px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/password.png" data-size="1149x767">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/password.png"
+			width="1149"
+			height="767"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/password_hua577c2c58be967a92dcfd46698598126_70154_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/password_hua577c2c58be967a92dcfd46698598126_70154_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Seteando nuevas credenciales para el usuario carlos">
+	</a>
+	
+	<figcaption>Seteando nuevas credenciales para el usuario carlos</figcaption>
+	
+</figure></p>
+<p>Al finalizar esta solicitud ya podriamos ingresar con el usuario carlos y la nueva contrasena que hemos colocado y resuelto el lab.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 184; 
+			flex-basis: 441px"
+	>
+	<a href="/p/portswigger-academy-learning-path-authentication-lab-13/resuelto.png" data-size="1742x946">
+		<img src="/p/portswigger-academy-learning-path-authentication-lab-13/resuelto.png"
+			width="1742"
+			height="946"
+			srcset="/p/portswigger-academy-learning-path-authentication-lab-13/resuelto_huf4059c99d6ed2b295175905cc4774812_104575_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-authentication-lab-13/resuelto_huf4059c99d6ed2b295175905cc4774812_104575_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-reset-poisoning-via-middleware"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/broken-authentication/">broken authentication</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-14/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-14/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 14</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-11/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-11/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 11</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-12/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-12/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 12</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-10/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-10/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 10</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-authentication-lab-9/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-authentication-lab-9/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Authentication Lab 9</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a></li>
+    <li><a href="#explotacion">Explotacion</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

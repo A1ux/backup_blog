@@ -6,169 +6,168 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Portswigger Academy Learning Path: Authentication Lab 8</title>
-        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</link>
-        <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+        <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 13</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/</link>
+        <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
         
-        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</guid>
-        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 8" /&gt;&lt;h1 id=&#34;lab-2fa-broken-logic&#34;&gt;Lab: 2FA broken logic&lt;/h1&gt;
-&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios &lt;code&gt;wiener&lt;/code&gt; y &lt;code&gt;carlos&lt;/code&gt; basandonos en estos haremos posible hacer el bypass para el usuario carlos.&lt;/p&gt;
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 13" /&gt;&lt;h1 id=&#34;lab-password-reset-poisoning-via-middleware&#34;&gt;Lab: Password reset poisoning via middleware&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es aprovecharse de una vulnerabilidad en la recuperacion de contrasena, la cual permite que un usuario pueda hacerse con otra cuenta por la mala implementacion de esta funcion.&lt;/p&gt;
 &lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
-&lt;p&gt;En el email de &lt;code&gt;wiener&lt;/code&gt; sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena &lt;code&gt;peter&lt;/code&gt;. Al iniciar sesion con las credenciales, luego se nos pide el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;La pagina consta de un inicio de sesion el cual, tiene una parte de recuperacion de contrasena, y si colocamos el usuario de &lt;code&gt;wiener&lt;/code&gt; recibimos un correo con el link para recuperar la contrasena. Todo funciona bien al parecer.&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 276; 
-			flex-basis: 664px&#34;
+			flex-grow: 325; 
+			flex-basis: 780px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34; data-size=&#34;1135x410&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34;
-			width=&#34;1135&#34;
-			height=&#34;410&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/form.png&#34; data-size=&#34;1142x351&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/form.png&#34;
+			width=&#34;1142&#34;
+			height=&#34;351&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/form_hu45194fe7501f149d657c40469f47e766_17420_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/form_hu45194fe7501f149d657c40469f47e766_17420_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Intruder inicio de sesion&#34;&gt;
+			alt=&#34;Recuperacion ingresando nombre de usuario&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	&lt;figcaption&gt;Recuperacion ingresando nombre de usuario&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Y si vamos a la pestana de email client recibimos el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;Luego recibiremos el siguiente correo:&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 219; 
-			flex-basis: 526px&#34;
+			flex-grow: 262; 
+			flex-basis: 630px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34; data-size=&#34;1787x815&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34;
-			width=&#34;1787&#34;
-			height=&#34;815&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/email.png&#34; data-size=&#34;1777x676&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/email.png&#34;
+			width=&#34;1777&#34;
+			height=&#34;676&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Codigo de seguridad para usuario wiener&#34;&gt;
+			alt=&#34;Correo de recuperacion de contrasena&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Codigo de seguridad para usuario wiener&lt;/figcaption&gt;
+	&lt;figcaption&gt;Correo de recuperacion de contrasena&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Si abrimos el link nos enviara a ingresar la nueva contrasena del usuario.&lt;/p&gt;
 &lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
-&lt;p&gt;En este caso ya que no contamos con la contrasena del usuario carlos haremos un account takeover y tambien pasando una configuracion de seguridad incorrecta en el 2FA que permite enviar multiples codigos de seguridad sin bloquearnos.&lt;/p&gt;
-&lt;p&gt;Notamos que al iniciar con credenciales correctas de &lt;code&gt;wiener:peter&lt;/code&gt; el sistema envia una cookie llamada &lt;code&gt;verify=wiener&lt;/code&gt; lo que nos da a entender que esta validando al usuario &lt;code&gt;wiener&lt;/code&gt; su segundo factor de autenticacion, y si es correcto lo redirigira con una cookie asignada a su perfil.&lt;/p&gt;
+&lt;p&gt;Ahora como se podria explotar algo asi ya que todo funciona muy bien, pero hay un error, a la hora de la creacion del link que se le envia al usuario victima se puede craftear para que tome un host del atacante y nosotros posteriormente cuando el usuario abra el link poder capturar el token. El diagrama de ataque seria el siguiente:&lt;/p&gt;
 &lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 153; 
-			flex-basis: 368px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34; data-size=&#34;788x513&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34;
-			width=&#34;788&#34;
-			height=&#34;513&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/ataque.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/ataque.svg&#34;
+			
+			
+			
 			loading=&#34;lazy&#34;
-			alt=&#34;Cookie del usuario wiener&#34;&gt;
+			alt=&#34;Diagrama de ataque&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Cookie del usuario wiener&lt;/figcaption&gt;
+	&lt;figcaption&gt;Diagrama de ataque&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Si enviamos nuestro codigo que hemos recibido en el correo, ingresa automaticamente al perfil de wiener, y es aca donde esta la vulnerabilidad, ya que tenemos una cookie pero que aun no tiene asignado un perfil podremos utilizarla para acceder con el usuario &lt;code&gt;carlos&lt;/code&gt; y con intruder generar un ataque de &lt;code&gt;sniper&lt;/code&gt; el cual inyecte numeros del 1111 al 1999 hasta que encontremos el codigo que sea el correcto. En este caso vamos a repetir el proceso pero lo vamos a interceptar y al momento que se llegue a esta peticion lo enviaremos al intruder y le damos drop para que la cookie la podamos utilizar en intruder.&lt;/p&gt;
+&lt;p&gt;Ahora realizamos todo el proceso de recuperacion de la contrasena y capturamos cuando se envia el usuario al que se piensa recuperar la contrasena, que es cuando se toma el host para enviar el correo. En este caso lo que queremos es que tome otro host y no el que es enviado en &lt;code&gt;Host:&lt;/code&gt; para eso existen maneras de modificarlo, si se agrega otro Host da error pero si se agrega &lt;code&gt;X-Forwarded-Host&lt;/code&gt; si lo toma y envia el correo hacia la victima con el host que se le indica en el header.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;X-Forwarded-Host&lt;/code&gt; (XFH) header is a de-facto standard header for identifying the original host requested by the client in the Host HTTP request header.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 238; 
-			flex-basis: 572px&#34;
+			flex-grow: 198; 
+			flex-basis: 475px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34; data-size=&#34;1226x514&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34;
-			width=&#34;1226&#34;
-			height=&#34;514&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/request.png&#34; data-size=&#34;1513x763&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/request.png&#34;
+			width=&#34;1513&#34;
+			height=&#34;763&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/request_hub0ca1253e188b0824be8865c8273fe62_139887_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/request_hub0ca1253e188b0824be8865c8273fe62_139887_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Configuracion de posicion de payloads&#34;&gt;
+			alt=&#34;Solicitud hacia el servidor&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Configuracion de posicion de payloads&lt;/figcaption&gt;
-	
-&lt;/figure&gt;
-&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 142; 
-			flex-basis: 342px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34; data-size=&#34;616x432&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34;
-			width=&#34;616&#34;
-			height=&#34;432&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Configuracion de payload set con valores de 1111 a 9999&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Configuracion de payload set con valores de 1111 a 9999&lt;/figcaption&gt;
+	&lt;figcaption&gt;Solicitud hacia el servidor&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Ya que tenemos los resultados, notamos que existe una respuesta &lt;code&gt;302&lt;/code&gt; que es la que nos redirige a nuestro perfil. Asi que ya tenemos una cookie valida para poder ingresar al perfil de carlos.&lt;/p&gt;
+&lt;p&gt;Este seria el link que recibiria la victima con la url del atacante que se le indico en el header &lt;code&gt;X-Forwarded-Host&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 172; 
-			flex-basis: 414px&#34;
+			flex-grow: 298; 
+			flex-basis: 717px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34; data-size=&#34;781x452&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34;
-			width=&#34;781&#34;
-			height=&#34;452&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/mail.png&#34; data-size=&#34;1751x586&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/mail.png&#34;
+			width=&#34;1751&#34;
+			height=&#34;586&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/mail_hu023ea08e79381d55b9a6b64a232fde99_121235_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/mail_hu023ea08e79381d55b9a6b64a232fde99_121235_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Resultado de intruder&#34;&gt;
+			alt=&#34;Correo recibido por la victima&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Resultado de intruder&lt;/figcaption&gt;
+	&lt;figcaption&gt;Correo recibido por la victima&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Luego de esto burpsuite cuenta con una funcion interesante que es ver la respuesta en el navegador dando clic derecho y &lt;code&gt;Show response in browser&lt;/code&gt; por lo que copiamos el link y lo pegamos en el navegador&lt;/p&gt;
+&lt;p&gt;Y cuando llega a la victima este lo abrira pero vera la pagina falsa y nosotros capturaremos el token para posteriormente nosotros ingresarlo manual a la pagina verdadera:&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 199; 
-			flex-basis: 479px&#34;
+			flex-grow: 164; 
+			flex-basis: 393px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34; data-size=&#34;1284x643&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34;
-			width=&#34;1284&#34;
-			height=&#34;643&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_1024x0_resize_box_3.png 1024w&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/log.png&#34; data-size=&#34;1653x1007&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/log.png&#34;
+			width=&#34;1653&#34;
+			height=&#34;1007&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/log_hu3268a1b9ad31feb8605f15d2608eb3ba_541982_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/log_hu3268a1b9ad31feb8605f15d2608eb3ba_541982_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
-			alt=&#34;Ver respuesta de burpsuite en navegador&#34;&gt;
+			alt=&#34;Captura del token de la victima&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Ver respuesta de burpsuite en navegador&lt;/figcaption&gt;
+	&lt;figcaption&gt;Captura del token de la victima&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Al pegar esta direccion en el navegador ya nos redirige al perfil de &lt;code&gt;carlos&lt;/code&gt; y hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;Ahora abrimos la pagina web y nos pide las credenciales nuevas para el usuario carlos:&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 190; 
-			flex-basis: 457px&#34;
+			flex-grow: 149; 
+			flex-basis: 359px&#34;
 	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34; data-size=&#34;1802x946&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34;
-			width=&#34;1802&#34;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/password.png&#34; data-size=&#34;1149x767&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/password.png&#34;
+			width=&#34;1149&#34;
+			height=&#34;767&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/password_hua577c2c58be967a92dcfd46698598126_70154_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/password_hua577c2c58be967a92dcfd46698598126_70154_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Seteando nuevas credenciales para el usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Seteando nuevas credenciales para el usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al finalizar esta solicitud ya podriamos ingresar con el usuario carlos y la nueva contrasena que hemos colocado y resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 184; 
+			flex-basis: 441px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/resuelto.png&#34; data-size=&#34;1742x946&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/resuelto.png&#34;
+			width=&#34;1742&#34;
 			height=&#34;946&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_1024x0_resize_box_3.png 1024w&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/resuelto_huf4059c99d6ed2b295175905cc4774812_104575_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/resuelto_huf4059c99d6ed2b295175905cc4774812_104575_1024x0_resize_box_3.png 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;Laboratorio resuelto&#34;&gt;
 	&lt;/a&gt;
@@ -180,7 +179,461 @@
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-broken-logic&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-reset-poisoning-via-middleware&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 14</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/</link>
+        <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 14" /&gt;&lt;h1 id=&#34;lab-password-brute-force-via-password-change&#34;&gt;Lab: Password brute-force via password change&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es aprovecharse de una vulnerabilidad en la funcion de cambio de contrasena.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La pagina consta de un inicio de sesion el cual se puede ingresar con el usuario &lt;code&gt;wiener&lt;/code&gt; y cuando vemos podemos cambiar la contrasena de nuestro usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 119; 
+			flex-basis: 285px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/changepassword.png&#34; data-size=&#34;1131x950&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/changepassword.png&#34;
+			width=&#34;1131&#34;
+			height=&#34;950&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/changepassword_huf75fafe240c193e69b082da40a9dddeb_53468_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/changepassword_huf75fafe240c193e69b082da40a9dddeb_53468_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Actualizacion de contrasena&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Actualizacion de contrasena&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora si probamos la funcionalidad, enviamos la peticion para cambiarla y notamos que se envia el usuario al que se quiere cambiar la contrasena&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 245; 
+			flex-basis: 589px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/request.png&#34; data-size=&#34;1230x501&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/request.png&#34;
+			width=&#34;1230&#34;
+			height=&#34;501&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/request_hu2374fc38260bf8f621c1a9974e19f9ca_72955_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/request_hu2374fc38260bf8f621c1a9974e19f9ca_72955_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Request enviada para cambiar la contrasena&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Request enviada para cambiar la contrasena&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Asi que teniendo esto lo que haremos es enviar la la &lt;code&gt;current-password&lt;/code&gt; realizando fuerza bruta al usuario carlos para cambiar la contrasena, pero hay un detalle que al enviar esto, las respuestas no nos arrojan si se cambio la contrasena, por esta razon lo que hice fue &lt;code&gt;colocar contrasenas diferentes en new password&lt;/code&gt; lo que hara que se nos muestre un error de match y la respuesta sea diferente al resto.png&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Colocar contrasenas diferentes en new password para no hacer match y generar error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 281; 
+			flex-basis: 674px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/results.png&#34; data-size=&#34;897x319&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/results.png&#34;
+			width=&#34;897&#34;
+			height=&#34;319&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/results_huf097d1a5537fa5f7acc7a20173bb304a_16001_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/results_huf097d1a5537fa5f7acc7a20173bb304a_16001_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas de intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas de intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora nos muestra que la contrasena es &lt;code&gt;77777&lt;/code&gt; porque la contrasenas no hacen match porque si valida que la contrasena sea la correcta. Y ya podriamos ingresar con el usuario &lt;code&gt;carlos:777777&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 129; 
+			flex-basis: 310px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/resuelto.png&#34; data-size=&#34;1739x1345&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/resuelto.png&#34;
+			width=&#34;1739&#34;
+			height=&#34;1345&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/resuelto_hu85855c1315a3933605f0cec2c1cb77c6_128132_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/resuelto_hu85855c1315a3933605f0cec2c1cb77c6_128132_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-brute-force-via-password-change&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 11</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</link>
+        <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 11" /&gt;&lt;h1 id=&#34;lab-offline-password-cracking&#34;&gt;Lab: Offline password cracking&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es ingresar con el usuario &lt;code&gt;carlos&lt;/code&gt; el cual hay que robar la cookie y luego crackear la contrasena en offline para poder entrar al sistema con el usuario carlos para que al resolver el lab se debe de eliminar el usuario carlos y estara resuelto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es que podemos ingresar con el usuario &lt;code&gt;wiener&lt;/code&gt;, lo primero que notamos es que podemos escribir comentarios en el sistema, y ahi es donde tenemos una idea de que se puede ingresar codigo javascript para aprovecharse por medio de javascript robar una cookie si no se cuenta con el header de &lt;code&gt;httpOnly&lt;/code&gt;. La forma de ataque es el siguiente:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 167; 
+			flex-basis: 401px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/ataque.png&#34; data-size=&#34;689x412&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/ataque.png&#34;
+			width=&#34;689&#34;
+			height=&#34;412&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/ataque_hu96cf820d15d58f685632afe05c652e37_23802_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/ataque_hu96cf820d15d58f685632afe05c652e37_23802_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ataque diagramado&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ataque diagramado&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso, aprovechando que ya hemos iniciado sesion, colocamos el siguiente comentario, ya que el sistema nos da un exploit server en el cual podemos ver los logs. Lo que comentamso seria el siguiente codigo, que lo que hara es inyectar el codigo javascript que a su vez lo que hara es redirigir a la siguiente web con el valor de la cookie en la url para posteriormente nosotros tomarla.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;location&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;https://exploit-aca31fc11ef256eac0eb50c801be00df.web-security-academy.net/exploit?c=&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;cookie&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 114; 
+			flex-basis: 275px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/comentario.png&#34; data-size=&#34;1125x979&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/comentario.png&#34;
+			width=&#34;1125&#34;
+			height=&#34;979&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/comentario_huec7a7c46c9e39ea76b182080e9a0a1ea_72022_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/comentario_huec7a7c46c9e39ea76b182080e9a0a1ea_72022_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Comentario xss&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Comentario xss&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego de que hemos inyectado el codigo debemos quedarnos a la espera de la solicitud de la victima, y en el log estara, en este caso esta &lt;code&gt;/exploit?c=secret=...&lt;/code&gt; que es el valor de la cookie.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 239; 
+			flex-basis: 575px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/log.png&#34; data-size=&#34;2083x869&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/log.png&#34;
+			width=&#34;2083&#34;
+			height=&#34;869&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/log_hu93581bcaf58020bba5d43481ac62764d_463110_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/log_hu93581bcaf58020bba5d43481ac62764d_463110_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Log del servidor web atacante&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Log del servidor web atacante&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al notar la cookie que tenemos vamos a decodificar la cookie desde bash:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Y2FybG9zOjI2MzIzYzE2ZDVmNGRhYmZmM2JiMTM2ZjI0NjBhOTQz&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; base64 -d
+carlos:26323c16d5f4dabff3bb136f2460a943
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora lo que haremos es descifrar el valor de &lt;code&gt;26323c16d5f4dabff3bb136f2460a943&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 544; 
+			flex-basis: 1306px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/md5.png&#34; data-size=&#34;1650x303&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/md5.png&#34;
+			width=&#34;1650&#34;
+			height=&#34;303&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/md5_huf81a0857fbde378c9bf7be1b5046e1b7_97869_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/md5_huf81a0857fbde378c9bf7be1b5046e1b7_97869_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Descifrar contrasena MD5&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Descifrar contrasena MD5&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Finalmente, ya que tenemos la contrasena entramos con las credenciales de carlos y eliminamos la cuenta para resolver el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 285; 
+			flex-basis: 685px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/resuelto.png&#34; data-size=&#34;1787x626&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/resuelto.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;626&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/resuelto_hue7f615e819fee2bdf43606558a64509a_78441_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/resuelto_hue7f615e819fee2bdf43606558a64509a_78441_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/other-mechanisms/lab-offline-password-cracking&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 12</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/</link>
+        <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 12" /&gt;&lt;h1 id=&#34;lab-password-reset-broken-logic&#34;&gt;Lab: Password reset broken logic&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es aprovecharse de una vulnerabilidad en la recuperacion de contrasena, la cual permite que un usuario pueda hacerse con otra cuenta por la mala implementacion de esta funcion.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La pagina consta de un inicio de sesion el cual, tiene una parte de recuperacion de contrasena, y si colocamos el usuario de &lt;code&gt;wiener&lt;/code&gt; recibimos un correo con el link para recuperar la contrasena. Si&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 262; 
+			flex-basis: 630px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/email.png&#34; data-size=&#34;1777x676&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/email.png&#34;
+			width=&#34;1777&#34;
+			height=&#34;676&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/email_hu4d30352ac233d75ac7244d145dd14ceb_127530_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Correo de recuperacion de contrasena&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Correo de recuperacion de contrasena&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Si abrimos el link nos enviara a ingresar la nueva contrasena del usuario&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 261; 
+			flex-basis: 627px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/form.png&#34; data-size=&#34;1137x435&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/form.png&#34;
+			width=&#34;1137&#34;
+			height=&#34;435&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/form_hu0b640d4014b928efcad0567e59cc108a_20018_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/form_hu0b640d4014b928efcad0567e59cc108a_20018_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Nueva contrasena para usuario&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Nueva contrasena para usuario&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso todo normal, pero es cuando empezamos a proxear y ver las peticiones que se envian al servidor con burp, y como es el caso al ingresar los datos y enviar la peticion va el valor del usuario al que se le va a cambiar la contrasena que es wiener&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Es enviada en la peticion el nombre de usuario al que se le cambia la contrasena&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 209; 
+			flex-basis: 503px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/peticion.png&#34; data-size=&#34;1015x484&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/peticion.png&#34;
+			width=&#34;1015&#34;
+			height=&#34;484&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/peticion_hu71e9a1058e653e2abda48446a3f1cc8b_75083_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/peticion_hu71e9a1058e653e2abda48446a3f1cc8b_75083_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion enviada al servidor con nombre de usuario&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion enviada al servidor con nombre de usuario&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Aca aprovechamos y podemos hacer el cambio por el usuario &lt;code&gt;wiener a carlos&lt;/code&gt;, lo cual aprovechando del link anterior pero que la cookie o el codigo no esta asignado al propio usuario nos permite cambiarle la contrasena al usuario carlos, para posteriormente ingresar con ese usuario.&lt;/p&gt;
+&lt;p&gt;Al finalizar esta solicitud ya podriamos ingresar con el usuario carlos y la nueva contrasena que hemos colocado y resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 196; 
+			flex-basis: 472px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/resuelto.png&#34; data-size=&#34;1792x910&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/resuelto.png&#34;
+			width=&#34;1792&#34;
+			height=&#34;910&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/resuelto_huce16c3590cdad1c67d77f0138a7dee8b_101843_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/resuelto_huce16c3590cdad1c67d77f0138a7dee8b_101843_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/other-mechanisms/lab-password-reset-broken-logic&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 10</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/</link>
+        <pubDate>Wed, 24 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 10" /&gt;&lt;h1 id=&#34;lab-brute-forcing-a-stay-logged-in-cookie&#34;&gt;Lab: Brute-forcing a stay-logged-in cookie&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es ingresar con el usuario &lt;code&gt;carlos&lt;/code&gt; el cual contiene una vulnerabilidad en el inicio de sesion&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Para resolver el ejercicio se nos da el listado de contrasenas con el que nos podemos autenticar con el usuario carlos para realizar las pruebas, pero al iniciar sesion notamos que tiene una opcion de mantener el inicio de sesion, el cual contiene una vulnerabilidad ya que pareciera que es una cookie random pero no.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Al iniciar sesion con la opcion habilitada, se crea una cookie distinta que no parece random, en este caso cuando intentamos descifrar la cookie nos damos cuenta que esta codificada el usuario y su contrasena.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 184; 
+			flex-basis: 443px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/cyberchef.png&#34; data-size=&#34;1524x824&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/cyberchef.png&#34;
+			width=&#34;1524&#34;
+			height=&#34;824&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/cyberchef_huae1cd2014d43f953956d671c997ac2bf_187188_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/cyberchef_huae1cd2014d43f953956d671c997ac2bf_187188_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			&gt;
+	&lt;/a&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al querer descifrar la contrasena, nos encontramos con que esta en formato MD5, por lo cual hemos encontrado el proceso para codificar la cookie&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 495; 
+			flex-basis: 1190px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/md5.png&#34; data-size=&#34;1557x314&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/md5.png&#34;
+			width=&#34;1557&#34;
+			height=&#34;314&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/md5_hu4734063bd35271135622d7660cb7b49b_95688_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/md5_hu4734063bd35271135622d7660cb7b49b_95688_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Password en formato MD5&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Password en formato MD5&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora debemos crear una cookie nueva inyectado las contrasenas y el usuario carlos. Todo esto a traves del intruder de burpsuite.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 253; 
+			flex-basis: 608px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payloadposition.png&#34; data-size=&#34;1256x495&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payloadposition.png&#34;
+			width=&#34;1256&#34;
+			height=&#34;495&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payloadposition_hu342e6764efec963f9f7e1bdae65ee129_67184_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payloadposition_hu342e6764efec963f9f7e1bdae65ee129_67184_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Posiciones en el payload&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Posiciones en el payload&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 241; 
+			flex-basis: 580px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payload1.png&#34; data-size=&#34;1253x518&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payload1.png&#34;
+			width=&#34;1253&#34;
+			height=&#34;518&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payload1_hu5b601d2897d9422b72ce716be0d88e3d_28056_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/payload1_hu5b601d2897d9422b72ce716be0d88e3d_28056_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 319; 
+			flex-basis: 766px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/resuelto.png&#34; data-size=&#34;1780x557&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/resuelto.png&#34;
+			width=&#34;1780&#34;
+			height=&#34;557&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/resuelto_hu240511762ddbf484074345bc015acedf_85847_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/resuelto_hu240511762ddbf484074345bc015acedf_85847_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya muestra que se ha resuelto el lab.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/other-mechanisms/lab-brute-forcing-a-stay-logged-in-cookie&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -190,7 +643,7 @@
         <item>
         <title>Portswigger Academy Learning Path: Authentication Lab 9</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</link>
-        <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+        <pubDate>Wed, 24 Nov 2021 00:00:00 +0000</pubDate>
         
         <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</guid>
         <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 9" /&gt;&lt;h1 id=&#34;lab-2fa-bypass-using-a-brute-force-attack&#34;&gt;Lab: 2FA bypass using a brute-force attack&lt;/h1&gt;
@@ -441,6 +894,187 @@
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Authentication Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</link>
+        <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: Authentication Lab 8" /&gt;&lt;h1 id=&#34;lab-2fa-broken-logic&#34;&gt;Lab: 2FA broken logic&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios &lt;code&gt;wiener&lt;/code&gt; y &lt;code&gt;carlos&lt;/code&gt; basandonos en estos haremos posible hacer el bypass para el usuario carlos.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En el email de &lt;code&gt;wiener&lt;/code&gt; sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena &lt;code&gt;peter&lt;/code&gt;. Al iniciar sesion con las credenciales, luego se nos pide el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 276; 
+			flex-basis: 664px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34; data-size=&#34;1135x410&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login.png&#34;
+			width=&#34;1135&#34;
+			height=&#34;410&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/login_hu4839c5983dd8a0eafcf987690819c5a7_18007_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y si vamos a la pestana de email client recibimos el codigo de seguridad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 219; 
+			flex-basis: 526px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34; data-size=&#34;1787x815&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;815&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/email_huf1e4820a0b41ae8d74a7f497031a2de2_138815_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Codigo de seguridad para usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Codigo de seguridad para usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso ya que no contamos con la contrasena del usuario carlos haremos un account takeover y tambien pasando una configuracion de seguridad incorrecta en el 2FA que permite enviar multiples codigos de seguridad sin bloquearnos.&lt;/p&gt;
+&lt;p&gt;Notamos que al iniciar con credenciales correctas de &lt;code&gt;wiener:peter&lt;/code&gt; el sistema envia una cookie llamada &lt;code&gt;verify=wiener&lt;/code&gt; lo que nos da a entender que esta validando al usuario &lt;code&gt;wiener&lt;/code&gt; su segundo factor de autenticacion, y si es correcto lo redirigira con una cookie asignada a su perfil.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 153; 
+			flex-basis: 368px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34; data-size=&#34;788x513&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie.png&#34;
+			width=&#34;788&#34;
+			height=&#34;513&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/cookie_hu07864f4c60f045ea92fe51a4f6a17ae4_67443_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Cookie del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Cookie del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Si enviamos nuestro codigo que hemos recibido en el correo, ingresa automaticamente al perfil de wiener, y es aca donde esta la vulnerabilidad, ya que tenemos una cookie pero que aun no tiene asignado un perfil podremos utilizarla para acceder con el usuario &lt;code&gt;carlos&lt;/code&gt; y con intruder generar un ataque de &lt;code&gt;sniper&lt;/code&gt; el cual inyecte numeros del 1111 al 1999 hasta que encontremos el codigo que sea el correcto. En este caso vamos a repetir el proceso pero lo vamos a interceptar y al momento que se llegue a esta peticion lo enviaremos al intruder y le damos drop para que la cookie la podamos utilizar en intruder.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 238; 
+			flex-basis: 572px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34; data-size=&#34;1226x514&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1.png&#34;
+			width=&#34;1226&#34;
+			height=&#34;514&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder1_hu4e55fc44083498c44d71911d6f1e441d_71983_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Configuracion de posicion de payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Configuracion de posicion de payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 342px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34; data-size=&#34;616x432&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2.png&#34;
+			width=&#34;616&#34;
+			height=&#34;432&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/intruder2_hu5e4a329dcb8a896f6f1c57ce6298e69a_13486_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Configuracion de payload set con valores de 1111 a 9999&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Configuracion de payload set con valores de 1111 a 9999&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya que tenemos los resultados, notamos que existe una respuesta &lt;code&gt;302&lt;/code&gt; que es la que nos redirige a nuestro perfil. Asi que ya tenemos una cookie valida para poder ingresar al perfil de carlos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 172; 
+			flex-basis: 414px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34; data-size=&#34;781x452&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado.png&#34;
+			width=&#34;781&#34;
+			height=&#34;452&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resultado_hu8a62f2d8a30043e4754a1e51d85dc647_28052_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Resultado de intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Resultado de intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego de esto burpsuite cuenta con una funcion interesante que es ver la respuesta en el navegador dando clic derecho y &lt;code&gt;Show response in browser&lt;/code&gt; por lo que copiamos el link y lo pegamos en el navegador&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 199; 
+			flex-basis: 479px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34; data-size=&#34;1284x643&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser.png&#34;
+			width=&#34;1284&#34;
+			height=&#34;643&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/responseinbrowser_hud851cd82faf8e79376d822c4949490b6_44264_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ver respuesta de burpsuite en navegador&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ver respuesta de burpsuite en navegador&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al pegar esta direccion en el navegador ya nos redirige al perfil de &lt;code&gt;carlos&lt;/code&gt; y hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 190; 
+			flex-basis: 457px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34; data-size=&#34;1802x946&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto.png&#34;
+			width=&#34;1802&#34;
+			height=&#34;946&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/resuelto_hu22080bf0a5932b0b041e8239aa680954_100189_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-broken-logic&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

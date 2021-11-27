@@ -6,7 +6,69 @@
     <description>Recent content in broken authentication on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/broken-authentication/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/broken-authentication/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 13</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/</link>
+      <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/</guid>
+      <description>Lab: Password reset poisoning via middleware En este laboratorio1la finalidad es aprovecharse de una vulnerabilidad en la recuperacion de contrasena, la cual permite que un usuario pueda hacerse con otra cuenta por la mala implementacion de esta funcion.
+Reconocimiento La pagina consta de un inicio de sesion el cual, tiene una parte de recuperacion de contrasena, y si colocamos el usuario de wiener recibimos un correo con el link para recuperar la contrasena.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 14</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/</link>
+      <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-14/</guid>
+      <description>Lab: Password brute-force via password change En este laboratorio1la finalidad es aprovecharse de una vulnerabilidad en la funcion de cambio de contrasena.
+Reconocimiento La pagina consta de un inicio de sesion el cual se puede ingresar con el usuario wiener y cuando vemos podemos cambiar la contrasena de nuestro usuario.
+ Actualizacion de contrasena 
+Explotacion Ahora si probamos la funcionalidad, enviamos la peticion para cambiarla y notamos que se envia el usuario al que se quiere cambiar la contrasena</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 11</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-11/</guid>
+      <description>Lab: Offline password cracking En este laboratorio1la finalidad es ingresar con el usuario carlos el cual hay que robar la cookie y luego crackear la contrasena en offline para poder entrar al sistema con el usuario carlos para que al resolver el lab se debe de eliminar el usuario carlos y estara resuelto.
+Reconocimiento Lo primero que tenemos es que podemos ingresar con el usuario wiener, lo primero que notamos es que podemos escribir comentarios en el sistema, y ahi es donde tenemos una idea de que se puede ingresar codigo javascript para aprovecharse por medio de javascript robar una cookie si no se cuenta con el header de httpOnly.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 12</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-12/</guid>
+      <description>Lab: Password reset broken logic En este laboratorio1la finalidad es aprovecharse de una vulnerabilidad en la recuperacion de contrasena, la cual permite que un usuario pueda hacerse con otra cuenta por la mala implementacion de esta funcion.
+Reconocimiento La pagina consta de un inicio de sesion el cual, tiene una parte de recuperacion de contrasena, y si colocamos el usuario de wiener recibimos un correo con el link para recuperar la contrasena.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 10</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/</link>
+      <pubDate>Wed, 24 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-10/</guid>
+      <description>Lab: Brute-forcing a stay-logged-in cookie En este laboratorio1la finalidad es ingresar con el usuario carlos el cual contiene una vulnerabilidad en el inicio de sesion
+Reconocimiento Para resolver el ejercicio se nos da el listado de contrasenas con el que nos podemos autenticar con el usuario carlos para realizar las pruebas, pero al iniciar sesion notamos que tiene una opcion de mantener el inicio de sesion, el cual contiene una vulnerabilidad ya que pareciera que es una cookie random pero no.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Authentication Lab 9</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</link>
+      <pubDate>Wed, 24 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</guid>
+      <description>Lab: 2FA bypass using a brute-force attack En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da unas credenciales que son carlos:montoya y luego de esto se nos pide el segundo factor de autenticacion y la idea es saltarselo para poder ingresar.
+Reconocimiento Al iniciar sesion con las credenciales, se puede notar que se pide el 2FA si las credenciales son correctas. Pero este hace uso de csrf-token y como todo token va cambiando y enviandose por lo que si usamos algo como repeater el codigo ya no funcionara mas.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Authentication Lab 8</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</link>
@@ -15,16 +77,6 @@
       <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-8/</guid>
       <description>Lab: 2FA broken logic En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da un email de cliente en el cual recibiremos el codigo y se nos da los usuarios wiener y carlos basandonos en estos haremos posible hacer el bypass para el usuario carlos.
 Reconocimiento En el email de wiener sera en el que recibiremos el correo con el codigo de seguridad al intentar iniciar con la contrasena peter.</description>
-    </item>
-    
-    <item>
-      <title>Portswigger Academy Learning Path: Authentication Lab 9</title>
-      <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</link>
-      <pubDate>Mon, 22 Nov 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-9/</guid>
-      <description>Lab: 2FA bypass using a brute-force attack En este laboratorio1la finalidad es hacer un bypass al segundo factor de autenticacion, se nos da unas credenciales que son carlos:montoya y luego de esto se nos pide el segundo factor de autenticacion y la idea es saltarselo para poder ingresar.
-Reconocimiento Al iniciar sesion con las credenciales, se puede notar que se pide el 2FA si las credenciales son correctas. Pero este hace uso de csrf-token y como todo token va cambiando y enviandose por lo que si usamos algo como repeater el codigo ya no funcionara mas.</description>
     </item>
     
     <item>

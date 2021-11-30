@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>directory traversal on A1ux</title>
+    <link>https://www.alux.cc/tags/directory-traversal/</link>
+    <description>Recent content in directory traversal on A1ux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-GT</language>
+    <lastBuildDate>Sun, 28 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/directory-traversal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</guid>
+      <description>Lab: File path traversal, simple case En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+El ataque es el siguiente, en el cual se permite leer otros archivos arbitrarios en el servidor, basandose en un request que pueda hacer una solicitud valida.
+ Diagrama de vulnerabilidad Directory Traversal 
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/</guid>
+      <description>Lab: File path traversal, traversal sequences blocked with absolute path bypass En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/</guid>
+      <description>Lab: File path traversal, traversal sequences stripped non-recursively En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla
+ Solicitud de imagen</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/</guid>
+      <description>Lab: File path traversal, traversal sequences stripped with superfluous URL-decode En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/</guid>
+      <description>Lab: File path traversal, validation of start of path En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla
+ Solicitud de imagen</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Directory Traversal Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/</guid>
+      <description>Lab: File path traversal, validation of file extension with null byte bypass En este laboratorio1la finalidad es poder recuperar el archivo /etc/passwd todo esto en una vulnerabilidad la cual es la que desplega las imagenes.
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla</description>
+    </item>
+    
+  </channel>
+</rss>

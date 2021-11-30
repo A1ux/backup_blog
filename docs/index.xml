@@ -6,7 +6,694 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 28 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 1" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-simple-case&#34;&gt;Lab: File path traversal, simple case&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;p&gt;El ataque es el siguiente, en el cual se permite leer otros archivos arbitrarios en el servidor, basandose en un request que pueda hacer una solicitud valida.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/diagrama.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/diagrama.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Diagrama de vulnerabilidad Directory Traversal&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Diagrama de vulnerabilidad Directory Traversal&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 102; 
+			flex-basis: 246px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/web.png&#34; data-size=&#34;1796x1750&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/web.png&#34;
+			width=&#34;1796&#34;
+			height=&#34;1750&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/web_hu2e2fcc0afb3a225c347dd455e351f57b_1039023_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/web_hu2e2fcc0afb3a225c347dd455e351f57b_1039023_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 173; 
+			flex-basis: 416px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request.png&#34; data-size=&#34;1536x885&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request.png&#34;
+			width=&#34;1536&#34;
+			height=&#34;885&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request_hu0f6e6c347c00310841bf3fcc26133915_241278_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request_hu0f6e6c347c00310841bf3fcc26133915_241278_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora lo que podemos hacer es intentar recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; del servidor usando la siguiente solicitud, agregando &lt;code&gt;../../../&lt;/code&gt; para ir hasta la raiz como es en linux&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=../../../etc/passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 258; 
+			flex-basis: 620px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request2.png&#34; data-size=&#34;1535x594&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request2.png&#34;
+			width=&#34;1535&#34;
+			height=&#34;594&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request2_hu62aecc6cf551ac653d6682f8334519fd_115517_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/request2_hu62aecc6cf551ac653d6682f8334519fd_115517_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 185; 
+			flex-basis: 445px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/resuelto.png&#34; data-size=&#34;1788x963&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/resuelto.png&#34;
+			width=&#34;1788&#34;
+			height=&#34;963&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/resuelto_hua34b2a302674e5e82efcf7b5321be1ee_536960_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/resuelto_hua34b2a302674e5e82efcf7b5321be1ee_536960_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-simple&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 2" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-traversal-sequences-blocked-with-absolute-path-bypass&#34;&gt;Lab: File path traversal, traversal sequences blocked with absolute path bypass&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 122; 
+			flex-basis: 293px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/web.png&#34; data-size=&#34;1805x1474&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/web.png&#34;
+			width=&#34;1805&#34;
+			height=&#34;1474&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/web_hu055f6d0eded21e6a838d8e54966bcf9d_488434_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/web_hu055f6d0eded21e6a838d8e54966bcf9d_488434_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 183; 
+			flex-basis: 439px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request.png&#34; data-size=&#34;1534x837&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request.png&#34;
+			width=&#34;1534&#34;
+			height=&#34;837&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request_huc807d3254dbb7962786da386e519d393_221860_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request_huc807d3254dbb7962786da386e519d393_221860_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora lo que podemos hacer es intentar recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; del servidor usando la siguiente solicitud pero hay una funcion del sistema que no acepta los valores de inyeccion que se utilizan como &lt;code&gt;../../../&lt;/code&gt; por lo que si enviamos la solicitud de esa manera no recibiremos nada. Pero igual podemos enviar la ruta absoluta&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;La aplicacion bloquea solicitudes de Directory Traversal pero trata el nombre del archivo como relativo a un directorio de trabajo predeterminado&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=/etc/passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 253; 
+			flex-basis: 608px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request2.png&#34; data-size=&#34;1534x605&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request2.png&#34;
+			width=&#34;1534&#34;
+			height=&#34;605&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request2_hucb83224a7c1e2e39787b8ebd1433239e_115350_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/request2_hucb83224a7c1e2e39787b8ebd1433239e_115350_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 254; 
+			flex-basis: 610px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/resuelto.png&#34; data-size=&#34;1830x720&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/resuelto.png&#34;
+			width=&#34;1830&#34;
+			height=&#34;720&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/resuelto_hu021907906e86cb08fc4ff6d1c7b63f66_185691_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-2/resuelto_hu021907906e86cb08fc4ff6d1c7b63f66_185691_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 3" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-traversal-sequences-stripped-non-recursively&#34;&gt;Lab: File path traversal, traversal sequences stripped non-recursively&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 110; 
+			flex-basis: 265px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/web.png&#34; data-size=&#34;1801x1629&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/web.png&#34;
+			width=&#34;1801&#34;
+			height=&#34;1629&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/web_huc721b94bb86f403ef615a5a318a11053_878281_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/web_huc721b94bb86f403ef615a5a318a11053_878281_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 170; 
+			flex-basis: 409px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request.png&#34; data-size=&#34;1530x897&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request.png&#34;
+			width=&#34;1530&#34;
+			height=&#34;897&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request_hu204bb183324198d925cbb571809caeac_238475_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request_hu204bb183324198d925cbb571809caeac_238475_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Lo que sabemos es que el backend eliminara los valores ingresados para realizar directory traversal como &lt;code&gt;../ o /&lt;/code&gt; en este caso lo que hay que hacer es saltarse esto para que el sistema aun pueda borrar las inyecciones pero nos deje inyectar las nuestras que al final terminen en el mismo proceso.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Caracteres ingresados&lt;/th&gt;
+&lt;th&gt;Caracteres despues de eliminacion&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;../&lt;/td&gt;
+&lt;td&gt;Vacio&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/&lt;/td&gt;
+&lt;td&gt;Vacio&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;hellip;/./&lt;/td&gt;
+&lt;td&gt;../&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;..//&lt;/td&gt;
+&lt;td&gt;/&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;./&lt;/td&gt;
+&lt;td&gt;Vacio&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=..././..././..././etc..//passwd HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y obtenemos el archivo &lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 235; 
+			flex-basis: 566px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request2.png&#34; data-size=&#34;1540x653&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request2.png&#34;
+			width=&#34;1540&#34;
+			height=&#34;653&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request2_hu5aaa62fdb461b31706275c7045629526_120068_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/request2_hu5aaa62fdb461b31706275c7045629526_120068_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 195; 
+			flex-basis: 468px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/resuelto.png&#34; data-size=&#34;1789x917&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/resuelto.png&#34;
+			width=&#34;1789&#34;
+			height=&#34;917&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/resuelto_hu5972d871c1fb3d5f830886e4f6d263fd_173696_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-3/resuelto_hu5972d871c1fb3d5f830886e4f6d263fd_173696_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-sequences-stripped-non-recursively&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 4" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-traversal-sequences-stripped-with-superfluous-url-decode&#34;&gt;Lab: File path traversal, traversal sequences stripped with superfluous URL-decode&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 112; 
+			flex-basis: 269px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/web.png&#34; data-size=&#34;1797x1600&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/web.png&#34;
+			width=&#34;1797&#34;
+			height=&#34;1600&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/web_hu190ad23e192f5eeef1169bd355039f1c_898379_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/web_hu190ad23e192f5eeef1169bd355039f1c_898379_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 172; 
+			flex-basis: 415px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request.png&#34; data-size=&#34;1527x883&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request.png&#34;
+			width=&#34;1527&#34;
+			height=&#34;883&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request_hu01864c6ddbe5b679fe490dd6a972af73_249116_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request_hu01864c6ddbe5b679fe490dd6a972af73_249116_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo que sabemos es que el backend eliminara los valores ingresados para realizar directory traversal como &lt;code&gt;../ o /&lt;/code&gt; pero luego de eliminarlo realiza la decodificacion de las entradas de la URL antes de usarla, por lo que podemos codificar los caracteres en formato URL. En este caso para resolverlo debemos usar doble codificacion como vemos, que esta codificado doble lo podemos decodificar por terminal o usando Cyberchef&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -n &lt;span class=&#34;s2&#34;&gt;&amp;#34;%252e%252e%252f&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;import sys; from urllib.parse import unquote; print(unquote(sys.stdin.read()));&amp;#34;&lt;/span&gt;
+%2e%2e%2f
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -n &lt;span class=&#34;s2&#34;&gt;&amp;#34;%2e%2e%2f&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;import sys; from urllib.parse import unquote; print(unquote(sys.stdin.read()));&amp;#34;&lt;/span&gt;
+../
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 341px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/codificado.png&#34; data-size=&#34;1509x1059&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/codificado.png&#34;
+			width=&#34;1509&#34;
+			height=&#34;1059&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/codificado_huf33e036e58ee5da710645adf98fbc9da_45761_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/codificado_huf33e036e58ee5da710645adf98fbc9da_45761_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Decodificacion de strings URL&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Decodificacion de strings URL&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y realizamos la peticion:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y obtenemos el archivo &lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 230; 
+			flex-basis: 553px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request2.png&#34; data-size=&#34;1538x667&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request2.png&#34;
+			width=&#34;1538&#34;
+			height=&#34;667&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request2_hu92c6f294e430b57b0faa38f1689d6b86_117584_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/request2_hu92c6f294e430b57b0faa38f1689d6b86_117584_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 169; 
+			flex-basis: 406px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/resuelto.png&#34; data-size=&#34;1833x1082&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/resuelto.png&#34;
+			width=&#34;1833&#34;
+			height=&#34;1082&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/resuelto_hu87d9b9a8d9ff090c2bc78c64b319365e_632932_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-4/resuelto_hu87d9b9a8d9ff090c2bc78c64b319365e_632932_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-superfluous-url-decode&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 5" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-validation-of-start-of-path&#34;&gt;Lab: File path traversal, validation of start of path&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 111; 
+			flex-basis: 267px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/web.png&#34; data-size=&#34;1806x1622&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/web.png&#34;
+			width=&#34;1806&#34;
+			height=&#34;1622&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/web_hu33d88c37511bbec648b3b335d01b4a6b_1352086_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/web_hu33d88c37511bbec648b3b335d01b4a6b_1352086_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 169; 
+			flex-basis: 407px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request.png&#34; data-size=&#34;1542x908&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request.png&#34;
+			width=&#34;1542&#34;
+			height=&#34;908&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request_hu129f5ccbb9ffdc599f31bc31975919c5_247981_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request_hu129f5ccbb9ffdc599f31bc31975919c5_247981_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo que sabemos es que el backend pide que se ingrese la ruta absoluta de las imagenes que al ver la peticion es &lt;code&gt;/var/www/images/&lt;/code&gt; en este caso la solucion es saltarlo ingresando el path al inicio pero se agrega siempre los caracteres para volver al path de raiz en este caso &lt;code&gt;../../../&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Y realizamos la peticion:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=/var/www/images/../../../etc/passwd HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y obtenemos el archivo &lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 249; 
+			flex-basis: 597px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request2.png&#34; data-size=&#34;1539x618&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request2.png&#34;
+			width=&#34;1539&#34;
+			height=&#34;618&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request2_hu1b4dea58a7d53b81a7b3a146c1b41652_119703_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/request2_hu1b4dea58a7d53b81a7b3a146c1b41652_119703_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 284; 
+			flex-basis: 681px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/resuelto.png&#34; data-size=&#34;1778x626&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/resuelto.png&#34;
+			width=&#34;1778&#34;
+			height=&#34;626&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/resuelto_hub01c952f011729171e71abcf6c384d94_78087_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-5/resuelto_hub01c952f011729171e71abcf6c384d94_78087_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-superfluous-url-decode&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Directory Traversal Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/</link>
+        <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Directory Traversal Lab 6" /&gt;&lt;h1 id=&#34;lab-file-path-traversal-validation-of-file-extension-with-null-byte-bypass&#34;&gt;Lab: File path traversal, validation of file extension with null byte bypass&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; todo esto en una vulnerabilidad la cual es la que desplega las imagenes.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;La web muestra un post el cual contiene contenido y una imagen.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 217; 
+			flex-basis: 522px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/web.png&#34; data-size=&#34;1777x816&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/web.png&#34;
+			width=&#34;1777&#34;
+			height=&#34;816&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/web_hu1f914a41a1810c682b18c1e6fac67c58_281117_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/web_hu1f914a41a1810c682b18c1e6fac67c58_281117_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Web&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Web&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Hasta ahi todo bien pero viendo burpsuite podemos ver que se hace la peticion para poder recuperar la imagen y mostrarla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 178; 
+			flex-basis: 428px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request.png&#34; data-size=&#34;1532x858&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request.png&#34;
+			width=&#34;1532&#34;
+			height=&#34;858&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request_hu89159de4e0a86c93397e49a358fa3a07_239860_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request_hu89159de4e0a86c93397e49a358fa3a07_239860_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de imagen&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de imagen&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo que sabemos es que el backend valida que la aplicacion termine en formato .jpg para poder hacer la solicitud, pero en este caso existe una forma de ya no validar lo que sigue despues del .jpg para evitar que no se muestre &lt;code&gt;/etc/passwd&lt;/code&gt; y es &lt;code&gt;%00&lt;/code&gt; que lo que hara es insertar un bit nulo.&lt;/p&gt;
+&lt;p&gt;Y realizamos la peticion:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GET /image?filename=../../../etc/passwd%00.png HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y obtenemos el archivo &lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 244; 
+			flex-basis: 585px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request2.png&#34; data-size=&#34;1533x628&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request2.png&#34;
+			width=&#34;1533&#34;
+			height=&#34;628&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request2_hu05b0579d4e7b71678c8b7d772e1a4831_117032_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/request2_hu05b0579d4e7b71678c8b7d772e1a4831_117032_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud de archivo passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud de archivo passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 167; 
+			flex-basis: 402px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/resuelto.png&#34; data-size=&#34;1746x1040&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/resuelto.png&#34;
+			width=&#34;1746&#34;
+			height=&#34;1040&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/resuelto_hu769fad77d05f1272fdef66a04e258eb2_408565_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/resuelto_hu769fad77d05f1272fdef66a04e258eb2_408565_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-path-traversal/lab-validate-file-extension-null-byte-bypass&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Authentication Lab 13</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-authentication-lab-13/</link>
         <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>

@@ -6,7 +6,66 @@
     <description>Recent content in Posts on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sun, 28 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: OS Command Injection Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-3/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-3/</guid>
+      <description>Lab: Blind OS command injection with output redirection En este laboratorio1la finalidad es obtener ejecucion de comandos en el sitio web, pero ya que no se recibe respuesta hay que escribir un archivo dentro de la web para poder mostrar la salida del comando en un archivo y posteriormente recuperarlo.
+Reconocimiento La web cuenta con un formulario para el envio de feedback hacia el correo del servidor.
+ Web</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: OS Command Injection Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-4/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-4/</guid>
+      <description>Lab: Blind OS command injection with out-of-band interaction En este laboratorio1la finalidad es obtener ejecucion de comandos en el sitio web, pero ya que no se recibe respuesta hay que realizar una consulta hacia el dns o una web para saber que se ejecuto la secuencia correctamente./
+Reconocimiento La web cuenta con un formulario para el envio de feedback hacia el correo del servidor.
+ Web 
+Hasta ahi todo bien pero hace una peticion que lo que hace es enviar el correo por medio de una consulta por terminal de mail que es para el envio de correo por terminal linux.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: OS Command Injection Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-5/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-5/</guid>
+      <description>Lab: Blind OS command injection with out-of-band data exfiltration En este laboratorio1la finalidad es obtener ejecucion de comandos en el sitio web, pero ya que no se recibe respuesta hay que realizar una consulta hacia el dns o una web para saber que se ejecuto la secuencia correctamente.
+Reconocimiento La web cuenta con un formulario para el envio de feedback hacia el correo del servidor.
+ Web 
+Hasta ahi todo bien pero hace una peticion que lo que hace es enviar el correo por medio de una consulta por terminal de mail que es para el envio de correo por terminal linux.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: OS Command Injection Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-1/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-1/</guid>
+      <description>Lab: OS command injection, simple case En este laboratorio1la finalidad es obtener ejecucion de comandos en el sitio web, ejecutando whoami
+Reconocimiento La web muestra un post el cual contiene contenido y una imagen.
+ Web 
+Hasta ahi todo bien pero hace una peticion que checa el stock que existe para posteriormente dar la respuesta. Aca lo mas seguro es que realice el proceso desde un script y lo ejecute el propio programa pasandole los parametros pero no hace un filtrado de los datos que nosotros ingresemos.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: OS Command Injection Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-2/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-2/</guid>
+      <description>Lab: Blind OS command injection with time delays En este laboratorio1la finalidad es obtener ejecucion de comandos en el sitio web, pero ya que no se recibe respuesta hay que ingresar un delay para saber que se ejecuto la inyeccion correctamente.
+Reconocimiento La web cuenta con un formulario para el envio de feedback hacia el correo del servidor.
+ Web 
+Hasta ahi todo bien pero hace una peticion que lo que hace es enviar el correo por medio de una consulta por terminal de mail que es para el envio de correo por terminal linux.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Directory Traversal Lab 1</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</link>

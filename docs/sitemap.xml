@@ -3,24 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.alux.cc/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/academy/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/burpsuite/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.alux.cc/tags/directory-traversal/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <loc>https://www.alux.cc/tags/command-injection/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/pentest-web/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/portswigger/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-3/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-4/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-5/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/post/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/</loc>
+    <lastmod>2021-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-1/</loc>
+    <lastmod>2021-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-os-command-injection-lab-2/</loc>
+    <lastmod>2021-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/directory-traversal/</loc>
     <lastmod>2021-11-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</loc>
@@ -39,12 +63,6 @@
     <lastmod>2021-11-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-6/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/post/</loc>
-    <lastmod>2021-11-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/</loc>
     <lastmod>2021-11-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/broken-authentication/</loc>

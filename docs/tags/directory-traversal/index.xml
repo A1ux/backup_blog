@@ -6,7 +6,18 @@
     <description>Recent content in directory traversal on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sun, 28 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/directory-traversal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/directory-traversal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-1/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-1/</guid>
+      <description>Lab: Excessive trust in client-side controls En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+En este caso lo que deberiamos de poder hacer es comprar un Lightweight l33t leather jacket para resolver el lab.
+Reconocimiento Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Directory Traversal Lab 1</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-directory-traversal-lab-1/</link>

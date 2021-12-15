@@ -4,7 +4,7 @@ title = "Portswigger Academy Learning Path: Business Logic Lab 1"
 date = "2021-12-02"
 description = "Lab: Excessive trust in client-side controls"
 tags = [
-    "directory traversal",
+    "business logic",
     "portswigger",
     "academy",
     "burpsuite",

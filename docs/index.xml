@@ -6,7 +6,1114 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 10</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</link>
+        <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 10" /&gt;&lt;h1 id=&#34;lab-infinite-money-logic-flaw&#34;&gt;Lab: Infinite money logic flaw&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo que debemos poder hacer es comprar la chaqueta para resolver el lab. Pero no contamos con el credito suficiente para realizar la compra. Lo primero que notamos es que seguimos teniendo un codigo de descuento que es &lt;code&gt;SIGNUP30&lt;/code&gt; que nos da el 30% de descuento en una compra. Y lo otro es que podemos comprar gift card&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 87; 
+			flex-basis: 210px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/giftcard.png&#34; data-size=&#34;438x500&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/giftcard.png&#34;
+			width=&#34;438&#34;
+			height=&#34;500&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/giftcard_hu874ade19f805c36fae76a72f8198a949_163089_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/giftcard_hu874ade19f805c36fae76a72f8198a949_163089_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Gift Card&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Gift Card&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Cuando realizamos la compra pasa lo siguiente, se nos da un codigo el cual podemos hacer el cambio para obtener 10 dolares en nuetro credito eso significa que si compramos una gift card con el descuento del 30% nos saldra en 7 dolares y cuando la cambiemos tendremos en nuestro credito 3 dolares mas por haber gastado menos por el descuento.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 197; 
+			flex-basis: 474px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/buygiftcard.png&#34; data-size=&#34;1787x904&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/buygiftcard.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;904&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/buygiftcard_hu8cc87314eca9929affb6a237d8e3856b_97617_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/buygiftcard_hu8cc87314eca9929affb6a237d8e3856b_97617_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Gift Card&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Gift Card&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Esto es imposible hacerlo manual sin la automatizacion, pero el sistema usa token csrf para las peticiones y toca realizar muchos pasos por eso lo mejor es preparar una macro para poder realizar el proceso de manera automatizada hasta que tengamos el credito suficiente para comprar la chaqueta.&lt;/p&gt;
+&lt;h3 id=&#34;creacion-de-macro&#34;&gt;Creacion de macro&lt;/h3&gt;
+&lt;h4 id=&#34;crear-sesion&#34;&gt;Crear sesion&lt;/h4&gt;
+&lt;p&gt;Vamos a Project Options &amp;gt; Session Handling Rules y creamos  una nueva&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 293; 
+			flex-basis: 704px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/sessions.png&#34; data-size=&#34;887x302&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/sessions.png&#34;
+			width=&#34;887&#34;
+			height=&#34;302&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/sessions_hud6d53b202c5604779609ea9dbe962979_16615_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/sessions_hud6d53b202c5604779609ea9dbe962979_16615_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;crear session handling rule&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;crear session handling rule&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;crear-rule-actions&#34;&gt;Crear Rule Actions&lt;/h4&gt;
+&lt;p&gt;Agregamos una nueva regla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 131; 
+			flex-basis: 315px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/ruleaction.png&#34; data-size=&#34;961x731&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/ruleaction.png&#34;
+			width=&#34;961&#34;
+			height=&#34;731&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/ruleaction_hue6ccdf378c2b6e0917a0e2d9247c37b6_32745_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/ruleaction_hue6ccdf378c2b6e0917a0e2d9247c37b6_32745_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Agregamos nueva rule action&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Agregamos nueva rule action&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h4 id=&#34;crear-macro&#34;&gt;Crear macro&lt;/h4&gt;
+&lt;p&gt;Elegimos las peticiones que participan en el proceso para la compra de la gift card y realizar y hacer uso de este. La forma en que procesan todo es:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Se envia a la carretilla la gift card para su compra&lt;/li&gt;
+&lt;li&gt;Se envia el cupon de 30% de descuento SIGNUP30&lt;/li&gt;
+&lt;li&gt;Se hace un check de lo que esta en carretilla&lt;/li&gt;
+&lt;li&gt;Se hace la confirmacion del pedido y realiza la compra de la gift card (en este paso se extrae de la respuesta el cupon que se muestra al realizar la compra)&lt;/li&gt;
+&lt;li&gt;Se envia la peticion para canjear la gift card&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 487px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/macro.png&#34; data-size=&#34;1346x663&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/macro.png&#34;
+			width=&#34;1346&#34;
+			height=&#34;663&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/macro_hue06b7b26c0d8ee20a0d85fdfde888a22_67208_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/macro_hue06b7b26c0d8ee20a0d85fdfde888a22_67208_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Edicion de macro&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Edicion de macro&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego solo nos queda enviar la peticion de &lt;code&gt;/my-account&lt;/code&gt; al intruder ya que es la que hara que toda la macro corra.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Esta se lanza con null payloads, que se ejecute indefinidamente y con solamente un hilo para que no genere error por los token csrf&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 272; 
+			flex-basis: 655px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/intruder.png&#34; data-size=&#34;1291x473&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/intruder.png&#34;
+			width=&#34;1291&#34;
+			height=&#34;473&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/intruder_huae5a6a30335eb556617f06e15cd89ae8_62057_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/intruder_huae5a6a30335eb556617f06e15cd89ae8_62057_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Intruder para lanzar macro&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Intruder para lanzar macro&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Cuando la lanzamos podemops ver como va cambiando el valor del credito y va sumando 3 dolares cada que se ejecuta correctamente. En total lance &lt;code&gt;438&lt;/code&gt; peticiones para tener el valor necesario para comprar el jacket.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 195; 
+			flex-basis: 469px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update1.png&#34; data-size=&#34;180x92&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update1.png&#34;
+			width=&#34;180&#34;
+			height=&#34;92&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update1_hu3f8c5e4163d883182f9cb71918561f23_5488_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update1_hu3f8c5e4163d883182f9cb71918561f23_5488_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Credito 1&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Credito 1&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 180; 
+			flex-basis: 434px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update2.png&#34; data-size=&#34;170x94&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update2.png&#34;
+			width=&#34;170&#34;
+			height=&#34;94&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update2_hu9b75941456021f2853ddacc75efe3b42_5194_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update2_hu9b75941456021f2853ddacc75efe3b42_5194_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Credito 2&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Credito 2&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 187; 
+			flex-basis: 450px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update3.png&#34; data-size=&#34;180x96&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update3.png&#34;
+			width=&#34;180&#34;
+			height=&#34;96&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update3_hu031e833945916474a99008485c719901_4976_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/update3_hu031e833945916474a99008485c719901_4976_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Credito 3&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Credito 3&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 167; 
+			flex-basis: 402px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/credito.png&#34; data-size=&#34;1769x1054&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/credito.png&#34;
+			width=&#34;1769&#34;
+			height=&#34;1054&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/credito_hu113e6df7a4d1becbcc712753c4a0d17e_87375_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/credito_hu113e6df7a4d1becbcc712753c4a0d17e_87375_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Credito del usuario en su cuenta&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Credito del usuario en su cuenta&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora al tener la cantidad correcta ya podemos realizar la compra y se resuelve el lab&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 395; 
+			flex-basis: 950px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/resuelto.png&#34; data-size=&#34;1770x447&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/resuelto.png&#34;
+			width=&#34;1770&#34;
+			height=&#34;447&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/resuelto_hu3f580bc0f36dc6b4414e70057a2e6504_45028_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/resuelto_hu3f580bc0f36dc6b4414e70057a2e6504_45028_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-infinite-money&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/</link>
+        <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 8" /&gt;&lt;h1 id=&#34;lab-authentication-bypass-via-flawed-state-machine&#34;&gt;Lab: Authentication bypass via flawed state machine&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ingresamos con las credenciales de &lt;code&gt;wiener:peter&lt;/code&gt; para poder acceder al sistema y luego debemos elegir el rol que queremos tener en el sistema.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 184; 
+			flex-basis: 443px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/login.png&#34; data-size=&#34;1217x659&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/login.png&#34;
+			width=&#34;1217&#34;
+			height=&#34;659&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/login_hu5c9305fb11b6196b1d6915067a676bc3_25631_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/login_hu5c9305fb11b6196b1d6915067a676bc3_25631_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Inicio de sesion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Inicio de sesion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al iniciar con las credenciales correctas podemos elegir el rol:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 373; 
+			flex-basis: 896px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/selectrole.png&#34; data-size=&#34;1106x296&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/selectrole.png&#34;
+			width=&#34;1106&#34;
+			height=&#34;296&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/selectrole_hu6f6cd85f692cb192d3d5f4193ee660d0_13757_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/selectrole_hu6f6cd85f692cb192d3d5f4193ee660d0_13757_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Seleccionar rol&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Seleccionar rol&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora vamos a tratar de saltarnos la eleccion de rol para ver si el sistema hace una validacion o provoca un error en el sistema para saber que algo esta mal.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 268; 
+			flex-basis: 643px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request.png&#34; data-size=&#34;1536x573&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request.png&#34;
+			width=&#34;1536&#34;
+			height=&#34;573&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request_hu21e92e161486fd2f3370558e4a789d7d_86976_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request_hu21e92e161486fd2f3370558e4a789d7d_86976_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Enviamos nuestras credenciales&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Enviamos nuestras credenciales&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora recibimos la opcion para elegir el rol, en esta ocasion lo que haremos es ignorar la peticion y eliminarla para que no se eliga el rol. Por lo que nos envia&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 245; 
+			flex-basis: 588px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request2.png&#34; data-size=&#34;1203x491&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request2.png&#34;
+			width=&#34;1203&#34;
+			height=&#34;491&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request2_huf2cea5065fca0553a6a9d5cafc2e9c40_57291_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/request2_huf2cea5065fca0553a6a9d5cafc2e9c40_57291_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion a darle drop para ignorar&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion a darle drop para ignorar&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto nos podemos dirigir a la raiz &lt;code&gt;/&lt;/code&gt; y ver que error pudo generar el sistema, y vemos que nos muestra el admin panel entre las opciones y accedemos y eliminaremos al usuario carlos&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 214; 
+			flex-basis: 515px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/resuelto.png&#34; data-size=&#34;1747x813&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/resuelto.png&#34;
+			width=&#34;1747&#34;
+			height=&#34;813&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/resuelto_hucc22d56c58da072fec3cdc2f7cc9fd9a_89841_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/resuelto_hucc22d56c58da072fec3cdc2f7cc9fd9a_89841_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-authentication-bypass-via-flawed-state-machine&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 9</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/</link>
+        <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 9" /&gt;&lt;h1 id=&#34;lab-flawed-enforcement-of-business-rules&#34;&gt;Lab: Flawed enforcement of business rules&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo que debemos poder realizar es comprar una chaqueta, pero tenemos diferentes codigos de descuento para aplicar.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 144; 
+			flex-basis: 346px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento1.png&#34; data-size=&#34;1756x1215&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento1.png&#34;
+			width=&#34;1756&#34;
+			height=&#34;1215&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento1_hu920c8851d76c125750a6830131a5cf30_96649_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento1_hu920c8851d76c125750a6830131a5cf30_96649_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Descuento de 5 dolares&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Descuento de 5 dolares&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero viendo en el pie de pagina podemos ver un formulario de registro para obtener otro codigo&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 276; 
+			flex-basis: 662px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuentoregistro.png&#34; data-size=&#34;1146x415&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuentoregistro.png&#34;
+			width=&#34;1146&#34;
+			height=&#34;415&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuentoregistro_hue738d89cf9e497cf349231546884795c_26189_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuentoregistro_hue738d89cf9e497cf349231546884795c_26189_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Descuento obtenido al registrar&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Descuento obtenido al registrar&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 156; 
+			flex-basis: 375px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento2.png&#34; data-size=&#34;1722x1102&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento2.png&#34;
+			width=&#34;1722&#34;
+			height=&#34;1102&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento2_hudb225a18ac653a69dca2fa74da42094d_88959_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/descuento2_hudb225a18ac653a69dca2fa74da42094d_88959_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Descuento del 30% del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Descuento del 30% del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora lo que debemos hacer es poder comprar con 100 dolares de credito el producto de la chaqueta, para esto si ponemos 1 cupon y luego el otro nos dara un error ya que no permite ingresarlo nuevamente, pero si primero ingresamos uno y luego el otro lo permite la aplicacion que la aplicacion no valida, podemos comprar hasta por 0 dolares.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 114; 
+			flex-basis: 274px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/cart.png&#34; data-size=&#34;1778x1552&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/cart.png&#34;
+			width=&#34;1778&#34;
+			height=&#34;1552&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/cart_hu4c7155751a73edd836ace3cd650e3c4b_135079_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/cart_hu4c7155751a73edd836ace3cd650e3c4b_135079_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Orden de compra&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Orden de compra&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al realizar la compra hemos solucionado el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 146; 
+			flex-basis: 352px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/resuelto.png&#34; data-size=&#34;1778x1211&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/resuelto.png&#34;
+			width=&#34;1778&#34;
+			height=&#34;1211&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/resuelto_huae198e8914cf766b146ddd2f5258dd40_158342_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/resuelto_huae198e8914cf766b146ddd2f5258dd40_158342_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-flawed-enforcement-of-business-rules&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/</link>
+        <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 5" /&gt;&lt;h1 id=&#34;lab-inconsistent-security-controls&#34;&gt;Lab: Inconsistent security controls&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Esta pagina es igual que podamos acceder al panel de admin para poder borrar al usuario carlos pero este usuario debe de contar con un mail del dominio dontwannacryh.com para poder acceder al panel.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 144; 
+			flex-basis: 347px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/register.png&#34; data-size=&#34;1123x775&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/register.png&#34;
+			width=&#34;1123&#34;
+			height=&#34;775&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/register_hu096260c75218624c9811b9c80f550ebc_57910_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/register_hu096260c75218624c9811b9c80f550ebc_57910_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Registrar usuario con usuario atacante&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Registrar usuario con usuario atacante&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y al registrarnos recibimos el correo para poder habilitar la cuenta y acceder. Todo&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 192; 
+			flex-basis: 461px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/mail.png&#34; data-size=&#34;1836x955&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/mail.png&#34;
+			width=&#34;1836&#34;
+			height=&#34;955&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/mail_hudde4913ef871eaf5e515f4fce4d4873f_172375_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/mail_hudde4913ef871eaf5e515f4fce4d4873f_172375_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Correo con link de activacion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Correo con link de activacion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora lo que queda es explotar esto, y al ingresar al sistema hay una funcion de actualizar el correo por lo que si intentamos actualizar funcionaria correctamente.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 201; 
+			flex-basis: 482px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/updateemail.png&#34; data-size=&#34;1779x884&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/updateemail.png&#34;
+			width=&#34;1779&#34;
+			height=&#34;884&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/updateemail_hu21347d564ef513fd774666c68dd66ec3_97493_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/updateemail_hu21347d564ef513fd774666c68dd66ec3_97493_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Actualizar correo por un dominio dontwannacry.com&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Actualizar correo por un dominio dontwannacry.com&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Cuando ingresamos el nuevo correo ya se nos actualiza y ya podemos acceder al panel de admin sin que nos saque de la sesion o valide que ese es el correo asociada a esa cuenta.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 199; 
+			flex-basis: 479px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/adminpanel.png&#34; data-size=&#34;1753x877&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/adminpanel.png&#34;
+			width=&#34;1753&#34;
+			height=&#34;877&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/adminpanel_hue1551d47712d014a123f6898963f8791_83893_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/adminpanel_hue1551d47712d014a123f6898963f8791_83893_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Panel de administracion al actualizar el mail&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Panel de administracion al actualizar el mail&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora accedemos y podemos borrar al usuario carlos para resolver el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 225; 
+			flex-basis: 540px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/resuelto.png&#34; data-size=&#34;1780x791&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/resuelto.png&#34;
+			width=&#34;1780&#34;
+			height=&#34;791&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/resuelto_huff40e0b3dabe26536122c4c2ca8974f3_86768_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/resuelto_huff40e0b3dabe26536122c4c2ca8974f3_86768_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-inconsistent-security-controls&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/</link>
+        <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 6" /&gt;&lt;h1 id=&#34;lab-weak-isolation-on-dual-use-endpoint&#34;&gt;Lab: Weak isolation on dual-use endpoint&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Contamos con una cuenta con las credenciales de &lt;code&gt;wiener:peter&lt;/code&gt; para poder acceder, cuando entramos hay una funcion de actualizar datos como contrasena o correo.png. Tratamos de realizar la peticion con los siguientes datos:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 145; 
+			flex-basis: 349px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/form.png&#34; data-size=&#34;1750x1203&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/form.png&#34;
+			width=&#34;1750&#34;
+			height=&#34;1203&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/form_hu11e06a0174ae05fe2eebba093fa4692c_78700_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/form_hu11e06a0174ae05fe2eebba093fa4692c_78700_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Formulario de actualizacion de datos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Formulario de actualizacion de datos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y la peticion es la siguiente:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 176; 
+			flex-basis: 423px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/requestinicial.png&#34; data-size=&#34;1538x871&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/requestinicial.png&#34;
+			width=&#34;1538&#34;
+			height=&#34;871&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/requestinicial_hu47fa4c0c1927a1f15b205b5676ffda1f_158328_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/requestinicial_hu47fa4c0c1927a1f15b205b5676ffda1f_158328_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion realizada para el cambio de contrasena&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion realizada para el cambio de contrasena&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora vamos a modificar esa peticion para poder cambiar la contrasena del usuario &lt;code&gt;administrator&lt;/code&gt; porque el sistema no valida que el usuario sea al que se debe realizar el cambio y tampoco la contrasena actual para colocar la nueva. La peticion realizada es la siguiente:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 169; 
+			flex-basis: 406px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/request.png&#34; data-size=&#34;1541x910&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/request.png&#34;
+			width=&#34;1541&#34;
+			height=&#34;910&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/request_hu22ba6dff961441dbb6dca31c1dcb205f_163132_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/request_hu22ba6dff961441dbb6dca31c1dcb205f_163132_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion realizada para actualiar la contrasena de administrator&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion realizada para actualiar la contrasena de administrator&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora tenemos acceso al panel del usuario &lt;code&gt;administrator&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 138; 
+			flex-basis: 332px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/adminpanel.png&#34; data-size=&#34;1727x1245&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/adminpanel.png&#34;
+			width=&#34;1727&#34;
+			height=&#34;1245&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/adminpanel_hue5c8dd2cfd6656ccb91f33d2e7c03906_108729_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/adminpanel_hue5c8dd2cfd6656ccb91f33d2e7c03906_108729_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Panel de administracion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Panel de administracion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora eliminamos al usuario a carlos para resolver el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 264; 
+			flex-basis: 635px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/resuelto.png&#34; data-size=&#34;1792x677&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/resuelto.png&#34;
+			width=&#34;1792&#34;
+			height=&#34;677&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/resuelto_hu768ddc1e967feeafeb87da8944cf4f65_84309_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/resuelto_hu768ddc1e967feeafeb87da8944cf4f65_84309_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-weak-isolation-on-dual-use-endpoint&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 7</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/</link>
+        <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 7" /&gt;&lt;h1 id=&#34;lab-insufficient-workflow-validation&#34;&gt;Lab: Insufficient workflow validation&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Ingresamos con las credenciales de &lt;code&gt;wiener:peter&lt;/code&gt; por lo que tendremos un credito de $100 para poder realizar las compras. Cuando intentamos damos &lt;code&gt;place order&lt;/code&gt; e intentamos realizar la compra nos redirige a una salida de falla&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;El sistema rediige a un codigo 303 con Insufficient Funds&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 265; 
+			flex-basis: 636px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/requesterror.png&#34; data-size=&#34;1540x581&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/requesterror.png&#34;
+			width=&#34;1540&#34;
+			height=&#34;581&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/requesterror_hua081a1a17631337936c8b7dc364445cf_82342_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/requesterror_hua081a1a17631337936c8b7dc364445cf_82342_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Error al realizar la compra&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Error al realizar la compra&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora vamos a comparar cuando si se cuenta con el credito valido para poder realizar la compra y podemos ver en el historial.png&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 544; 
+			flex-basis: 1306px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/history.png&#34; data-size=&#34;724x133&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/history.png&#34;
+			width=&#34;724&#34;
+			height=&#34;133&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/history_huc8953adb7cc21bc8549b3a1c86c16a87_10816_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/history_huc8953adb7cc21bc8549b3a1c86c16a87_10816_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Historial de peticiones realizadas&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Historial de peticiones realizadas&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;En este caso vemos que hace un get a &lt;code&gt;/cart/oreder-confirmation&lt;/code&gt; por lo que podemos saltarnos la verificacion del checkout y ver si el sistema no valida eso anteriormente. Realizando el siguiente request agregando el producto que es mayor al valor que tenemos de credito.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 171; 
+			flex-basis: 411px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/request.png&#34; data-size=&#34;1538x897&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/request.png&#34;
+			width=&#34;1538&#34;
+			height=&#34;897&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/request_hu70d0b2f268faad914a8939fb8f78cb37_149329_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/request_hu70d0b2f268faad914a8939fb8f78cb37_149329_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para saltarse el checkout&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para saltarse el checkout&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;No nos salta ni nos redirige nada y nos muestra que se ha realizado la compra correctamente, por lo que hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 139; 
+			flex-basis: 335px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/resuelto.png&#34; data-size=&#34;1784x1277&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/resuelto.png&#34;
+			width=&#34;1784&#34;
+			height=&#34;1277&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/resuelto_hu4ff9c27b203d88c93d349602df2f3e23_123580_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/resuelto_hu4ff9c27b203d88c93d349602df2f3e23_123580_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-insufficient-workflow-validation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/</link>
+        <pubDate>Tue, 07 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 4" /&gt;&lt;h1 id=&#34;lab-inconsistent-handling-of-exceptional-input&#34;&gt;Lab: Inconsistent handling of exceptional input&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;p&gt;En este caso lo que deberiamos de poder hacer es poder eliminar al usuario &lt;code&gt;Carlos&lt;/code&gt; en el cual entonces deberiamos de ingresar con un usuario &lt;code&gt;@dontwannacry.com&lt;/code&gt; .&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Nosotros contamos con un correo el cual va a recibir todos los correos que son enviados al dominio sin importar el usuario o un subdominio que indiquemos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 205; 
+			flex-basis: 493px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/mail.png&#34; data-size=&#34;1751x852&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/mail.png&#34;
+			width=&#34;1751&#34;
+			height=&#34;852&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/mail_hu7b4baff6d764d7c0c6541922b9ec69ff_165528_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/mail_hu7b4baff6d764d7c0c6541922b9ec69ff_165528_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Correo recibido al registrarnos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Correo recibido al registrarnos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo primero es registrarnos con un usuario normal, el cual no tiene mayores modulos, pero existe un path para usuarios administradores, este se puede hacer una busqueda a traves de herramientas como gobuster o intuir automaticamente por el nombre, este path es &lt;code&gt;/admin&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 396; 
+			flex-basis: 951px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/admininterface.png&#34; data-size=&#34;1781x449&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/admininterface.png&#34;
+			width=&#34;1781&#34;
+			height=&#34;449&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/admininterface_hu829a397ab447cb95d17ebd1682f284fd_58236_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/admininterface_hu829a397ab447cb95d17ebd1682f284fd_58236_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Path accesible por administradores&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Path accesible por administradores&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero lamentablemente un usuario cualquiera no podria acceder ya que el sistema valida que el correo del usuario sea &lt;code&gt;@dontwannacry.com&lt;/code&gt; pero hay un problema y es que aunque el usuario se crea, el correo no permite mas de n caracteres por lo que vemos que lo ultimo del correo no aparece pero aun asi se logra crear el usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 292; 
+			flex-basis: 701px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/maillargo.png&#34; data-size=&#34;1828x625&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/maillargo.png&#34;
+			width=&#34;1828&#34;
+			height=&#34;625&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/maillargo_hu66fcac872f880bc5e003fa15dedb4390_77205_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/maillargo_hu66fcac872f880bc5e003fa15dedb4390_77205_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Correo del usuario al ser mostrado&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Correo del usuario al ser mostrado&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora queda crear el usuario con el subdmonio &lt;code&gt;dontwannacry.com&lt;/code&gt; para nuestro dominio que tenemos y que el sistema al hacer la validacion de correo tome los caracteres del subdominio pensando que si esta correcto porque borra el resto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 325; 
+			flex-basis: 782px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/request.png&#34; data-size=&#34;1877x576&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/request.png&#34;
+			width=&#34;1877&#34;
+			height=&#34;576&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/request_hud4e6fa3f846f0a7ebc43284c57f4be8c_88612_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/request_hud4e6fa3f846f0a7ebc43284c57f4be8c_88612_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud para la creacion de un usuario nuevo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud para la creacion de un usuario nuevo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y tenemos nuestro correo creado:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 247; 
+			flex-basis: 593px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/accountwannacry.png&#34; data-size=&#34;1766x714&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/accountwannacry.png&#34;
+			width=&#34;1766&#34;
+			height=&#34;714&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/accountwannacry_hu3f55108800d330a22bd03898237d9395_83806_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/accountwannacry_hu3f55108800d330a22bd03898237d9395_83806_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Informacion mostrada en my account&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Informacion mostrada en my account&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora ya podemos acceder al path de &lt;code&gt;/admin&lt;/code&gt; y eliminar al usuario carlos:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 211; 
+			flex-basis: 508px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/resuelto.png&#34; data-size=&#34;1769x835&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/resuelto.png&#34;
+			width=&#34;1769&#34;
+			height=&#34;835&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/resuelto_hub29c8aa35c22a436e2cc6314ee33797e_104470_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/resuelto_hub29c8aa35c22a436e2cc6314ee33797e_104470_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Path accesible solo con correos de dontwannacry.com&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Path accesible solo con correos de dontwannacry.com&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-inconsistent-handling-of-exceptional-input&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/</link>
+        <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 3" /&gt;&lt;h1 id=&#34;lab-low-level-logic-flaw&#34;&gt;Lab: Low-level logic flaw&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;p&gt;En este caso lo que deberiamos de poder hacer es comprar un &lt;code&gt;Lightweight l33t leather jacket&lt;/code&gt; para resolver el lab usando las credenciales de &lt;code&gt;wiener:peter&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla en este va el productId y la cantidad&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 90; 
+			flex-basis: 216px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/articulo.png&#34; data-size=&#34;1787x1977&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/articulo.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;1977&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/articulo_huec73577eab29e147f7155993ebfcaf33_1775636_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/articulo_huec73577eab29e147f7155993ebfcaf33_1775636_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Articulo en venta para agregar a la carretilla&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Articulo en venta para agregar a la carretilla&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso seguimos el proceso y al enviar el producto a la carretilla es enviado el id del producto, y la cantidad del producto a enviar. Pero hay un problema aunque aca no podemos enviar valores negativos y solo permite enviar peticiones de una cantidad maxima de 99, podemos enviar muchas peticiones para que el sistema en el backend genere un error y que al llegar al limite se termina convirtiendo en negativo por la maxima cantidad que permite este tipo de datos&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Total en valores negativos&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 170; 
+			flex-basis: 408px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart.png&#34; data-size=&#34;1749x1028&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart.png&#34;
+			width=&#34;1749&#34;
+			height=&#34;1028&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart_huebdcfc2f5da3ed122e4086d57487831c_85705_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart_huebdcfc2f5da3ed122e4086d57487831c_85705_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Pago con valor negativo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Pago con valor negativo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora que sabemos esto lo que debemos hacer es calcular productos hasta que podamos pagar con los $100 de credito&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 234; 
+			flex-basis: 562px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/request.png&#34; data-size=&#34;1537x656&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/request.png&#34;
+			width=&#34;1537&#34;
+			height=&#34;656&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/request_hu8c3a7d3ac97ea44c53bff16d7061ce77_86738_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/request_hu8c3a7d3ac97ea44c53bff16d7061ce77_86738_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud para enviar a la carretilla&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud para enviar a la carretilla&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego si vemos la aplicacion vemos que con 32123 del jacket y otros 35 de producto menores a $100 para hacer el calculo y que paguemos menos de 100 porque soo comprando jacket no se podria&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 167; 
+			flex-basis: 402px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart2.png&#34; data-size=&#34;1795x1069&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart2.png&#34;
+			width=&#34;1795&#34;
+			height=&#34;1069&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart2_hu2c98f2ef1a9321c206ed5a0f7c9fae4e_84579_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/cart2_hu2c98f2ef1a9321c206ed5a0f7c9fae4e_84579_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Carretilla con los productos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Carretilla con los productos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto damos a &lt;code&gt;place order&lt;/code&gt; y realizamos la compra sin problemas y nos devuelve que hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 236; 
+			flex-basis: 568px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/resuelto.png&#34; data-size=&#34;1803x761&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/resuelto.png&#34;
+			width=&#34;1803&#34;
+			height=&#34;761&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/resuelto_hu72e45c50f6438b0e57fb7d1ebfab6c1f_102776_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/resuelto_hu72e45c50f6438b0e57fb7d1ebfab6c1f_102776_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-low-level&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Business Logic Lab 1</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-1/</link>
         <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
@@ -105,6 +1212,150 @@
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-excessive-trust-in-client-side-controls&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Business Logic Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/</link>
+        <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: Business Logic Lab 2" /&gt;&lt;h1 id=&#34;lab-high-level-logic-vulnerability&#34;&gt;Lab: High-level logic vulnerability&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.&lt;/p&gt;
+&lt;p&gt;En este caso lo que deberiamos de poder hacer es comprar un &lt;code&gt;Lightweight l33t leather jacket&lt;/code&gt; para resolver el lab usando las credenciales de &lt;code&gt;wiener:peter&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 90; 
+			flex-basis: 216px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/articulo.png&#34; data-size=&#34;1787x1977&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/articulo.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;1977&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/articulo_huec73577eab29e147f7155993ebfcaf33_1775636_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/articulo_huec73577eab29e147f7155993ebfcaf33_1775636_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Articulo en venta para agregar a la carretilla&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Articulo en venta para agregar a la carretilla&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;En este caso seguimos el proceso y al enviar el producto a la carretilla es enviado el id del producto, y la cantidad del producto a enviar. Por lo que la enviamos. Pero si cambiamos el valor a un numero negativo lo acepta e intentar pagar de esa manera. Pero nos salta el error de &lt;code&gt;Cart total price cannot be less than zero&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Podemos cambiar la cantidad a valor negativo&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 115; 
+			flex-basis: 276px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/carterror.png&#34; data-size=&#34;1142x991&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/carterror.png&#34;
+			width=&#34;1142&#34;
+			height=&#34;991&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/carterror_hu005967a92cdc7e1805d05929d06235fb_63368_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/carterror_hu005967a92cdc7e1805d05929d06235fb_63368_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Pago con valor negativo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Pago con valor negativo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora lo interesante ya que no permite pagar valores menores a 0 pero si elegir cantidades con valores negativos enviaremos la compra de &lt;code&gt;Lightweight&lt;/code&gt; con cantidad 1 y otro producto con cantidades negativas para restar el total.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 144; 
+			flex-basis: 347px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request.png&#34; data-size=&#34;780x539&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request.png&#34;
+			width=&#34;780&#34;
+			height=&#34;539&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request_huaa4d2eff30ea2e6cdbfa075d97f52165_66840_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request_huaa4d2eff30ea2e6cdbfa075d97f52165_66840_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud para enviar a la carretilla&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud para enviar a la carretilla&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 283; 
+			flex-basis: 679px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request2.png&#34; data-size=&#34;1229x434&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request2.png&#34;
+			width=&#34;1229&#34;
+			height=&#34;434&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request2_hub6d8e355212b07e11153eefa4edf31af_66946_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/request2_hub6d8e355212b07e11153eefa4edf31af_66946_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud para enviar a carretilla con cantidad negativa&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud para enviar a carretilla con cantidad negativa&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Luego si vemos la aplicacion vemos que nos da un total de $34.25 con el credito que si contamos. Para eso pagamos y nos lo aceptaria.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 111; 
+			flex-basis: 268px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/cart.png&#34; data-size=&#34;1157x1036&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/cart.png&#34;
+			width=&#34;1157&#34;
+			height=&#34;1036&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/cart_hu149f68ca87658deee6d392918ddbb789_69866_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/cart_hu149f68ca87658deee6d392918ddbb789_69866_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Carretilla con los productos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Carretilla con los productos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto damos a &lt;code&gt;place order&lt;/code&gt; y realizamos la compra sin problemas y nos devuelve que hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 232; 
+			flex-basis: 557px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/resuelto.png&#34; data-size=&#34;1789x770&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/resuelto.png&#34;
+			width=&#34;1789&#34;
+			height=&#34;770&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/resuelto_hue57d9fd35b6fcef8601d5e144c7a8046_105674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/resuelto_hue57d9fd35b6fcef8601d5e144c7a8046_105674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-high-level&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

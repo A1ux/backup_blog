@@ -6,7 +6,93 @@
     <description>Recent content in burpsuite on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/burpsuite/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/burpsuite/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 10</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</link>
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</guid>
+      <description>Lab: Infinite money logic flaw En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Lo que debemos poder hacer es comprar la chaqueta para resolver el lab. Pero no contamos con el credito suficiente para realizar la compra. Lo primero que notamos es que seguimos teniendo un codigo de descuento que es SIGNUP30 que nos da el 30% de descuento en una compra.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 8</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-8/</guid>
+      <description>Lab: Authentication bypass via flawed state machine En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Ingresamos con las credenciales de wiener:peter para poder acceder al sistema y luego debemos elegir el rol que queremos tener en el sistema.
+ Inicio de sesion 
+Al iniciar con las credenciales correctas podemos elegir el rol:</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 9</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-9/</guid>
+      <description>Lab: Flawed enforcement of business rules En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Lo que debemos poder realizar es comprar una chaqueta, pero tenemos diferentes codigos de descuento para aplicar.
+ Descuento de 5 dolares 
+Pero viendo en el pie de pagina podemos ver un formulario de registro para obtener otro codigo</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-5/</guid>
+      <description>Lab: Inconsistent security controls En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Esta pagina es igual que podamos acceder al panel de admin para poder borrar al usuario carlos pero este usuario debe de contar con un mail del dominio dontwannacryh.com para poder acceder al panel.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-6/</guid>
+      <description>Lab: Weak isolation on dual-use endpoint En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Contamos con una cuenta con las credenciales de wiener:peter para poder acceder, cuando entramos hay una funcion de actualizar datos como contrasena o correo.png. Tratamos de realizar la peticion con los siguientes datos:</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 7</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-7/</guid>
+      <description>Lab: Insufficient workflow validation En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+Reconocimiento Ingresamos con las credenciales de wiener:peter por lo que tendremos un credito de $100 para poder realizar las compras. Cuando intentamos damos place order e intentamos realizar la compra nos redirige a una salida de falla</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/</link>
+      <pubDate>Tue, 07 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-4/</guid>
+      <description>Lab: Inconsistent handling of exceptional input En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+En este caso lo que deberiamos de poder hacer es poder eliminar al usuario Carlos en el cual entonces deberiamos de ingresar con un usuario @dontwannacry.com .
+Reconocimiento Nosotros contamos con un correo el cual va a recibir todos los correos que son enviados al dominio sin importar el usuario o un subdominio que indiquemos.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/</link>
+      <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-3/</guid>
+      <description>Lab: Low-level logic flaw En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+En este caso lo que deberiamos de poder hacer es comprar un Lightweight l33t leather jacket para resolver el lab usando las credenciales de wiener:peter
+Reconocimiento Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla en este va el productId y la cantidad</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Business Logic Lab 1</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-1/</link>
@@ -15,6 +101,17 @@
       <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-1/</guid>
       <description>Lab: Excessive trust in client-side controls En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
 En este caso lo que deberiamos de poder hacer es comprar un Lightweight l33t leather jacket para resolver el lab.
+Reconocimiento Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Business Logic Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-2/</guid>
+      <description>Lab: High-level logic vulnerability En este laboratorio1la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+En este caso lo que deberiamos de poder hacer es comprar un Lightweight l33t leather jacket para resolver el lab usando las credenciales de wiener:peter
 Reconocimiento Lo que podemos notar es que la web envia una peticion con el producto para agregar a la carretilla</description>
     </item>
     

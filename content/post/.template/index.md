@@ -1,10 +1,10 @@
 +++
 author = "Alux"
-title = "Portswigger Academy Learning Path: Business Logic Lab "
-date = "2021-12-11"
+title = "Portswigger Academy Learning Path: Information Disclosure Lab "
+date = "2021-12-15"
 description = "Lab: "
 tags = [
-    "business logic",
+    "information disclosure",
     "portswigger",
     "academy",
     "burpsuite",

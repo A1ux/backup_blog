@@ -86,7 +86,7 @@ params:
         waline:
             serverURL:
             lang:
-            visitor:
+            visitor: true
             avatar:
             emoji:
                 - https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo

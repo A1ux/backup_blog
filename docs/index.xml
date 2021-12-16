@@ -6,7 +6,652 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Information Disclosure Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</link>
+        <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: Information Disclosure Lab 1" /&gt;&lt;h1 id=&#34;lab-information-disclosure-in-error-messages&#34;&gt;Lab: Information disclosure in error messages&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como &lt;code&gt;Information Disclosure&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es una aplicacion que muestra articulos y este es un ejemplo de ellos. El link es el siguiente:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://ac191fa51e0838eec062495f000c0099.web-security-academy.net/product?productId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 103; 
+			flex-basis: 247px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/article.png&#34; data-size=&#34;1774x1718&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/article.png&#34;
+			width=&#34;1774&#34;
+			height=&#34;1718&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/article_hu4dc69b8d2611c1246b7864cf67cbb6c9_752494_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/article_hu4dc69b8d2611c1246b7864cf67cbb6c9_752494_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Articulo de la aplicacion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Articulo de la aplicacion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Teniendo esto podemos pensar que lo primero es que generar un error al ingresar el id del articulo, que tambien funciona para saber si algo puede ser vulnerable a sqli. Esto lo haremos injectando una comilla simple &lt;code&gt;&#39;&lt;/code&gt; o &lt;code&gt;&amp;quot;&lt;/code&gt; o &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; se puede intentar con cualquiera.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://ac191fa51e0838eec062495f000c0099.web-security-academy.net/product?productId=1&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y genera el siguiente error que genera el nombre de la aplicacion:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 173; 
+			flex-basis: 416px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/error.png&#34; data-size=&#34;1548x891&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/error.png&#34;
+			width=&#34;1548&#34;
+			height=&#34;891&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/error_hu97e11a306aadb301ab5210017d69c02f_305480_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/error_hu97e11a306aadb301ab5210017d69c02f_305480_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Erro generado al modificar el id&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Erro generado al modificar el id&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ingresamos la solucion y resolvimos el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 194; 
+			flex-basis: 467px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/resuelto.png&#34; data-size=&#34;1811x930&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/resuelto.png&#34;
+			width=&#34;1811&#34;
+			height=&#34;930&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/resuelto_hu769deded3bacf0ab895b7d7df5d59077_328965_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/resuelto_hu769deded3bacf0ab895b7d7df5d59077_328965_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/information-disclosure/exploiting/lab-infoleak-in-error-messages&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Information Disclosure Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/</link>
+        <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: Information Disclosure Lab 2" /&gt;&lt;h1 id=&#34;lab-information-disclosure-on-debug-page&#34;&gt;Lab: Information disclosure on debug page&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como &lt;code&gt;Information Disclosure&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es una aplicacion que muestra articulos y en el podemos ver detalles, lo que hay que obtener es la SECRET_KEY que esta en las variables de entorno, lo que nos hace recordar que la manera de ver esto es posible en HP desde un archivo en phpinfo.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo que vamos a hacer es la manera de buscar el phpinfo, ingresamos directamente a &lt;code&gt;phpinfo.php&lt;/code&gt; pero no existe, por lo que podemos buscar comentarios o en el codigo fuente.&lt;/p&gt;
+&lt;h3 id=&#34;buscar-la-url&#34;&gt;Buscar la URL&lt;/h3&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 488; 
+			flex-basis: 1171px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/comentario.png&#34; data-size=&#34;1211x248&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/comentario.png&#34;
+			width=&#34;1211&#34;
+			height=&#34;248&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/comentario_hu03fd4895e9b6056c58bde97faa071452_51908_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/comentario_hu03fd4895e9b6056c58bde97faa071452_51908_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Comentarios en el codigo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Comentarios en el codigo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;O a traves de las herramientas de burpsuite&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Vamos a Target &amp;gt; Site map&lt;/li&gt;
+&lt;li&gt;Damos clic derecho en el sitio web&lt;/li&gt;
+&lt;li&gt;Engagement Tools &amp;gt; Find Comments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Y se lista a continuacion los codigos: Information&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 262; 
+			flex-basis: 629px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/burpcomment.png&#34; data-size=&#34;968x369&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/burpcomment.png&#34;
+			width=&#34;968&#34;
+			height=&#34;369&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/burpcomment_hub0274be67798476ae707cd71ca2bf76c_30366_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/burpcomment_hub0274be67798476ae707cd71ca2bf76c_30366_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Comentarios con funcion de burpsuite&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Comentarios con funcion de burpsuite&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;buscar-la-secret-key&#34;&gt;Buscar la secret key&lt;/h3&gt;
+&lt;p&gt;Ahora accedemos al archivo:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 255; 
+			flex-basis: 613px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/phpinfo.png&#34; data-size=&#34;1607x629&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/phpinfo.png&#34;
+			width=&#34;1607&#34;
+			height=&#34;629&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/phpinfo_hu64f774c641deb338e2bafcbac39bc6b6_165741_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/phpinfo_hu64f774c641deb338e2bafcbac39bc6b6_165741_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;PHPINFO archivo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;PHPINFO archivo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y buscando encontramos la key:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 384; 
+			flex-basis: 923px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/key.png&#34; data-size=&#34;1431x372&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/key.png&#34;
+			width=&#34;1431&#34;
+			height=&#34;372&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/key_hu192b812aced57641fae98f30bf5bbe5f_53645_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/key_hu192b812aced57641fae98f30bf5bbe5f_53645_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Secret key en phpinfo.php&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Secret key en phpinfo.php&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ingresamos la solucion y resolvimos el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 234; 
+			flex-basis: 562px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/resuelto.png&#34; data-size=&#34;1787x763&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/resuelto.png&#34;
+			width=&#34;1787&#34;
+			height=&#34;763&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/resuelto_hu3edf3f6caa26df627c0d9153704ec7f5_330309_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/resuelto_hu3edf3f6caa26df627c0d9153704ec7f5_330309_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/information-disclosure/exploiting/lab-infoleak-on-debug-page&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Information Disclosure Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/</link>
+        <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: Information Disclosure Lab 3" /&gt;&lt;h1 id=&#34;lab-source-code-disclosure-via-backup-files&#34;&gt;Lab: Source code disclosure via backup files&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como &lt;code&gt;Information Disclosure&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es una aplicacion que muestra articulos pero lo que debemos hacer es una archivo de backups que nos pueda dar la contrasena que necesitamos.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Buscamos entre el codigo fuente no encontramos nada y entre los comentarios, asi que buscamos otra manera, y en la ruta de &lt;code&gt;/robots.txt&lt;/code&gt; podemos ver si encontramos algo.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 462; 
+			flex-basis: 1110px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/robots.png&#34; data-size=&#34;657x142&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/robots.png&#34;
+			width=&#34;657&#34;
+			height=&#34;142&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/robots_hud77612498e757243c608aac36926e23f_12938_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/robots_hud77612498e757243c608aac36926e23f_12938_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Contenido del archivo robots.txt&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Contenido del archivo robots.txt&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora listamos lo que encontramos en ese archivo robots&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 283; 
+			flex-basis: 679px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/directory.png&#34; data-size=&#34;626x221&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/directory.png&#34;
+			width=&#34;626&#34;
+			height=&#34;221&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/directory_hufbd3b1405b037f02ccb5286cf81b7206_20816_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/directory_hufbd3b1405b037f02ccb5286cf81b7206_20816_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Contenido del directorio backup&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Contenido del directorio backup&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y podemos ver que tiene un archivo de backup que podemos visualizar, lo abrimos y nos lista a continuacion el codigo y encontramos la contrasena de postgresql&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kn&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;data.productcatalog&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;common.db.ConnectionBuilder&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.io.IOException&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.io.ObjectInputStream&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.io.Serializable&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.sql.Connection&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.sql.ResultSet&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.sql.SQLException&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;java.sql.Statement&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ProductTemplate&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Serializable&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;serialVersionUID&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;1L&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;final&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;transient&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;ProductTemplate&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;readObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ObjectInputStream&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;inputStream&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;throws&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;IOException&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClassNotFoundException&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;inputStream&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;defaultReadObject&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;ConnectionBuilder&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connectionBuilder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ConnectionBuilder&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;org.postgresql.Driver&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;postgresql&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;5432&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;postgres&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;postgres&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s&#34;&gt;&amp;#34;zkzsf7azhrcee4r127holbxpwkaq8f3g&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;withAutoCommit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;Connection&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connectionBuilder&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;connect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;30&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sql&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;SELECT * FROM products WHERE id = &amp;#39;%s&amp;#39; LIMIT 1&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;Statement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;statement&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;createStatement&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;ResultSet&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;resultSet&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;statement&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;executeQuery&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sql&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;resultSet&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;())&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;product&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;resultSet&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SQLException&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;throw&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;IOException&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Product&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getProduct&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;product&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Y ahora ingresamos la solucion y resolvimos el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 211; 
+			flex-basis: 508px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/resuelto.png&#34; data-size=&#34;1795x847&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/resuelto.png&#34;
+			width=&#34;1795&#34;
+			height=&#34;847&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/resuelto_hu2d520a614d839c425859cbf2b5d3aaa8_464114_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/resuelto_hu2d520a614d839c425859cbf2b5d3aaa8_464114_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/information-disclosure/exploiting/lab-infoleak-via-backup-files&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Information Disclosure Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/</link>
+        <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: Information Disclosure Lab 4" /&gt;&lt;h1 id=&#34;lab-authentication-bypass-via-information-disclosure&#34;&gt;Lab: Authentication bypass via information disclosure&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como &lt;code&gt;Information Disclosure&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es que la aplicacion nos da unas credenciales de &lt;code&gt;wiener:peter&lt;/code&gt; con la cual podemos acceder al sistema y realizar otras funciones. Pero cuando queremos acceder al portal de administracion que esta en la ruta &lt;code&gt;/admin&lt;/code&gt; muestra el siguiente error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Admin interface only available to local users&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 530; 
+			flex-basis: 1273px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/requisito.png&#34; data-size=&#34;1767x333&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/requisito.png&#34;
+			width=&#34;1767&#34;
+			height=&#34;333&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/requisito_hua8e49a0ba5a00a23d457661aaa39305a_19485_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/requisito_hua8e49a0ba5a00a23d457661aaa39305a_19485_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solo esta disponible para usuarios en localhost&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solo esta disponible para usuarios en localhost&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora nos da una ruta donde seguir que es que seguramente envia un header la comunicacion para saber si se debe acceder o no dependiendo del header que es enviado, para eso utilizamos el metodo &lt;code&gt;TRACE&lt;/code&gt; que lo que hara es volver a imprimirnos todos los headers que son enviados en la peticion haciendo una especie de debugging.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 289; 
+			flex-basis: 694px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request.png&#34; data-size=&#34;1537x531&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request.png&#34;
+			width=&#34;1537&#34;
+			height=&#34;531&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request_hu67b904ae4a207b8dcc2434d50d391672_107155_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request_hu67b904ae4a207b8dcc2434d50d391672_107155_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Envio de peticion con metodo TRACE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Envio de peticion con metodo TRACE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Encontramos un header interesante que es &lt;code&gt;X-Custom-IP-Authorization: &amp;lt;nuestraip&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Ahora lo que sabemos es que podemos cambiar esa ip para enviar la nuestra y actue como si nosotros estuvieramos en localhost y poder acceder a la funcion de admin&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 175; 
+			flex-basis: 421px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request2.png&#34; data-size=&#34;1535x873&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request2.png&#34;
+			width=&#34;1535&#34;
+			height=&#34;873&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request2_hu9b7939c82ed4b1f1612528f21d6e7f46_121167_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request2_hu9b7939c82ed4b1f1612528f21d6e7f46_121167_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar la funcionalidad de admin&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar la funcionalidad de admin&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya sabemos que tenemos acceso ahora debemos eliminar al usuario carlos haciendo la peticion get que nos ha dado la respuesta anterior que es &lt;code&gt;/admin/delete?username=carlos&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 326; 
+			flex-basis: 782px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request3.png&#34; data-size=&#34;1539x472&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request3.png&#34;
+			width=&#34;1539&#34;
+			height=&#34;472&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request3_hu75a33bb2d6293d3a38086cc5c7967b87_65079_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/request3_hu75a33bb2d6293d3a38086cc5c7967b87_65079_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Eliminacion de usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Eliminacion de usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ingresamos la solucion y resolvimos el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 269; 
+			flex-basis: 646px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/resuelto.png&#34; data-size=&#34;1800x668&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/resuelto.png&#34;
+			width=&#34;1800&#34;
+			height=&#34;668&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/resuelto_hudd7490475328aad218f82b856bc53717_78558_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/resuelto_hudd7490475328aad218f82b856bc53717_78558_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/information-disclosure/exploiting/lab-infoleak-authentication-bypass&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Information Disclosure Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/</link>
+        <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: Information Disclosure Lab 5" /&gt;&lt;h1 id=&#34;lab-source-code-disclosure-via-backup-files&#34;&gt;Lab: Source code disclosure via backup files&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como &lt;code&gt;Information Disclosure&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Lo primero que tenemos es una aplicacion que parece todo normal, pero existe algo que al realizar una busqueda el sitio cuenta con una carpeta &lt;code&gt;.git&lt;/code&gt; que nos dice eso que estan haciendo uso de git para el versionado de la aplicacion y esta carpeta es la que lleva el historial de todos los cambios en el sitio web.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 97; 
+			flex-basis: 233px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/git.png&#34; data-size=&#34;621x638&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/git.png&#34;
+			width=&#34;621&#34;
+			height=&#34;638&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/git_hu41dea0547ad82bd1f76dd071a623a11b_40936_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/git_hu41dea0547ad82bd1f76dd071a623a11b_40936_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Archivos de git&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Archivos de git&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Todos estos archivos nos puede llevar a rastrear cambios, visualizar la contrasena del administrador que pudo estar en estor archivos ya que todo el cambio ahi esta registrado y estara el log y podemos regresar a cambios anteriores. Para eso debemos descargar en local toda la carpeta para trabajar con ella, pero con wget se vuelve muy complicado y por eso existe una tool muy buena que es git-dumper que nos descarga la carpeta completa, esta se instala con pip.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;pip install git-dumper
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora la lanzamos con el sitio y la carpeta .git y la carpeta en la que queremos que se guarden todos nuestros archivos.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alux@rootsystems:~/tools$ git-dumper https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git &lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Testing https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Testing https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/ &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching common files
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/post-receive.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/post-receive.sample responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.gitignore &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.gitignore responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/post-update.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/COMMIT_EDITMSG &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/commit-msg.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/post-commit.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/post-commit.sample responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/pre-applypatch.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/applypatch-msg.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/description &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/pre-push.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/pre-commit.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/prepare-commit-msg.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/pre-rebase.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/index &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/pre-receive.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/info/packs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/info/packs responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/hooks/update.sample &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/info/exclude &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Finding refs/
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/FETCH_HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/FETCH_HEAD responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/info/refs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/info/refs responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/config &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/ORIG_HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/ORIG_HEAD responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/heads/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/remotes/origin/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/remotes/origin/master responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/remotes/origin/HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/remotes/origin/HEAD responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/stash &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/logs/refs/stash responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/packed-refs &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/packed-refs responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/heads/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/wip/wtree/refs/heads/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/wip/wtree/refs/heads/master responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/stash &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/stash responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/remotes/origin/HEAD &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/remotes/origin/HEAD responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/remotes/origin/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/remotes/origin/master responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/wip/index/refs/heads/master &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/refs/wip/index/refs/heads/master responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Finding packs
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Finding objects
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching objects
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/89/44e3b9853691431dc58d5f4978d3940cea4af2 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/fd/566ec1574b5eb704b3b69a275cdedf33dfc1b9 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/21/d23f13ce6c704b81857379a3e247e3436f4b26 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/63/10c3e39bf987171b2f674fbb643edddbe0e238 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/00/00000000000000000000000000000000000000 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;404&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/00/00000000000000000000000000000000000000 responded with status code &lt;span class=&#34;m&#34;&gt;404&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/21/54555944002791a4d27412bf6e9a6f29e942fa &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/2a/43eabe500cc1a50c12bdbf2ed4c1f6ce3f1672 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Fetching https://ac951f811e6afa19c09f053f002800bc.web-security-academy.net/.git/objects/21/d2e87f8577056741bb3dd4608cfd7b7506cfa5 &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;200&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;-&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; Running git checkout .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora que tenemos todos nuestros archivos podemos entrar y ver que esta en los archivos y carpetas creadas. Y hay algo que llama la atencion y es donde esta una contrasena de usuario pero que ahora esta como variable. Podriamos ver el historial si antes estaba ahi la contrasena real y no fue cambiada.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alux@rootsystems:~/tools/test&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;$ ls -la
+drwxr-xr-x  - alux &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; dic 21:55 .git
+.rw-r--r-- &lt;span class=&#34;m&#34;&gt;37&lt;/span&gt; alux &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; dic 21:55 admin.conf
+.rw-r--r-- &lt;span class=&#34;m&#34;&gt;88&lt;/span&gt; alux &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt; dic 21:55 admin_panel.php
+alux@rootsystems:~/tools/test&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;$ cat admin_panel.php&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt;
+&amp;lt;?php &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;TODO: build an amazing admin panel, but remember to check the password!&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; ?&amp;gt;
+alux@rootsystems:~/tools/test&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;$ cat admin.conf
+&lt;span class=&#34;nv&#34;&gt;ADMIN_PASSWORD&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;env&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;ADMIN_PASSWORD&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+alux@rootsystems:~/tools/test&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;$
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Para eso nos apoyamos de git y mostramos los cambios que se han realizado y vemos que ahi esta la nueva contrasena y la vieja por lo que deberiamos poder acceder con ella.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alux@rootsystems:~/tools/test&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;$ git show
+commit fd566ec1574b5eb704b3b69a275cdedf33dfc1b9 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;HEAD -&amp;gt; master&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+Author: Carlos Montoya &amp;lt;carlos@evil-user.net&amp;gt;
+Date:   Tue Jun &lt;span class=&#34;m&#34;&gt;23&lt;/span&gt; 14:05:07 &lt;span class=&#34;m&#34;&gt;2020&lt;/span&gt; +0000
+
+    Remove admin password from config
+
+diff --git a/admin.conf b/admin.conf
+index 21d2e87..21d23f1 &lt;span class=&#34;m&#34;&gt;100644&lt;/span&gt;
+--- a/admin.conf
++++ b/admin.conf
+@@ -1 +1 @@
+-ADMIN_PASSWORD&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;ewm1p3s0m5xon81jftcj
++ADMIN_PASSWORD&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;env&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;ADMIN_PASSWORD&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Y ahora ingresamos las credenciales de &lt;code&gt;administrator:ewm1p3s0m5xon81jftcj&lt;/code&gt;, eliminamos al usuario carlos y resolvimos el lab:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 257; 
+			flex-basis: 617px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/resuelto.png&#34; data-size=&#34;1804x701&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/resuelto.png&#34;
+			width=&#34;1804&#34;
+			height=&#34;701&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/resuelto_hufaac76ddbbf68615f9e1465c2c88d110_84660_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/resuelto_hufaac76ddbbf68615f9e1465c2c88d110_84660_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/information-disclosure/exploiting/lab-infoleak-via-backup-files&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Business Logic Lab 10</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</link>
         <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>

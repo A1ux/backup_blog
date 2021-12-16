@@ -6,7 +6,60 @@
     <description>Recent content in academy on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/academy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Information Disclosure Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</guid>
+      <description>Lab: Information disclosure in error messages En este laboratorio1la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como Information Disclosure.
+Reconocimiento Lo primero que tenemos es una aplicacion que muestra articulos y este es un ejemplo de ellos. El link es el siguiente:
+https://ac191fa51e0838eec062495f000c0099.web-security-academy.net/product?productId=1  Articulo de la aplicacion 
+Explotacion Teniendo esto podemos pensar que lo primero es que generar un error al ingresar el id del articulo, que tambien funciona para saber si algo puede ser vulnerable a sqli.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Information Disclosure Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-2/</guid>
+      <description>Lab: Information disclosure on debug page En este laboratorio1la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como Information Disclosure.
+Reconocimiento Lo primero que tenemos es una aplicacion que muestra articulos y en el podemos ver detalles, lo que hay que obtener es la SECRET_KEY que esta en las variables de entorno, lo que nos hace recordar que la manera de ver esto es posible en HP desde un archivo en phpinfo.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Information Disclosure Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-3/</guid>
+      <description>Lab: Source code disclosure via backup files En este laboratorio1la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como Information Disclosure.
+Reconocimiento Lo primero que tenemos es una aplicacion que muestra articulos pero lo que debemos hacer es una archivo de backups que nos pueda dar la contrasena que necesitamos.
+Explotacion Buscamos entre el codigo fuente no encontramos nada y entre los comentarios, asi que buscamos otra manera, y en la ruta de /robots.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Information Disclosure Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-4/</guid>
+      <description>Lab: Authentication bypass via information disclosure En este laboratorio1la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como Information Disclosure.
+Reconocimiento Lo primero que tenemos es que la aplicacion nos da unas credenciales de wiener:peter con la cual podemos acceder al sistema y realizar otras funciones. Pero cuando queremos acceder al portal de administracion que esta en la ruta /admin muestra el siguiente error</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Information Disclosure Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/</guid>
+      <description>Lab: Source code disclosure via backup files En este laboratorio1la finalidad es poder mostrar en la aplicacion informacion de la infraestructura, software o algo que revele informacion del sistema. Esta vulnerabilidad mas conocida como Information Disclosure.
+Reconocimiento Lo primero que tenemos es una aplicacion que parece todo normal, pero existe algo que al realizar una busqueda el sitio cuenta con una carpeta .git que nos dice eso que estan haciendo uso de git para el versionado de la aplicacion y esta carpeta es la que lleva el historial de todos los cambios en el sitio web.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Business Logic Lab 10</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-business-logic-lab-10/</link>

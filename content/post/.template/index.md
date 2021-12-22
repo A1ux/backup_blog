@@ -1,10 +1,10 @@
 +++
 author = "Alux"
-title = "Portswigger Academy Learning Path: Information Disclosure Lab "
-date = "2021-12-15"
+title = "Portswigger Academy Learning Path: Access Control Lab "
+date = "2021-12-16"
 description = "Lab: "
 tags = [
-    "information disclosure",
+    "access control",
     "portswigger",
     "academy",
     "burpsuite",
@@ -18,7 +18,7 @@ image = "head.png"
 
 # Lab: 
 
-En este <cite>laboratorio[^1]</cite>la finalidad es poder explotar una vulnerabilidad de business logic la cual ocurre cuando el sistema no valida lo que puede hacer el usuario creyendo que todo seguira el workflow correcto.
+En este <cite>laboratorio[^1]</cite>la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
 
 
 

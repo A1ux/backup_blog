@@ -188,7 +188,7 @@ menu:
             
         - identifier: twitter
           name: Twitter
-          url: https://twitter.com/A1uxHash/
+          url: 
           params:
             icon: brand-twitter
 

@@ -6,7 +6,88 @@
     <description>Recent content in Posts on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Wed, 15 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-4/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-4/</guid>
+      <description>Lab: User role can be modified in user profile En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+Explotacion Existe una funcionalidad de administracion en la cual podemos entrar con el usuario wiener:peter pero si entramos a esa ruta no podemos acceder nos sale la siguiente alerta:
+ Admin interface only available if logged in as an administrator</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-5/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-5/</guid>
+      <description>Lab: URL-based access control can be circumvented En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.
+Explotacion Pero podemos bypassear esto por medio de headers como
+X-Original-URL X-Rewrite-URL Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de acceso denegado.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</guid>
+      <description>Lab: Method-based access control can be circumvented En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.
+Explotacion Pero podemos bypassear esto por medio de headers como
+X-Original-URL X-Rewrite-URL Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de acceso denegado.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-1/</link>
+      <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-1/</guid>
+      <description>Lab: Unprotected admin functionality En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+Debemos de buscar el modulo de administracion para poder acceder en el y ver si la aplicacion no valida los permisos necesarios.
+ Archivo robots 
+Explotacion Ahora sabemos que exista esta pagina accedemos y vemos si podemos entrar sin los permisos necesarios.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-2/</link>
+      <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-2/</guid>
+      <description>Lab: Unprotected admin functionality with unpredictable URL En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+Explotacion Ahora sabemos que exista una pagina para poder acceder a la funcionalidad de admin y que no esta protegida correctamente. Nos vamos a la web de login para
+ Pagina de login</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-3/</link>
+      <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-3/</guid>
+      <description>Lab: User role controlled by request parameter En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento Cuando entramos tenemos la siguiente web.
+ Web 
+Explotacion Existe una funcionalidad de administracion en la cual podemos entrar con el usuario wiener:peter pero si entramos a esa ruta no podemos acceder nos sale la siguiente alerta:
+ Admin interface only available if logged in as an administrator</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Information Disclosure Lab 1</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</link>

@@ -3,24 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.alux.cc/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/academy/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/access-control/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/burpsuite/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/information-disclosure/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/pentest-web/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/portswigger/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-4/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-5/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/post/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-1/</loc>
+    <lastmod>2021-12-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-2/</loc>
+    <lastmod>2021-12-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-3/</loc>
+    <lastmod>2021-12-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/information-disclosure/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-1/</loc>
@@ -36,12 +63,6 @@
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-information-disclosure-lab-5/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/post/</loc>
-    <lastmod>2021-12-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/</loc>
     <lastmod>2021-12-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/business-logic/</loc>

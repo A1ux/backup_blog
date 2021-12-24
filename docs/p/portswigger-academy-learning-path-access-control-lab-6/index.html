@@ -9,7 +9,7 @@
 <meta property='og:description' content='Lab: Method-based access control can be circumvented'>
 <meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/'>
 <meta property='og:site_name' content='A1ux'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='access control' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-12-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-12-17T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/head.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='access control' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2021-12-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-12-22T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/head.png' />
 <meta name="twitter:title" content="Portswigger Academy Learning Path: Access Control Lab 6">
 <meta name="twitter:description" content="Lab: Method-based access control can be circumvented"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/head.png' />
@@ -119,7 +119,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Dec 17, 2021</time>
+                <time class="article-time--published">Dec 22, 2021</time>
             </div>
         
 
@@ -145,106 +145,105 @@ if (!doNotTrack) {
 
     <section class="article-content">
     <h1 id="lab-method-based-access-control-can-be-circumvented">Lab: Method-based access control can be circumvented</h1>
-<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.</p>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.</p>
 <h2 id="reconocimiento">Reconocimiento</h2>
-<p>Cuando entramos tenemos la siguiente web.</p>
+<p>En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente. Se nos da una cuenta <code>administrator:admin</code> en la cual vemos las funciones que tenemos</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 166; 
-			flex-basis: 400px"
+			flex-grow: 314; 
+			flex-basis: 754px"
 	>
-	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/web.png" data-size="1794x1075">
-		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/web.png"
-			width="1794"
-			height="1075"
-			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/web_hu4133aee039c2d038a0efa3d2e02510a6_748605_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/web_hu4133aee039c2d038a0efa3d2e02510a6_748605_1024x0_resize_box_3.png 1024w"
+	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/management.png" data-size="1791x570">
+		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/management.png"
+			width="1791"
+			height="570"
+			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/management_hu3df4d76b3708a34672f7a70a6661018a_68319_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/management_hu3df4d76b3708a34672f7a70a6661018a_68319_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
-			alt="Web">
+			alt="Cambiar permisos de usuario">
 	</a>
 	
-	<figcaption>Web</figcaption>
+	<figcaption>Cambiar permisos de usuario</figcaption>
 	
 </figure></p>
-<p>En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.</p>
+<p>Si vemos la peticion que se hace es la siguiente la cual hace una peticion post para la actualizacion a admin</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 229; 
+			flex-basis: 551px"
+	>
+	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina.png" data-size="1205x524">
+		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina.png"
+			width="1205"
+			height="524"
+			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina_hua1677a1d28151aca773d01f84bf920fd_78409_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/requestorigina_hua1677a1d28151aca773d01f84bf920fd_78409_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Peticion para cambiar permisos de usuario">
+	</a>
+	
+	<figcaption>Peticion para cambiar permisos de usuario</figcaption>
+	
+</figure></p>
 <h2 id="explotacion">Explotacion</h2>
-<p>Pero podemos bypassear esto por medio de headers como</p>
-<pre tabindex="0"><code>X-Original-URL
-X-Rewrite-URL
-</code></pre><p>Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de <code>acceso denegado</code>.</p>
+<p>Cuando ingresamos a la pagina de <code>/admin</code> no tenemos permisos para acceder, asi que directamente pasamos a replicar la peticion que hemos hecho con el usuario de prueba admin, que nos dara que no estamos autorizados para realizar la peticion.</p>
+<blockquote>
+<p>Usuario no autorizado para realizar la peticion</p>
+</blockquote>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 179; 
-			flex-basis: 430px"
+			flex-grow: 222; 
+			flex-basis: 533px"
 	>
-	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/request.png" data-size="1531x854">
+	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/request.png" data-size="1231x554">
 		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/request.png"
-			width="1531"
-			height="854"
-			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/request_hu06c0f5eaf33c4c903c02adf70f755e2c_124633_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/request_hu06c0f5eaf33c4c903c02adf70f755e2c_124633_1024x0_resize_box_3.png 1024w"
+			width="1231"
+			height="554"
+			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/request_hud86f0196763b0a2d7c88b50ff1c2dec6_79164_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/request_hud86f0196763b0a2d7c88b50ff1c2dec6_79164_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
-			alt="Agregar header de X-Original-URL para bypass">
+			alt="Request POST para cambiar permisos de usuario wiener">
 	</a>
 	
-	<figcaption>Agregar header de X-Original-URL para bypass</figcaption>
+	<figcaption>Request POST para cambiar permisos de usuario wiener</figcaption>
 	
 </figure></p>
-<p>Ahora notamos que podemos eliminar al usuario carlos haciendo una peticion <code>GET</code> a <code>/admin/delete?username=carlos</code> pero cuando lo intentamos sale el siguiente error:</p>
+<p>Ahora cambiamos la peticion a post con <code>change request method</code> y vemos como ahora si la peticion es aceptada por el servidor.</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 238; 
-			flex-basis: 572px"
+			flex-grow: 226; 
+			flex-basis: 543px"
 	>
-	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/request2.png" data-size="1191x499">
+	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/request2.png" data-size="1132x500">
 		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/request2.png"
-			width="1191"
-			height="499"
-			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/request2_hudab507ede568cf072570da13d734e6fa_68561_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/request2_hudab507ede568cf072570da13d734e6fa_68561_1024x0_resize_box_3.png 1024w"
+			width="1132"
+			height="500"
+			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/request2_hu7afea4a0bc9572196b418312638083e2_70520_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/request2_hu7afea4a0bc9572196b418312638083e2_70520_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
-			alt="Request para eliminar al usuario carlos pero erroneamente">
+			alt="Request GET para actualizar al usuario wiener">
 	</a>
 	
-	<figcaption>Request para eliminar al usuario carlos pero erroneamente</figcaption>
+	<figcaption>Request GET para actualizar al usuario wiener</figcaption>
 	
 </figure></p>
-<p>La correcta manera es la siguiente es enviar en la peticion <code>GET</code> los parametros para eliminar y en el header agregado solamente el path de la pagina al que se le hace el delete y la respuesta no nos da ningun error por lo que se ejecuto correctamente.</p>
+<p>Y con eso ya nos salta la alerta de que hemos resuelto el lab por actualizar nuestro usuario a admin.</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 221; 
-			flex-basis: 531px"
+			flex-grow: 196; 
+			flex-basis: 472px"
 	>
-	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/request3.png" data-size="1080x488">
-		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/request3.png"
-			width="1080"
-			height="488"
-			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/request3_hud9086bbebb67666f3155ac6719b78aa1_64624_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/request3_hud9086bbebb67666f3155ac6719b78aa1_64624_1024x0_resize_box_3.png 1024w"
-			loading="lazy"
-			alt="Request para eliminar el usuario carlos">
-	</a>
-	
-	<figcaption>Request para eliminar el usuario carlos</figcaption>
-	
-</figure></p>
-<p>Y con eso ya nos salta la alerta de que hemos eliminado al usuario y resuelto el lab.</p>
-<p><figure 
-	
-		class="gallery-image" 
-		style="
-			flex-grow: 154; 
-			flex-basis: 369px"
-	>
-	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png" data-size="1799x1168">
+	<a href="/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png" data-size="1759x894">
 		<img src="/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png"
-			width="1799"
-			height="1168"
-			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_huc36cc13a5a4ecaa3d3ccc32f14b2895a_768741_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/resuelto_huc36cc13a5a4ecaa3d3ccc32f14b2895a_768741_1024x0_resize_box_3.png 1024w"
+			width="1759"
+			height="894"
+			srcset="/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_hu585a018f3990b7d0fea77ba0b4a34ba5_96335_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-access-control-lab-6/resuelto_hu585a018f3990b7d0fea77ba0b4a34ba5_96335_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
 			alt="Laboratorio resuelto">
 	</a>
@@ -295,6 +294,94 @@ X-Rewrite-URL
                 
                     
 <article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-access-control-lab-10/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-access-control-lab-10/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 10</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-access-control-lab-8/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-access-control-lab-8/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 8</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-access-control-lab-9/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-access-control-lab-9/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 9</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-access-control-lab-7/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-access-control-lab-7/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 7</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
     <a href="/p/portswigger-academy-learning-path-access-control-lab-4/">
         
         
@@ -311,94 +398,6 @@ X-Rewrite-URL
 
         <div class="article-details">
             <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 4</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/portswigger-academy-learning-path-access-control-lab-5/">
-        
-        
-            <div class="article-image">
-                <img src="/p/portswigger-academy-learning-path-access-control-lab-5/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 5</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/portswigger-academy-learning-path-access-control-lab-1/">
-        
-        
-            <div class="article-image">
-                <img src="/p/portswigger-academy-learning-path-access-control-lab-1/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 1</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/portswigger-academy-learning-path-access-control-lab-2/">
-        
-        
-            <div class="article-image">
-                <img src="/p/portswigger-academy-learning-path-access-control-lab-2/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 2</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/portswigger-academy-learning-path-access-control-lab-3/">
-        
-        
-            <div class="article-image">
-                <img src="/p/portswigger-academy-learning-path-access-control-lab-3/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Portswigger Academy Learning Path: Access Control Lab 3</h2>
         </div>
     </a>
 </article>

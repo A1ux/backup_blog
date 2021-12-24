@@ -6,7 +6,66 @@
     <description>Recent content in Posts on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Fri, 17 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 10</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/</guid>
+      <description>Lab: User ID controlled by request parameter with password disclosure En este laboratorio1lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento En este caso la aplicacion debemos de encontrar la contrasena del usuario administrator y acceder con sus credenciales. Para eso contamos con el perfil de wiener
+ Api key del usuario wiener 
+Explotacion Cuando ingresamos al usuario de administrator cambiando el valor del id, podemos acceder a su perfil y ver que tiene una contrasena mostrada.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 8</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/</guid>
+      <description>Lab: User ID controlled by request parameter, with unpredictable user IDs En este laboratorio1lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:
+ Api key del usuario wiener 
+Pero el id enviado es enviado aparte en una peticion con un id aleatorio que no podriamos explotar, por lo que deberiamos de buscar el id del usuario carlos</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 9</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/</guid>
+      <description>Lab: User ID controlled by request parameter with data leakage in redirect En este laboratorio1lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:
+ Api key del usuario wiener</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 7</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/</link>
+      <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/</guid>
+      <description>Lab: User ID controlled by request parameter En este laboratorio1lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:
+https://acf11f881e7ff811c01c63ee00ab0049.web-security-academy.net/my-account?id=wiener  Api key del usuario wiener 
+Explotacion La solucion aca es muy simple ya que notamos algo interesante, enviando en una peticion GET esta enviada el id del usuario que es wiener si intentamos cambiarla por carlos ya obtenemos la api key del usuario carlos.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</link>
+      <pubDate>Wed, 22 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</guid>
+      <description>Lab: Method-based access control can be circumvented En este laboratorio1lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+Reconocimiento En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente. Se nos da una cuenta administrator:admin en la cual vemos las funciones que tenemos
+ Cambiar permisos de usuario 
+Si vemos la peticion que se hace es la siguiente la cual hace una peticion post para la actualizacion a admin</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Access Control Lab 4</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-4/</link>
@@ -27,20 +86,6 @@ Explotacion Existe una funcionalidad de administracion en la cual podemos entrar
       
       <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-5/</guid>
       <description>Lab: URL-based access control can be circumvented En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
-Reconocimiento Cuando entramos tenemos la siguiente web.
- Web 
-En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.
-Explotacion Pero podemos bypassear esto por medio de headers como
-X-Original-URL X-Rewrite-URL Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de acceso denegado.</description>
-    </item>
-    
-    <item>
-      <title>Portswigger Academy Learning Path: Access Control Lab 6</title>
-      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</link>
-      <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</guid>
-      <description>Lab: Method-based access control can be circumvented En este laboratorio1la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
 Reconocimiento Cuando entramos tenemos la siguiente web.
  Web 
 En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.

@@ -15,13 +15,12 @@ menu:
             icon: user
 ---
 
-Actualmente trabajo como consultor en ciberseguridad. Cree este blog para crear notas personales y compartir por si algun dia alguien necesita ayuda, no se si como forma de writeup veremos que dice el tiempo. Pero de momento lo quiero para tener notas guardadas por si algun dia las necesito y volver a releerlas, a veces olvido las cosas facilmente jaja
+Actualmente trabajo como consultor en ciberseguridad. Cree este blog para crear notas personales y compartir por si algun dia alguien necesita ayuda, no se si como forma de writeup veremos que dice el tiempo. Pero de momento es un lugar donde ir para saber como resolver un lab sin mayor detalle.
 
-Mis redes sociales son:
+Mis perfiles son:
 
 * https://github.com/A1ux/
-* https://twitter.com/A1uxHash/
 * https://app.hackthebox.com/profile/326717
 * https://tryhackme.com/p/alux
 
-Saludos y espero que las cosas que en este blog te gusten.
+Saludos.

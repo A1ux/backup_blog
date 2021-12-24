@@ -1,7 +1,7 @@
 +++
 author = "Alux"
 title = "Portswigger Academy Learning Path: Access Control Lab 6"
-date = "2021-12-17"
+date = "2021-12-22"
 description = "Lab: Method-based access control can be circumvented"
 tags = [
     "access control",
@@ -18,38 +18,31 @@ image = "head.png"
 
 # Lab: Method-based access control can be circumvented
 
-En este <cite>laboratorio[^1]</cite>la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
+En este <cite>laboratorio[^1]</cite>lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.
 
 ## Reconocimiento
 
-Cuando entramos tenemos la siguiente web.
+En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente. Se nos da una cuenta `administrator:admin` en la cual vemos las funciones que tenemos
 
-![Web](web.png)
+![Cambiar permisos de usuario](management.png)
 
-En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.
+Si vemos la peticion que se hace es la siguiente la cual hace una peticion post para la actualizacion a admin
+
+![Peticion para cambiar permisos de usuario](requestorigina.png)
 
 ## Explotacion
 
-Pero podemos bypassear esto por medio de headers como
+Cuando ingresamos a la pagina de `/admin` no tenemos permisos para acceder, asi que directamente pasamos a replicar la peticion que hemos hecho con el usuario de prueba admin, que nos dara que no estamos autorizados para realizar la peticion.
 
-```
-X-Original-URL
-X-Rewrite-URL
-```
+> Usuario no autorizado para realizar la peticion
 
-Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de `acceso denegado`.
+![Request POST para cambiar permisos de usuario wiener](request.png)
 
-![Agregar header de X-Original-URL para bypass](request.png)
+Ahora cambiamos la peticion a post con `change request method` y vemos como ahora si la peticion es aceptada por el servidor.
 
-Ahora notamos que podemos eliminar al usuario carlos haciendo una peticion `GET` a `/admin/delete?username=carlos` pero cuando lo intentamos sale el siguiente error:
+![Request GET para actualizar al usuario wiener](request2.png)
 
-![Request para eliminar al usuario carlos pero erroneamente](request2.png)
-
-La correcta manera es la siguiente es enviar en la peticion `GET` los parametros para eliminar y en el header agregado solamente el path de la pagina al que se le hace el delete y la respuesta no nos da ningun error por lo que se ejecuto correctamente.
-
-![Request para eliminar el usuario carlos](request3.png)
-
-Y con eso ya nos salta la alerta de que hemos eliminado al usuario y resuelto el lab.
+Y con eso ya nos salta la alerta de que hemos resuelto el lab por actualizar nuestro usuario a admin.
 
 ![Laboratorio resuelto](resuelto.png)
 

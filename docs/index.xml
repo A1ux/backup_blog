@@ -6,7 +6,562 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Fri, 17 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 24 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Access Control Lab 10</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/</link>
+        <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 10" /&gt;&lt;h1 id=&#34;lab-user-id-controlled-by-request-parameter-with-password-disclosure&#34;&gt;Lab: User ID controlled by request parameter with password disclosure&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este caso la aplicacion debemos de encontrar la contrasena del usuario &lt;code&gt;administrator&lt;/code&gt; y acceder con sus credenciales. Para eso contamos con el perfil de wiener&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 156; 
+			flex-basis: 374px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/management.png&#34; data-size=&#34;1750x1121&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/management.png&#34;
+			width=&#34;1750&#34;
+			height=&#34;1121&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/management_hu132037896b3963f4ec22dc9f46c44439_106783_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/management_hu132037896b3963f4ec22dc9f46c44439_106783_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Api key del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Api key del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Cuando ingresamos al usuario de administrator cambiando el valor del id, podemos acceder a su perfil y ver que tiene una contrasena mostrada.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 107; 
+			flex-basis: 258px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administrator.png&#34; data-size=&#34;1231x1143&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administrator.png&#34;
+			width=&#34;1231&#34;
+			height=&#34;1143&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administrator_hu196d57f7c4bf2701938517924be60ac8_82890_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administrator_hu196d57f7c4bf2701938517924be60ac8_82890_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Cuenta de administrator&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Cuenta de administrator&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Aunque notamos que la contrasena ahi esta pero estando con el &lt;code&gt;input type password&lt;/code&gt; pero si vemos directamente el codigo fuente notamos que se puede ver su contrasena&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 942; 
+			flex-basis: 2261px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administratorpass.png&#34; data-size=&#34;669x71&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administratorpass.png&#34;
+			width=&#34;669&#34;
+			height=&#34;71&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administratorpass_hu1480e9d13455f714ab1819aaac2c4a49_12925_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/administratorpass_hu1480e9d13455f714ab1819aaac2c4a49_12925_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Password del usuario administrator&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Password del usuario administrator&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Con esto ya podemos acceder al admin panel y poder ver sus funciones para poder eliminar usuarios para&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 546; 
+			flex-basis: 1311px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/adminpanel.png&#34; data-size=&#34;1792x328&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/adminpanel.png&#34;
+			width=&#34;1792&#34;
+			height=&#34;328&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/adminpanel_hu3421fa89c98b7c10bb4dafa478092505_24634_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/adminpanel_hu3421fa89c98b7c10bb4dafa478092505_24634_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Panel del administracion&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Panel del administracion&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya eliminamos al usuario carlos y resolvemos el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 252; 
+			flex-basis: 606px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/resuelto.png&#34; data-size=&#34;1766x699&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/resuelto.png&#34;
+			width=&#34;1766&#34;
+			height=&#34;699&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/resuelto_hu2052b6bc50276081646dc2a03304483c_89396_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/resuelto_hu2052b6bc50276081646dc2a03304483c_89396_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-password-disclosure&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Access Control Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/</link>
+        <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 8" /&gt;&lt;h1 id=&#34;lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids&#34;&gt;Lab: User ID controlled by request parameter, with unpredictable user IDs&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando
+entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 192; 
+			flex-basis: 462px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/management.png&#34; data-size=&#34;1782x924&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/management.png&#34;
+			width=&#34;1782&#34;
+			height=&#34;924&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/management_hu249d4f1e5582b24ee7db6971dac788c3_102273_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/management_hu249d4f1e5582b24ee7db6971dac788c3_102273_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Api key del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Api key del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero el id enviado es enviado aparte en una peticion con un id aleatorio que no podriamos explotar, por lo que deberiamos de buscar el id del usuario carlos&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Encontramos un post en el cual esta escrito por el usuario &lt;code&gt;carlos&lt;/code&gt;, como se puede ver:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 128; 
+			flex-basis: 309px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post.png&#34; data-size=&#34;1144x888&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post.png&#34;
+			width=&#34;1144&#34;
+			height=&#34;888&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post_huaff653794a00514fa12157cd5e6a9642_876731_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post_huaff653794a00514fa12157cd5e6a9642_876731_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Post escrito por el usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Post escrito por el usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y al entrar al link directo del usuario carlos se nos muestra el id aleatorio asignado al usuario carlos:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 99; 
+			flex-basis: 238px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post2.png&#34; data-size=&#34;1413x1423&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post2.png&#34;
+			width=&#34;1413&#34;
+			height=&#34;1423&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post2_hu35698fa87a0d56863ec32070a7147bbb_976947_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/post2_hu35698fa87a0d56863ec32070a7147bbb_976947_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;ID del usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;ID del usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://ac311f0d1f5a70e9c0534ac400b30092.web-security-academy.net/blogs?userId=a933ec6e-ce81-488f-8a4e-3c2f125c4550
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ahora teniendo en cuenta que ya tenemos el id del usuario carlos enviaremos la peticion &lt;code&gt;GET&lt;/code&gt; con el id del usuario carlos&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 153; 
+			flex-basis: 367px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/carlosapi.png&#34; data-size=&#34;1377x899&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/carlosapi.png&#34;
+			width=&#34;1377&#34;
+			height=&#34;899&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/carlosapi_hu4b4469c749377142812790f6bd0d968f_89024_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/carlosapi_hu4b4469c749377142812790f6bd0d968f_89024_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;API KEY del usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;API KEY del usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya obtenemos la api del usuario carlos y la subimos para resolver el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 186; 
+			flex-basis: 446px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/resuelto.png&#34; data-size=&#34;1779x956&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/resuelto.png&#34;
+			width=&#34;1779&#34;
+			height=&#34;956&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/resuelto_hu22d8d073b32ea3ab7765440786777c7b_112768_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-8/resuelto_hu22d8d073b32ea3ab7765440786777c7b_112768_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Access Control Lab 9</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/</link>
+        <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 9" /&gt;&lt;h1 id=&#34;lab-user-id-controlled-by-request-parameter-with-data-leakage-in-redirect&#34;&gt;Lab: User ID controlled by request parameter with data leakage in redirect&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando
+entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 223; 
+			flex-basis: 536px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/management.png&#34; data-size=&#34;1174x525&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/management.png&#34;
+			width=&#34;1174&#34;
+			height=&#34;525&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/management_hucc717d3c7857afb5dcc5eca7772d0d87_37348_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/management_hucc717d3c7857afb5dcc5eca7772d0d87_37348_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Api key del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Api key del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Aca podemos ver que cambiando el parametro el id de wiener podemos acceder para ver los datos pero si directamente cambiamos el valor del id por &lt;code&gt;carlos&lt;/code&gt; se nos redirige a la opcion de login por lo que no podemos ver la api de carlos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 192; 
+			flex-basis: 463px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/login.png&#34; data-size=&#34;1798x932&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/login.png&#34;
+			width=&#34;1798&#34;
+			height=&#34;932&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/login_hudf99247a8963112e2aaf3684f08822b2_88827_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/login_hudf99247a8963112e2aaf3684f08822b2_88827_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Redireccion al login&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Redireccion al login&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Pero si se hace una redireccion lo mejor es ir a ver como se hace la redireccion en burp y al ver la peticion que se hace al usuario carlos, podemos ver que si nos muestra los datos y luego se redirige por lo que no existe una proteccion y se revela la api key&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 245; 
+			flex-basis: 589px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/request.png&#34; data-size=&#34;1537x626&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/request.png&#34;
+			width=&#34;1537&#34;
+			height=&#34;626&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/request_hub6934556b6aee4d86a83896a67d0c304_104125_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/request_hub6934556b6aee4d86a83896a67d0c304_104125_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;API key antes de redirigir&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;API key antes de redirigir&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya obtenemos la api del usuario carlos y la subimos para resolver el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 175; 
+			flex-basis: 421px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/resuelto.png&#34; data-size=&#34;1748x995&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/resuelto.png&#34;
+			width=&#34;1748&#34;
+			height=&#34;995&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/resuelto_huabce4f5f3c815ca3d416e412332dd1fd_95389_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-9/resuelto_huabce4f5f3c815ca3d416e412332dd1fd_95389_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-data-leakage-in-redirect&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Access Control Lab 7</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/</link>
+        <pubDate>Thu, 23 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 7" /&gt;&lt;h1 id=&#34;lab-user-id-controlled-by-request-parameter&#34;&gt;Lab: User ID controlled by request parameter&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este caso la aplicacion debemos de recuperar la api key del usuario carlos, cuando
+entramos al usuario automaticamente nos dirige a la url siguiente y lo que nos muestra:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://acf11f881e7ff811c01c63ee00ab0049.web-security-academy.net/my-account?id=wiener
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 192; 
+			flex-basis: 462px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/management.png&#34; data-size=&#34;1782x924&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/management.png&#34;
+			width=&#34;1782&#34;
+			height=&#34;924&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/management_hu249d4f1e5582b24ee7db6971dac788c3_102273_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/management_hu249d4f1e5582b24ee7db6971dac788c3_102273_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Api key del usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Api key del usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;La solucion aca es muy simple ya que notamos algo interesante, enviando en una peticion &lt;code&gt;GET&lt;/code&gt; esta enviada el id del usuario que es &lt;code&gt;wiener&lt;/code&gt; si intentamos cambiarla por &lt;code&gt;carlos&lt;/code&gt; ya obtenemos la api key del usuario carlos.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;https://acf11f881e7ff811c01c63ee00ab0049.web-security-academy.net/my-account?id=carlos
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 197; 
+			flex-basis: 474px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/carlosapi.png&#34; data-size=&#34;1756x888&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/carlosapi.png&#34;
+			width=&#34;1756&#34;
+			height=&#34;888&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/carlosapi_hu9a1262be666a684339652a39d7ecb9ff_101169_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/carlosapi_hu9a1262be666a684339652a39d7ecb9ff_101169_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;API KEY del usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;API KEY del usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya obtenemos la api del usuario carlos y la subimos para resolver el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 195; 
+			flex-basis: 469px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/resuelto.png&#34; data-size=&#34;1812x927&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/resuelto.png&#34;
+			width=&#34;1812&#34;
+			height=&#34;927&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/resuelto_hu54a35672ca628d9747432929e843a14a_107187_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-7/resuelto_hu54a35672ca628d9747432929e843a14a_107187_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Access Control Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</link>
+        <pubDate>Wed, 22 Dec 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 6" /&gt;&lt;h1 id=&#34;lab-method-based-access-control-can-be-circumvented&#34;&gt;Lab: Method-based access control can be circumvented&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;lqa finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente. Se nos da una cuenta &lt;code&gt;administrator:admin&lt;/code&gt; en la cual vemos las funciones que tenemos&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 314; 
+			flex-basis: 754px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/management.png&#34; data-size=&#34;1791x570&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/management.png&#34;
+			width=&#34;1791&#34;
+			height=&#34;570&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/management_hu3df4d76b3708a34672f7a70a6661018a_68319_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/management_hu3df4d76b3708a34672f7a70a6661018a_68319_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Cambiar permisos de usuario&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Cambiar permisos de usuario&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Si vemos la peticion que se hace es la siguiente la cual hace una peticion post para la actualizacion a admin&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 229; 
+			flex-basis: 551px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina.png&#34; data-size=&#34;1205x524&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina.png&#34;
+			width=&#34;1205&#34;
+			height=&#34;524&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina_hua1677a1d28151aca773d01f84bf920fd_78409_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/requestorigina_hua1677a1d28151aca773d01f84bf920fd_78409_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para cambiar permisos de usuario&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para cambiar permisos de usuario&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Cuando ingresamos a la pagina de &lt;code&gt;/admin&lt;/code&gt; no tenemos permisos para acceder, asi que directamente pasamos a replicar la peticion que hemos hecho con el usuario de prueba admin, que nos dara que no estamos autorizados para realizar la peticion.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Usuario no autorizado para realizar la peticion&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 222; 
+			flex-basis: 533px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request.png&#34; data-size=&#34;1231x554&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request.png&#34;
+			width=&#34;1231&#34;
+			height=&#34;554&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request_hud86f0196763b0a2d7c88b50ff1c2dec6_79164_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request_hud86f0196763b0a2d7c88b50ff1c2dec6_79164_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Request POST para cambiar permisos de usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Request POST para cambiar permisos de usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora cambiamos la peticion a post con &lt;code&gt;change request method&lt;/code&gt; y vemos como ahora si la peticion es aceptada por el servidor.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 226; 
+			flex-basis: 543px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2.png&#34; data-size=&#34;1132x500&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2.png&#34;
+			width=&#34;1132&#34;
+			height=&#34;500&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2_hu7afea4a0bc9572196b418312638083e2_70520_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2_hu7afea4a0bc9572196b418312638083e2_70520_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Request GET para actualizar al usuario wiener&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Request GET para actualizar al usuario wiener&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con eso ya nos salta la alerta de que hemos resuelto el lab por actualizar nuestro usuario a admin.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 196; 
+			flex-basis: 472px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png&#34; data-size=&#34;1759x894&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png&#34;
+			width=&#34;1759&#34;
+			height=&#34;894&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_hu585a018f3990b7d0fea77ba0b4a34ba5_96335_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_hu585a018f3990b7d0fea77ba0b4a34ba5_96335_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-method-based-access-control-can-be-circumvented&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Access Control Lab 4</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-4/</link>
         <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
@@ -249,131 +804,6 @@ X-Rewrite-URL
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-url-based-access-control-can-be-circumvented&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        </item>
-        <item>
-        <title>Portswigger Academy Learning Path: Access Control Lab 6</title>
-        <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</link>
-        <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/</guid>
-        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Access Control Lab 6" /&gt;&lt;h1 id=&#34;lab-method-based-access-control-can-be-circumvented&#34;&gt;Lab: Method-based access control can be circumvented&lt;/h1&gt;
-&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar un bypass al control de seguridad que tienen los accesos de los usuarios.&lt;/p&gt;
-&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
-&lt;p&gt;Cuando entramos tenemos la siguiente web.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 166; 
-			flex-basis: 400px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/web.png&#34; data-size=&#34;1794x1075&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/web.png&#34;
-			width=&#34;1794&#34;
-			height=&#34;1075&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/web_hu4133aee039c2d038a0efa3d2e02510a6_748605_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/web_hu4133aee039c2d038a0efa3d2e02510a6_748605_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Web&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Web&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;En este caso la aplicacion cuando intentamos entrar a la opcion de administracion nos deniega el acceso definitivamente.&lt;/p&gt;
-&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
-&lt;p&gt;Pero podemos bypassear esto por medio de headers como&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;X-Original-URL
-X-Rewrite-URL
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Si los agregamos a la solicitud podemos notar como podemos acceder a la funcionalidad de admin aunque anteriormente saliera un error de &lt;code&gt;acceso denegado&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 179; 
-			flex-basis: 430px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request.png&#34; data-size=&#34;1531x854&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request.png&#34;
-			width=&#34;1531&#34;
-			height=&#34;854&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request_hu06c0f5eaf33c4c903c02adf70f755e2c_124633_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request_hu06c0f5eaf33c4c903c02adf70f755e2c_124633_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Agregar header de X-Original-URL para bypass&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Agregar header de X-Original-URL para bypass&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Ahora notamos que podemos eliminar al usuario carlos haciendo una peticion &lt;code&gt;GET&lt;/code&gt; a &lt;code&gt;/admin/delete?username=carlos&lt;/code&gt; pero cuando lo intentamos sale el siguiente error:&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 238; 
-			flex-basis: 572px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2.png&#34; data-size=&#34;1191x499&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2.png&#34;
-			width=&#34;1191&#34;
-			height=&#34;499&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2_hudab507ede568cf072570da13d734e6fa_68561_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request2_hudab507ede568cf072570da13d734e6fa_68561_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Request para eliminar al usuario carlos pero erroneamente&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Request para eliminar al usuario carlos pero erroneamente&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;La correcta manera es la siguiente es enviar en la peticion &lt;code&gt;GET&lt;/code&gt; los parametros para eliminar y en el header agregado solamente el path de la pagina al que se le hace el delete y la respuesta no nos da ningun error por lo que se ejecuto correctamente.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 221; 
-			flex-basis: 531px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request3.png&#34; data-size=&#34;1080x488&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request3.png&#34;
-			width=&#34;1080&#34;
-			height=&#34;488&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request3_hud9086bbebb67666f3155ac6719b78aa1_64624_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/request3_hud9086bbebb67666f3155ac6719b78aa1_64624_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Request para eliminar el usuario carlos&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Request para eliminar el usuario carlos&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Y con eso ya nos salta la alerta de que hemos eliminado al usuario y resuelto el lab.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 154; 
-			flex-basis: 369px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png&#34; data-size=&#34;1799x1168&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto.png&#34;
-			width=&#34;1799&#34;
-			height=&#34;1168&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_huc36cc13a5a4ecaa3d3ccc32f14b2895a_768741_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-6/resuelto_huc36cc13a5a4ecaa3d3ccc32f14b2895a_768741_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Laboratorio resuelto&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/access-control/lab-method-based-access-control-can-be-circumvented&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

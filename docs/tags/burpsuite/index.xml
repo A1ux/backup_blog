@@ -6,7 +6,41 @@
     <description>Recent content in burpsuite on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Fri, 24 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/burpsuite/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/burpsuite/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 11</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-11/</link>
+      <pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-11/</guid>
+      <description>Lab: Insecure direct object references En este laboratorio1lqa finalidad es poder explotar un IDOR para encontrar datos interesantes a los cuales no deberiamos tener acceso segun los permisos, pero si se nos permite acceder a un objeto.
+Reconocimiento En este caso podemos enviar chat al sistema con otros a traves de la aplicacion pero tambien podemos descargar una archivo .txt de la conversacion, dando en View Transcript
+ Chat de la webapp</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 12</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-12/</link>
+      <pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-12/</guid>
+      <description>Lab: Multi-step process with no access control on one step En este laboratorio1lqa finalidad es poder elevar los privilegios de nuestro usuario que es wiener para eso se nos dan las credenciales y tambien se nos da un usuario administrator para poder ver el proceso en el cual se elevan los privilegios.
+ Paso 1 para elevar privilegios 
+ Paso 2 para elevar privilegios 
+Reconocimiento La manera de elevar privilegios es replicar lo anterior, pero no es necesario el primer paso, solamente el segundo para poder elevar los privilegios del usuario, ya que el primero dira que no esta autorizado para hacerlo.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Access Control Lab 13</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-13/</link>
+      <pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-13/</guid>
+      <description>Lab: Referer-based access control En este laboratorio1lqa finalidad es poder elevar los privilegios de nuestro usuario que es wiener para eso se nos dan las credenciales y tambien se nos da un usuario administrator para poder ver el proceso en el cual se elevan los privilegios.
+ Paso para elevar privilegios 
+Reconocimiento La manera de elevar privilegios es replicar lo anterior, para poder elevar nuestros privilegios como usuario wiener</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Access Control Lab 10</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-10/</link>

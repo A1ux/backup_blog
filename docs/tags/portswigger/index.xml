@@ -6,7 +6,87 @@
     <description>Recent content in portswigger on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/portswigger/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/portswigger/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 7</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-7/</link>
+      <pubDate>Tue, 11 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-7/</guid>
+      <description>Lab: Remote code execution via polyglot web shell upload En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 8</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</link>
+      <pubDate>Tue, 11 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</guid>
+      <description>Lab: Web shell upload via race condition En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/</link>
+      <pubDate>Mon, 03 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/</guid>
+      <description>Lab: Web shell upload via path traversal En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-5/</link>
+      <pubDate>Mon, 03 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-5/</guid>
+      <description>Lab: Web shell upload via extension blacklist bypass En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-6/</link>
+      <pubDate>Mon, 03 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-6/</guid>
+      <description>Lab: Web shell upload via obfuscated file extension En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-1/</link>
+      <pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-1/</guid>
+      <description>Lab: Remote code execution via web shell upload En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro, y tambien se pueden subir archivos .</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-2/</link>
+      <pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-2/</guid>
+      <description>Lab: Web shell upload via Content-Type restriction bypass En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro, y tambien se pueden subir archivos .</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: File Upload Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-3/</link>
+      <pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-3/</guid>
+      <description>Lab: Web shell upload via Content-Type restriction bypass En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Access Control Lab 11</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-access-control-lab-11/</link>

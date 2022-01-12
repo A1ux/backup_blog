@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: Web shell upload via path traversal'><title>Portswigger Academy Learning Path: File Upload Lab 4</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: File Upload Lab 4'>
+<meta property='og:description' content='Lab: Web shell upload via path traversal'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='file upload' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2022-01-03T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-03T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: File Upload Lab 4">
+<meta name="twitter:description" content="Lab: Web shell upload via path traversal"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-4/head.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CB4Z1SDS5Q"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CB4Z1SDS5Q', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-file-upload-lab-4/">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-file-upload-lab-4/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: File Upload Lab 4" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-file-upload-lab-4/">Portswigger Academy Learning Path: File Upload Lab 4</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: Web shell upload via path traversal
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 03, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-web-shell-upload-via-path-traversal">Lab: Web shell upload via path traversal</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo <code>/home/carlos/secret</code></p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>Cuando ingresamos con la cuenta de <code>wiener:peter</code> tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 142; 
+			flex-basis: 340px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-4/upload.png" data-size="1200x845">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-4/upload.png"
+			width="1200"
+			height="845"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/upload_hubfff896f02667d728ec037f96a306033_47826_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-4/upload_hubfff896f02667d728ec037f96a306033_47826_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Sistema permite la subida de archivos">
+	</a>
+	
+	<figcaption>Sistema permite la subida de archivos</figcaption>
+	
+</figure></p>
+<p>Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del <code>php</code> como si fuera texto plano.</p>
+<h2 id="explotacion">Explotacion</h2>
+<p>Creamos el archivo php con el siguiente codigo</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;/home/carlos/secret&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="err">
+</span></code></pre></div><p>Ahora enviamos el archivo, y lo sube sin problemas sin modificar el content-type y se guarda en <code>avatars/file.php</code></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 186; 
+			flex-basis: 447px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-4/request1.png" data-size="1535x823">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-4/request1.png"
+			width="1535"
+			height="823"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/request1_hu875cb6241d94bb73fe110f3cbc025180_127252_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-4/request1_hu875cb6241d94bb73fe110f3cbc025180_127252_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Subida de archivo php al servidor">
+	</a>
+	
+	<figcaption>Subida de archivo php al servidor</figcaption>
+	
+</figure></p>
+<p>El problema es que al querer visualizarlo se nos mostrara el codigo en texto plano por lo que no podremos ejecutar el contenido del php</p>
+<blockquote>
+<p>El archivo se muestra en texto plano</p>
+</blockquote>
+<p>Ahora lo que haremos es modificar el nombre del archivo para ejecutar un Path Traversal y situar el archivo en otra carpeta a la cual si se ejecutara el php sin problemas, usando codificacion url para <code>../</code> a <code>%2e%2e%2f</code> seguido del nombre del archivo.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 190; 
+			flex-basis: 457px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-4/request.png" data-size="1523x799">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-4/request.png"
+			width="1523"
+			height="799"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/request_hu98a3353a8f87857678f68974b7332fb4_127162_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-4/request_hu98a3353a8f87857678f68974b7332fb4_127162_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Subida de archivo php al servidor">
+	</a>
+	
+	<figcaption>Subida de archivo php al servidor</figcaption>
+	
+</figure></p>
+<p>Y ahora si vamos a la ruta podemos ejecutar el codigo php</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 711; 
+			flex-basis: 1708px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-4/key.png" data-size="662x93">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-4/key.png"
+			width="662"
+			height="93"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/key_hu73db096d0e11a0b1c9f5f172df975822_12581_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-4/key_hu73db096d0e11a0b1c9f5f172df975822_12581_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Lectura de archivo secret de carlos">
+	</a>
+	
+	<figcaption>Lectura de archivo secret de carlos</figcaption>
+	
+</figure></p>
+<p>Y con esto resolvimos el lab, pudiendo subir un archivo php que ejecuta acciones o comandos en el servidor.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 254; 
+			flex-basis: 610px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-4/resuelto.png" data-size="1783x701">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-4/resuelto.png"
+			width="1783"
+			height="701"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-4/resuelto_hu776cc54903e4b724ca1fdb795fbd713e_436475_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-4/resuelto_hu776cc54903e4b724ca1fdb795fbd713e_436475_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/file-upload/lab-file-upload-web-shell-upload-via-path-traversal"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/file-upload/">file upload</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-file-upload-lab-7/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-7/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: File Upload Lab 7</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-file-upload-lab-8/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-8/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: File Upload Lab 8</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-file-upload-lab-5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-5/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: File Upload Lab 5</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-file-upload-lab-6/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-6/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: File Upload Lab 6</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-file-upload-lab-1/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-file-upload-lab-1/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: File Upload Lab 1</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2022 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a></li>
+    <li><a href="#explotacion">Explotacion</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

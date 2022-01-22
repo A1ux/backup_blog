@@ -3,33 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.alux.cc/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/academy/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/burpsuite/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/categories/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/categories/pentest-web/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/portswigger/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/post/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/server-side-request-forgery/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/ssrf/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/tags/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/</loc>
+    <lastmod>2022-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/</loc>
+    <lastmod>2022-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/</loc>
+    <lastmod>2022-01-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/</loc>
+    <lastmod>2022-01-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/tags/file-upload/</loc>
     <lastmod>2022-01-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.alux.cc/categories/pentest-web/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/portswigger/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/post/</loc>
-    <lastmod>2022-01-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.alux.cc/tags/</loc>
     <lastmod>2022-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-7/</loc>

@@ -14,7 +14,9 @@
       
       <guid>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</guid>
       <description>Lab: Web shell upload via race condition En este laboratorio1la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo /home/carlos/secret
-Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</description>
+Reconocimiento Cuando ingresamos con la cuenta de wiener:peter tenemos una opcion para subir archivos, en este caso el avatar del usuario.
+Explotacion Creamos el archivo php con el siguiente codigo
+&amp;lt;?php echo file_get_contents(&amp;#39;/home/carlos/secret&amp;#39;); ?&amp;gt;Ahora se nos da el siguiente codigo para explicar que es lo que hace por atras el servidor y leyendolo entendemos que lo que hace es subir el archivo primero al servidor y ahi checarlo y validar, si es validado lo sube si no lo elimina, pero el principal problema es que se mantiene en el servidor por unos segundos el servicio.</description>
     </item>
     
     <item>

@@ -6,7 +6,847 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 21 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 6</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</link>
+        <pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 6" /&gt;&lt;h1 id=&#34;lab-blind-ssrf-with-out-of-band-detection&#34;&gt;Lab: Blind SSRF with out-of-band detection&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera pero esta vez no es tan interna.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web y la informacion que nos da el lab es que el sistema envia la url al terminar de cargar toda la pagina y esto a traves del &lt;code&gt;Referer Header&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 246; 
+			flex-basis: 591px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request1.png&#34; data-size=&#34;1538x624&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request1.png&#34;
+			width=&#34;1538&#34;
+			height=&#34;624&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request1_hu1ffdfa4bd0499cbbb3070bae20780a29_118896_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request1_hu1ffdfa4bd0499cbbb3070bae20780a29_118896_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para cargar producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para cargar producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo esto lo unico que debemos hacer es enviar la solicitud para cambiar la url del referer e ingresar uno generado por burpcollaborator.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 179; 
+			flex-basis: 431px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request2.png&#34; data-size=&#34;1525x849&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request2.png&#34;
+			width=&#34;1525&#34;
+			height=&#34;849&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request2_hu8d2f22fa937298ea9b3e58ac0fb37e65_141090_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/request2_hu8d2f22fa937298ea9b3e58ac0fb37e65_141090_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para cagar producto con header modificado&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para cagar producto con header modificado&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y hemos recibido una peticion en Burp Collaborator y&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 210; 
+			flex-basis: 505px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/collaborator.png&#34; data-size=&#34;1091x518&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/collaborator.png&#34;
+			width=&#34;1091&#34;
+			height=&#34;518&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/collaborator_hu6742cdc62f601357c7f9cf1f1d139e2f_24460_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/collaborator_hu6742cdc62f601357c7f9cf1f1d139e2f_24460_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Collaborator log&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Collaborator log&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab automaticamente.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 240; 
+			flex-basis: 577px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/resuelto.png&#34; data-size=&#34;1797x747&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/resuelto.png&#34;
+			width=&#34;1797&#34;
+			height=&#34;747&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/resuelto_hu5c62b3807278bda6fdffb6bfa3357342_176735_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/resuelto_hu5c62b3807278bda6fdffb6bfa3357342_176735_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/blind/lab-out-of-band-detection&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/</link>
+        <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 5" /&gt;&lt;h1 id=&#34;lab-ssrf-with-filter-bypass-via-open-redirection-vulnerability&#34;&gt;Lab: SSRF with filter bypass via open redirection vulnerability&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 1135; 
+			flex-basis: 2725px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/options.png&#34; data-size=&#34;1783x157&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/options.png&#34;
+			width=&#34;1783&#34;
+			height=&#34;157&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/options_hudf78db51b3b0fc5a449c54cbb4bd4779_14937_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/options_hudf78db51b3b0fc5a449c54cbb4bd4779_14937_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Stock y siguiente producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Stock y siguiente producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 302; 
+			flex-basis: 725px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request1.png&#34; data-size=&#34;1481x490&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request1.png&#34;
+			width=&#34;1481&#34;
+			height=&#34;490&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request1_hua3095d1f5a265ec2324442a7ba50db84_74533_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request1_hua3095d1f5a265ec2324442a7ba50db84_74533_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para checar stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para checar stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud &lt;code&gt;GET&lt;/code&gt; hacia &lt;code&gt;stock.weliketoshop.net&lt;/code&gt; en el puerto &lt;code&gt;8080&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;stockApi=%2Fproduct%2Fstock%2Fcheck%3FproductId%3D2%26storeId%3D1
+stockApi=/product/stock/check?productId=2&amp;amp;storeId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Pero aparte notamos otra solicitud a la hora de solicitar un siguiente producto con la siguiente peticion, que notaremos que podriamos utilizar para realizar SSRF el cual es el parametro de &lt;code&gt;path&lt;/code&gt; que se le pasa la ruta en la cual podriamos inyectar un host y ver si lo devuelve sin problema. Por lo que si cambiamos el path a un dominio nos redirige pero en nuestra propia pc y deberiamos de intentar inyectarlo en &lt;code&gt;stockApi&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;stockApi=/product/nextProduct?currentProductId=2&amp;amp;path=/product?productId=3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 252; 
+			flex-basis: 606px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/requestproducto.png&#34; data-size=&#34;1084x429&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/requestproducto.png&#34;
+			width=&#34;1084&#34;
+			height=&#34;429&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/requestproducto_hue19a8c99a5502a5928cac37f23e7e56c_65989_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/requestproducto_hue19a8c99a5502a5928cac37f23e7e56c_65989_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Solicitud para siguiente producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Solicitud para siguiente producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos como proceder intentaremos es inyectar un host para que el sistema nos redirija hacia el objetivo que es &lt;code&gt;http://192.168.0.12:8080/admin&lt;/code&gt; y llegar a el. Asi que procedemos a inyectar la solicitud normal pero cambiaremos el valor de &lt;code&gt;stockApi&lt;/code&gt; por el archivo que nos redirigira a la siguiente pagina y modificando el path por &lt;code&gt;http://192.168.0.12:8080/admin&lt;/code&gt; y debieramos de tener acceso.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;stockApi=/product/nextProduct?currentProductId=2&amp;amp;path=http://host/admin
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 177; 
+			flex-basis: 425px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request2.png&#34; data-size=&#34;1507x850&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request2.png&#34;
+			width=&#34;1507&#34;
+			height=&#34;850&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request2_hu271e19ec6ce74f40b8e80610cd6025a3_130928_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request2_hu271e19ec6ce74f40b8e80610cd6025a3_130928_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion hacia la ip local&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion hacia la ip local&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Viendo que lo acepta sin problema ahora procedemos a realizar la solicitud de la eliminacion solo agregando la peticion para la eliminacion.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 176; 
+			flex-basis: 424px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request3.png&#34; data-size=&#34;1513x855&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request3.png&#34;
+			width=&#34;1513&#34;
+			height=&#34;855&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request3_hu42595905c13044da8b2d10f2f307d0c8_129119_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/request3_hu42595905c13044da8b2d10f2f307d0c8_129119_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para eliminar al usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para eliminar al usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab eliminando al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 256; 
+			flex-basis: 615px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/resuelto.png&#34; data-size=&#34;1774x692&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/resuelto.png&#34;
+			width=&#34;1774&#34;
+			height=&#34;692&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/resuelto_hu63477efcbcf9121e87689653f83e34c3_167428_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/resuelto_hu63477efcbcf9121e87689653f83e34c3_167428_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/lab-ssrf-filter-bypass-via-open-redirection&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/</link>
+        <pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 4" /&gt;&lt;h1 id=&#34;lab-ssrf-with-whitelist-based-input-filter&#34;&gt;Lab: SSRF with whitelist-based input filter&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 228; 
+			flex-basis: 547px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request1.png&#34; data-size=&#34;1211x531&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request1.png&#34;
+			width=&#34;1211&#34;
+			height=&#34;531&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request1_hucb22ce80b94019b035910f4120a1f37f_69306_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request1_hucb22ce80b94019b035910f4120a1f37f_69306_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para checar stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para checar stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud &lt;code&gt;GET&lt;/code&gt; hacia &lt;code&gt;stock.weliketoshop.net&lt;/code&gt; en el puerto &lt;code&gt;8080&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http://stock.weliketoshop.net:8080/product/stock/check?productId=1&amp;amp;storeId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Lo primero es ver si el sistema cuenta con filtrado el cual no permita ingresar otro dominio y si es con lo primero que nos topamos, el cual no nos dejara ingresar mas que el dominio de &lt;code&gt;stock.weliketoshop.net&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 281; 
+			flex-basis: 676px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request2.png&#34; data-size=&#34;1302x462&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request2.png&#34;
+			width=&#34;1302&#34;
+			height=&#34;462&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request2_hu39ef94e7c33fa5d40bb7480f9566e3e4_70232_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request2_hu39ef94e7c33fa5d40bb7480f9566e3e4_70232_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion hacia la ip local&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion hacia la ip local&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Leyendo un poco encontre algo sobre realizar el bypass para dominios, en este caso porque el dominio esta en una whitelist y no podriamos ingresar mas que este.&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Un payload en especifico es el siguiente, el cual es una investigacion en la cual existe la manera de hacer un bypass porque el parsing tomara el dominio que no debe y como valido.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;domain.com#@whitelistdomain.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Pero al intentarlo seguia alertando de que no se podia por lo que es necesario codificar doblemente como en uno de los ejercicios anteriores para que el sistema lo tome correctamente y realizar el bypass para quedar asi.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http://localhost%2523@stock.weliketoshop.net:8080/admin
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Luego realizamos la peticion y se logra bypassear el whitelist del dominio.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 317; 
+			flex-basis: 763px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request3.png&#34; data-size=&#34;1523x479&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request3.png&#34;
+			width=&#34;1523&#34;
+			height=&#34;479&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request3_hu1926a1266ca79da1708d1bff45b917a7_74347_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/request3_hu1926a1266ca79da1708d1bff45b917a7_74347_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para eliminar al usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para eliminar al usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab eliminando al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 223; 
+			flex-basis: 535px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/resuelto.png&#34; data-size=&#34;1801x807&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/resuelto.png&#34;
+			width=&#34;1801&#34;
+			height=&#34;807&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/resuelto_hu831f6d1ae6b618ae7f9ce391f4e7cd96_301686_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/resuelto_hu831f6d1ae6b618ae7f9ce391f4e7cd96_301686_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/lab-ssrf-with-whitelist-filter&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/</link>
+        <pubDate>Sun, 16 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 3" /&gt;&lt;h1 id=&#34;lab-ssrf-with-blacklist-based-input-filter&#34;&gt;Lab: SSRF with blacklist-based input filter&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 230; 
+			flex-basis: 553px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request1.png&#34; data-size=&#34;1159x503&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request1.png&#34;
+			width=&#34;1159&#34;
+			height=&#34;503&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request1_hu307d97f778c19d43d847213a8d0de1b6_68318_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request1_hu307d97f778c19d43d847213a8d0de1b6_68318_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para checar stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para checar stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud &lt;code&gt;GET&lt;/code&gt; hacia &lt;code&gt;stock.weliketoshop.net&lt;/code&gt; en el puerto &lt;code&gt;8080&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http://stock.weliketoshop.net:8080/product/stock/check?productId=1&amp;amp;storeId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Primero debemos averiguar con que host si se nos acepta la peticion para despues pedir la interfaz administrativa. Para eso tomaremos alternativas a &lt;code&gt;localhost&lt;/code&gt; ya que todas resuelven a el pero escritas de manera distinta.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;127.127.127.127
+1227.0.1.3
+127.0.0.0
+127.1
+127.0.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;En nuestro caso tenemos dos ips que nos resuelven y nos muestran que si se podria ingresar a la interfaz de &lt;code&gt;admin&lt;/code&gt;, estos son &lt;code&gt;127.0.1&lt;/code&gt; y &lt;code&gt;127.1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 142; 
+			flex-basis: 340px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/intruder.png&#34; data-size=&#34;794x559&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/intruder.png&#34;
+			width=&#34;794&#34;
+			height=&#34;559&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/intruder_hu43663e292a60b206346621cdb023f934_31418_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/intruder_hu43663e292a60b206346621cdb023f934_31418_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticiones al localhost pero con ip alternativa&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticiones al localhost pero con ip alternativa&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora que sabemos todo esto lo que debemos hacer es eliminar al usuario &lt;code&gt;carlos&lt;/code&gt; en el &lt;code&gt;localhost&lt;/code&gt;. Pero ahora existe algo que nos bloqueara al querer intentar realizar una peticion al localhost&lt;/p&gt;
+&lt;p&gt;Ahora lo que intentaremos es hacer una peticion para solicitar al localhost, pero nos da la siguiente alerta, pero es al intentar ir al path de &lt;code&gt;/admin/&lt;/code&gt; el sistema cuenta con este bloqueo que no nos dejara ir mas alla.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 275; 
+			flex-basis: 661px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request2.png&#34; data-size=&#34;1278x464&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request2.png&#34;
+			width=&#34;1278&#34;
+			height=&#34;464&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request2_hu442079ffa138aaeeaa948552f7e16e66_67963_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request2_hu442079ffa138aaeeaa948552f7e16e66_67963_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion hacia la ip local&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion hacia la ip local&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Sabiendo esto lo que haremos sera codificar muchas veces &lt;code&gt;admin&lt;/code&gt; en URL con el mismo burp esto se hace con &lt;code&gt;Ctrl + U&lt;/code&gt; y haciendo la peticion obtenemos que el usuario carlos ha sido eliminado sin saltar la alerta como antes.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 295; 
+			flex-basis: 709px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request3.png&#34; data-size=&#34;1535x519&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request3.png&#34;
+			width=&#34;1535&#34;
+			height=&#34;519&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request3_hu896822c26fdaba682b41f8025c0df641_77619_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/request3_hu896822c26fdaba682b41f8025c0df641_77619_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para eliminar al usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para eliminar al usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab eliminando al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 223; 
+			flex-basis: 535px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/resuelto.png&#34; data-size=&#34;1801x807&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/resuelto.png&#34;
+			width=&#34;1801&#34;
+			height=&#34;807&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/resuelto_hu831f6d1ae6b618ae7f9ce391f4e7cd96_301686_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/resuelto_hu831f6d1ae6b618ae7f9ce391f4e7cd96_301686_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/lab-ssrf-with-blacklist-filter&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/</link>
+        <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 1" /&gt;&lt;h1 id=&#34;lab-basic-ssrf-against-the-local-server&#34;&gt;Lab: Basic SSRF against the local server&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 247; 
+			flex-basis: 594px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request1.png&#34; data-size=&#34;1266x511&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request1.png&#34;
+			width=&#34;1266&#34;
+			height=&#34;511&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request1_huc63aca9eeec373d302e2f377e748125d_71929_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request1_huc63aca9eeec373d302e2f377e748125d_71929_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para checar stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para checar stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud &lt;code&gt;GET&lt;/code&gt; hacia &lt;code&gt;stock.weliketoshop.net&lt;/code&gt; en el puerto &lt;code&gt;8080&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http://stock.weliketoshop.net:8080/product/stock/check?productId=1&amp;amp;storeId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos todo esto lo que debemos hacer es eliminar al usuario &lt;code&gt;carlos&lt;/code&gt; en el &lt;code&gt;localhost&lt;/code&gt;. Para eso realizamos la siguiente solicitud para ver si podemos cambiar la url por http://localhost/admin y ver si nos muestra la informacion sin errores.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Si entramos a /admin en el servicio nos salta la alerta de: &lt;code&gt;Admin interface only available if logged in as an administrator, or if requested from loopback&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 176; 
+			flex-basis: 424px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request2.png&#34; data-size=&#34;1511x854&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request2.png&#34;
+			width=&#34;1511&#34;
+			height=&#34;854&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request2_hudc179e81ec4ab4b80f5fbbd6ded4010b_123730_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request2_hudc179e81ec4ab4b80f5fbbd6ded4010b_123730_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion hacia el localhost&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion hacia el localhost&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ya notamos que podemos enviar solicitudes al servicio web que tenemos en el puerto 80 porque desde localhost la interfaz administrativa no esta protegida. Asi que ahora podremos eliminar al usuario carlos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 276; 
+			flex-basis: 662px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request3.png&#34; data-size=&#34;1538x557&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request3.png&#34;
+			width=&#34;1538&#34;
+			height=&#34;557&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request3_hu670c13c28711fa98d01897fbef0c0dac_77722_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/request3_hu670c13c28711fa98d01897fbef0c0dac_77722_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para eliminar al usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para eliminar al usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab eliminando al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 205; 
+			flex-basis: 492px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/resuelto.png&#34; data-size=&#34;1821x888&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/resuelto.png&#34;
+			width=&#34;1821&#34;
+			height=&#34;888&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/resuelto_hucea051d546dd5749fe49c5f53a034620_138707_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/resuelto_hucea051d546dd5749fe49c5f53a034620_138707_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/lab-basic-ssrf-against-localhost&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/</link>
+        <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2" /&gt;&lt;h1 id=&#34;lab-basic-ssrf-against-another-back-end-system&#34;&gt;Lab: Basic SSRF against another back-end system&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 252; 
+			flex-basis: 607px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1.png&#34; data-size=&#34;1237x489&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1.png&#34;
+			width=&#34;1237&#34;
+			height=&#34;489&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1_hu5d6737df470d510e6c4e489d44586209_68485_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1_hu5d6737df470d510e6c4e489d44586209_68485_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para checar stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para checar stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud &lt;code&gt;GET&lt;/code&gt; hacia &lt;code&gt;stock.weliketoshop.net&lt;/code&gt; en el puerto &lt;code&gt;8080&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http://192.168.0.1:8080/product/stock/check?productId=1&amp;amp;storeId=1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Ahora que sabemos todo esto lo que debemos hacer es eliminar al usuario &lt;code&gt;carlos&lt;/code&gt; en el &lt;code&gt;localhost&lt;/code&gt;. Pero debemos encontrar el acceso hacia otra ip en local en la red 192.168.0/24, para eso debemos encontrar primero la ip a la que acceder o la que podriamos tener acceso y luego eliminar a carlos.&lt;/p&gt;
+&lt;p&gt;Preparamos nuestro payload para enviar la solicitud en este caso cambiaremos el valor de la ip para que recorrar desde la 1 hasta 255.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 194; 
+			flex-basis: 467px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position.png&#34; data-size=&#34;966x496&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position.png&#34;
+			width=&#34;966&#34;
+			height=&#34;496&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position_hua5421f625371568b85c22117fa3b4e11_62720_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position_hua5421f625371568b85c22117fa3b4e11_62720_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Posicion para intruder&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Posicion para intruder&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y configuramos el payload para configurar los valores del 1 al 255&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 93; 
+			flex-basis: 223px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads.png&#34; data-size=&#34;629x676&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads.png&#34;
+			width=&#34;629&#34;
+			height=&#34;676&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads_hua2a58b50780a98f49692dd7c05be66af_22889_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads_hua2a58b50780a98f49692dd7c05be66af_22889_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Valores numericos de intruder a enviar&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Valores numericos de intruder a enviar&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y empezamos el ataque con lo que tenemos una respuesta con uno, especificamente es el unico que cambia junto con la ip &lt;code&gt;192.168.0.1&lt;/code&gt;, obteniendo un &lt;code&gt;404&lt;/code&gt; por lo que sabemos que esa ip si esta arriba&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 223; 
+			flex-basis: 536px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack.png&#34; data-size=&#34;568x254&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack.png&#34;
+			width=&#34;568&#34;
+			height=&#34;254&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack_hu7761f4abc1e2d094cd57cb22999e85b1_8736_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack_hu7761f4abc1e2d094cd57cb22999e85b1_8736_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Respuestas del ataque&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Respuestas del ataque&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora sabiendo la ip a la que podemos acceder ya podemos enviar la peticion para poder eliminar al usuario carlos, pero antes comprobar que si tenemos al sistema administrativo.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 175; 
+			flex-basis: 422px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2.png&#34; data-size=&#34;1523x866&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2.png&#34;
+			width=&#34;1523&#34;
+			height=&#34;866&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2_hu14a2ba98895e48411cb773aa1a6fff02_128603_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2_hu14a2ba98895e48411cb773aa1a6fff02_128603_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion hacia la ip local&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion hacia la ip local&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora enviamos la peticion &lt;code&gt;GET&lt;/code&gt; para eliminar al usuario carlos definitivamente&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 243; 
+			flex-basis: 585px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3.png&#34; data-size=&#34;1215x498&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3.png&#34;
+			width=&#34;1215&#34;
+			height=&#34;498&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3_hu2d992fba205fe1e9e6656d72d65a85da_67535_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3_hu2d992fba205fe1e9e6656d72d65a85da_67535_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para eliminar al usuario carlos&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para eliminar al usuario carlos&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab eliminando al usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 191; 
+			flex-basis: 459px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto.png&#34; data-size=&#34;1782x930&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto.png&#34;
+			width=&#34;1782&#34;
+			height=&#34;930&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto_hu2f0b929d9c6fdd28d72b51200790bab8_704001_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto_hu2f0b929d9c6fdd28d72b51200790bab8_704001_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/lab-basic-ssrf-against-backend-system&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: File Upload Lab 8</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/</link>
         <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
@@ -15,27 +855,7 @@
         <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/head.png" alt="Featured image of post Portswigger Academy Learning Path: File Upload Lab 8" /&gt;&lt;h1 id=&#34;lab-web-shell-upload-via-race-condition&#34;&gt;Lab: Web shell upload via race condition&lt;/h1&gt;
 &lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo &lt;code&gt;/home/carlos/secret&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
-&lt;p&gt;Cuando ingresamos con la cuenta de &lt;code&gt;wiener:peter&lt;/code&gt; tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	
-		class=&#34;gallery-image&#34; 
-		style=&#34;
-			flex-grow: 142; 
-			flex-basis: 340px&#34;
-	&gt;
-	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34; data-size=&#34;1200x845&#34;&gt;
-		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png&#34;
-			width=&#34;1200&#34;
-			height=&#34;845&#34;
-			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_1024x0_resize_box_3.png 1024w&#34;
-			loading=&#34;lazy&#34;
-			alt=&#34;Sistema permite la subida de archivos&#34;&gt;
-	&lt;/a&gt;
-	
-	&lt;figcaption&gt;Sistema permite la subida de archivos&lt;/figcaption&gt;
-	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del &lt;code&gt;php&lt;/code&gt; como si fuera texto plano.&lt;/p&gt;
+&lt;p&gt;Cuando ingresamos con la cuenta de &lt;code&gt;wiener:peter&lt;/code&gt; tenemos una opcion para subir archivos, en este caso el avatar del usuario.&lt;/p&gt;
 &lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
 &lt;p&gt;Creamos el archivo php con el siguiente codigo&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-php&#34; data-lang=&#34;php&#34;&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;php&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;file_get_contents&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/home/carlos/secret&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;cp&#34;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;

@@ -22,11 +22,7 @@ En este <cite>laboratorio[^1]</cite>la finalidad es subir una shell al servidor 
 
 ## Reconocimiento
 
-Cuando ingresamos con la cuenta de `wiener:peter` tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.
-
-![Sistema permite la subida de archivos](upload.png)
-
-Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del `php` como si fuera texto plano.
+Cuando ingresamos con la cuenta de `wiener:peter` tenemos una opcion para subir archivos, en este caso el avatar del usuario.
 
 ## Explotacion
 

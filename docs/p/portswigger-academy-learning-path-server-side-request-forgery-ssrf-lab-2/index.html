@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Lab: Basic SSRF against another back-end system'><title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2</title>
+
+<link rel='canonical' href='https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2'>
+<meta property='og:description' content='Lab: Basic SSRF against another back-end system'>
+<meta property='og:url' content='https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/'>
+<meta property='og:site_name' content='A1ux'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ssrf' /><meta property='article:tag' content='server-side request forgery' /><meta property='article:tag' content='portswigger' /><meta property='article:tag' content='academy' /><meta property='article:tag' content='burpsuite' /><meta property='article:published_time' content='2022-01-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-14T00:00:00&#43;00:00'/><meta property='og:image' content='https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head.png' />
+<meta name="twitter:title" content="Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2">
+<meta name="twitter:description" content="Lab: Basic SSRF against another back-end system"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head.png' />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CB4Z1SDS5Q"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-CB4Z1SDS5Q', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Volver</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png"
+                        srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_800x0_resize_box_3.png 800w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/head_huc76dcbe4719eea5620ad72b9e0798e52_74880_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="402" 
+                        loading="lazy"
+                        alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pentest-web/" >
+                pentest web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Lab: Basic SSRF against another back-end system
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 14, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minutos a leer
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="lab-basic-ssrf-against-another-back-end-system">Lab: Basic SSRF against another back-end system</h1>
+<p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.</p>
+<p><figure 
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/banner.svg" >
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/banner.svg"
+			
+			
+			
+			loading="lazy"
+			alt="Vulnerabilidad SSRF">
+	</a>
+	
+	<figcaption>Vulnerabilidad SSRF</figcaption>
+	
+</figure></p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 252; 
+			flex-basis: 607px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1.png" data-size="1237x489">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1.png"
+			width="1237"
+			height="489"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1_hu5d6737df470d510e6c4e489d44586209_68485_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request1_hu5d6737df470d510e6c4e489d44586209_68485_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Peticion para checar stock del producto">
+	</a>
+	
+	<figcaption>Peticion para checar stock del producto</figcaption>
+	
+</figure></p>
+<p>Decodificada la URL seria la siguiente, lo que nos indica que se hace una solicitud <code>GET</code> hacia <code>stock.weliketoshop.net</code> en el puerto <code>8080</code></p>
+<pre tabindex="0"><code>http://192.168.0.1:8080/product/stock/check?productId=1&amp;storeId=1
+</code></pre><h2 id="explotacion">Explotacion</h2>
+<p>Ahora que sabemos todo esto lo que debemos hacer es eliminar al usuario <code>carlos</code> en el <code>localhost</code>. Pero debemos encontrar el acceso hacia otra ip en local en la red 192.168.0/24, para eso debemos encontrar primero la ip a la que acceder o la que podriamos tener acceso y luego eliminar a carlos.</p>
+<p>Preparamos nuestro payload para enviar la solicitud en este caso cambiaremos el valor de la ip para que recorrar desde la 1 hasta 255.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 194; 
+			flex-basis: 467px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position.png" data-size="966x496">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position.png"
+			width="966"
+			height="496"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position_hua5421f625371568b85c22117fa3b4e11_62720_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/position_hua5421f625371568b85c22117fa3b4e11_62720_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Posicion para intruder">
+	</a>
+	
+	<figcaption>Posicion para intruder</figcaption>
+	
+</figure></p>
+<p>Y configuramos el payload para configurar los valores del 1 al 255</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 93; 
+			flex-basis: 223px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads.png" data-size="629x676">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads.png"
+			width="629"
+			height="676"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads_hua2a58b50780a98f49692dd7c05be66af_22889_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/payloads_hua2a58b50780a98f49692dd7c05be66af_22889_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Valores numericos de intruder a enviar">
+	</a>
+	
+	<figcaption>Valores numericos de intruder a enviar</figcaption>
+	
+</figure></p>
+<p>Y empezamos el ataque con lo que tenemos una respuesta con uno, especificamente es el unico que cambia junto con la ip <code>192.168.0.1</code>, obteniendo un <code>404</code> por lo que sabemos que esa ip si esta arriba</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 223; 
+			flex-basis: 536px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack.png" data-size="568x254">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack.png"
+			width="568"
+			height="254"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack_hu7761f4abc1e2d094cd57cb22999e85b1_8736_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/attack_hu7761f4abc1e2d094cd57cb22999e85b1_8736_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Respuestas del ataque">
+	</a>
+	
+	<figcaption>Respuestas del ataque</figcaption>
+	
+</figure></p>
+<p>Ahora sabiendo la ip a la que podemos acceder ya podemos enviar la peticion para poder eliminar al usuario carlos, pero antes comprobar que si tenemos al sistema administrativo.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 175; 
+			flex-basis: 422px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2.png" data-size="1523x866">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2.png"
+			width="1523"
+			height="866"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2_hu14a2ba98895e48411cb773aa1a6fff02_128603_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request2_hu14a2ba98895e48411cb773aa1a6fff02_128603_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Peticion hacia la ip local">
+	</a>
+	
+	<figcaption>Peticion hacia la ip local</figcaption>
+	
+</figure></p>
+<p>Ahora enviamos la peticion <code>GET</code> para eliminar al usuario carlos definitivamente</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 243; 
+			flex-basis: 585px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3.png" data-size="1215x498">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3.png"
+			width="1215"
+			height="498"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3_hu2d992fba205fe1e9e6656d72d65a85da_67535_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/request3_hu2d992fba205fe1e9e6656d72d65a85da_67535_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Peticion para eliminar al usuario carlos">
+	</a>
+	
+	<figcaption>Peticion para eliminar al usuario carlos</figcaption>
+	
+</figure></p>
+<p>Y ahora ya hemos resuelto el lab eliminando al usuario.</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 191; 
+			flex-basis: 459px"
+	>
+	<a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto.png" data-size="1782x930">
+		<img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto.png"
+			width="1782"
+			height="930"
+			srcset="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto_hu2f0b929d9c6fdd28d72b51200790bab8_704001_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/resuelto_hu2f0b929d9c6fdd28d72b51200790bab8_704001_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="Laboratorio resuelto">
+	</a>
+	
+	<figcaption>Laboratorio resuelto</figcaption>
+	
+</figure></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a class="link" href="https://portswigger.net/web-security/ssrf/lab-basic-ssrf-against-backend-system"  target="_blank" rel="noopener"
+    >Laboratorio</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ssrf/">ssrf</a>
+        
+            <a href="/tags/server-side-request-forgery/">server-side request forgery</a>
+        
+            <a href="/tags/portswigger/">portswigger</a>
+        
+            <a href="/tags/academy/">academy</a>
+        
+            <a href="/tags/burpsuite/">burpsuite</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Contenidos relacionados</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 6</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 5</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 4</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 3</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/">
+        
+        
+            <div class="article-image">
+                <img src="/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/head.a629808d3c419c422297aa6a9115b9dd_huc76dcbe4719eea5620ad72b9e0798e52_74880_250x150_fill_box_smart1_3.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pimAjTxBnEIil6pqkRW53Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 1</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2022 A1ux
+    </section>
+    
+    <section class="powerby">
+        
+
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Tabla de contenido</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a></li>
+    <li><a href="#explotacion">Explotacion</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

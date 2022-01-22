@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>server-side request forgery on A1ux</title>
+    <link>https://www.alux.cc/tags/server-side-request-forgery/</link>
+    <description>Recent content in server-side request forgery on A1ux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es-GT</language>
+    <lastBuildDate>Fri, 21 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/tags/server-side-request-forgery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 6</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</link>
+      <pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</guid>
+      <description>Lab: Blind SSRF with out-of-band detection En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera pero esta vez no es tan interna.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web y la informacion que nos da el lab es que el sistema envia la url al terminar de cargar toda la pagina y esto a traves del Referer Header.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-5/</guid>
+      <description>Lab: SSRF with filter bypass via open redirection vulnerability En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/</link>
+      <pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-4/</guid>
+      <description>Lab: SSRF with whitelist-based input filter En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/</link>
+      <pubDate>Sun, 16 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-3/</guid>
+      <description>Lab: SSRF with blacklist-based input filter En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/</link>
+      <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-1/</guid>
+      <description>Lab: Basic SSRF against the local server En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/</link>
+      <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-2/</guid>
+      <description>Lab: Basic SSRF against another back-end system En este laboratorio1la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera.
+ Vulnerabilidad SSRF 
+Reconocimiento Viendo la web podemos notar una solicitud en concreto que se hace para checar el stock del producto.</description>
+    </item>
+    
+  </channel>
+</rss>

